@@ -12,7 +12,10 @@ exec(pythonCommand, (error, stdout, stderr) => {
     process.exit(1);
   }
 
-  if(stdout.trim()=="Hello, World!")console.log("ok");
+  if(stdout.trim()=="Hello, World!"){
+    console.log("stdout.trim():",stdout.trim())
+    console.log("ok")
+  }
   else process.exit(1);
 
   // Print any errors from the Python command
