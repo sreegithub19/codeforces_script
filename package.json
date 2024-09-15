@@ -5,7 +5,8 @@
   "main": "50A.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node 50A.js && node 50A.js && node 50A.js"
+    "start": "node 50A.js && node 50A.js && node 50A.js",
+    "pystart": "node test.js"
   },
   "author": "",
   "license": "ISC"

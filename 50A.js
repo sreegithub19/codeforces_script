@@ -9,14 +9,14 @@ let fs = require('fs');
 const fileStream = require('fs').createReadStream(`input/input_${path.parse(path.basename(__filename))["name"]}_.txt`);
 const outputFilePath = `output/output_${path.parse(path.basename(__filename))["name"]}_.txt`;
 
+
+//////////////////////////////////////// 2. Problem-dependent and language-dependent code  /////////////////////////////////////////
+
 // Create an interface for reading input from stdin
 const rl = readline.createInterface({
   input: fileStream
   //,output: process.stdout
 });
-
-//////////////////////////////////////// 2. Problem-dependent code  /////////////////////////////////////////
-
 
 let inputLines = [];
 let currentLine = 0;
