@@ -1,0 +1,12 @@
+{
+  "name": "codeforces_script",
+  "version": "1.0.0",
+  "description": "",
+  "main": "50A.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node 50A.js && node 50A.js && node 50A.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
