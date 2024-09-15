@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 
 // Define the Python command to execute
-const pythonCommand = `python -c '''
+let pythonCommand = `python3 -c '''
 print("Hello, World!")'''
 `;
 
