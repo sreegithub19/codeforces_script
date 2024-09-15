@@ -1,0 +1,25 @@
+name: Run Node.js Script
+
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger the action
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'  # Use the Node.js version you need
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run script
+        run: npm run start  # Replace with the path to your script
