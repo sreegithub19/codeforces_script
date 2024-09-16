@@ -25,6 +25,9 @@ result = eval(input_content.replace(' ','*')) // 2
 print(str(result))
 `];
 
+
+  ///////////////////////////////////////// 3. Fixed code /////////////////////////////////////////////
+
 // Spawn the Python process
 const pythonProcess = spawn(pythonCommand, pythonArgs);
 
@@ -58,7 +61,7 @@ pythonProcess.on('close', (code) => {
   const trimmedOutput = output.trim();
   console.log(`Output of python code is ${trimmedOutput}`);
 
-  ///////////////////////////////////////// 3. Fixed code /////////////////////////////////////////////
+
 
 let result1 = trimmedOutput;
 // Read output.txt and compare directly in one line
@@ -77,5 +80,7 @@ fs.readFile(outputFilePath, 'utf8', (err, data) => {
     });
 
 
-//////////////////////////////////////////////////////////////////////////////////
 });
+
+
+//////////////////////////////////////////////////////////////////////////////////
