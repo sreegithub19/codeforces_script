@@ -3,7 +3,7 @@ const path = require('path');
 const { spawn, exec } = require('child_process');
 let fs = require('fs');
 
-function common(pythonArgs,inputFilePath,outputFilePath) {
+function common(pythonArgs,outputFile, inputFilePath,outputFilePath) {
 
     // Spawn the Python process
     const pythonProcess = spawn('python3', pythonArgs);
@@ -36,7 +36,7 @@ function common(pythonArgs,inputFilePath,outputFilePath) {
 
     // Trim any extra whitespace or newlines from the output
     const trimmedOutput = output.trim();
-    console.log(`Output of python code is :${trimmedOutput}`);
+    console.log(`${outputFile} :${trimmedOutput}`);
 
 
 
