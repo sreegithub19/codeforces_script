@@ -21,9 +21,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run script 50 times
-        run: |
-          for i in $(seq 1 50); do
-            echo "Run #$i"
-            npm run pystart  # Replace with the path to your script
-          done
+      - name: Run script
+        run: npm run pystart
+
+      # - name: Run script 50 times
+      #   run: |
+      #     for i in $(seq 1 50); do
+      #       echo "Run #$i"
+      #       npm run pystart  # Replace with the path to your script
+      #     done

@@ -17,8 +17,8 @@ for(var i = 0 ; i < (fs.readdirSync(path.join('input', path.parse(path.basename(
     const pythonArgs = ['-c', `
 with open('${inputFilePath}', 'r') as infile:
     input_content = infile.read().strip()
-result = eval(input_content.replace(' ','*')) // 2
-print(str(result))
+
+print(str(eval(input_content.replace(' ','*')) // 2))
     `];
 
     ///////////////////////////////////////// 3. Fixed code /////////////////////////////////////////////
