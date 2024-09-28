@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node 50A.js && node 50A.js && node 50A.js",
-    "pystart": "node 50A_py.js && node 51F_py.js"
+    "pystart": "node 50A_py.js"
   },
   "author": "",
   "license": "ISC"
