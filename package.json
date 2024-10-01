@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "50A.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node 50A.js && node 50A.js && node 50A.js",
-    "pystart": "node 50A_py.js"
-  },
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "pystart": "for file in execute/*.js; do node \"$file\"; done"
+},
   "author": "",
   "license": "ISC"
 }
