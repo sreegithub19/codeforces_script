@@ -24,8 +24,9 @@ jobs:
         overwrite-settings: true
         job-status: 'success'
 
-    - name: Build with Maven
-      run: mvn clean install
 
-    - name: Run the Java application
-      run: java -cp target/classes Main
+    - name: Run Inline Java Code
+      run: |
+        echo 'public class Main { public static void main(String[] args) { System.out.println("Hello from inline!"); } }' > Main.java
+        javac Main.java
+        java Main
