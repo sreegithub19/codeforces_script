@@ -3,7 +3,7 @@ name: Java CI
 on:
   push:
     branches:
-      - java_
+      - java_  # Adjust the branch name as needed
 
 jobs:
   build:
@@ -17,16 +17,20 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'temurin'  # Specify the distribution
-        java-package: 'jdk'       # Optional: Can specify 'jdk' or 'jre'
+        distribution: 'temurin'
+        java-package: 'jdk'
         architecture: 'x64'
         check-latest: false
         overwrite-settings: true
         job-status: 'success'
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # Specify the Node.js version you need
 
-    - name: Run Inline Java Code
-      run: |
-        echo 'public class Main { public static void main(String[] args) { System.out.println("Hello from inline!"); } }' > Main.java
-        javac Main.java
-        java Main
+    - name: Install dependencies
+      run: npm install  # Run this if you have dependencies; otherwise, skip
+
+    - name: Run Inline Java Code via Node.js
+      run: node runInlineJava.js
