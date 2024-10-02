@@ -34,3 +34,6 @@ jobs:
 
     - name: Run Inline Java Code via Node.js
       run: node java_node.js
+
+    - name: Build with Maven
+      run: mvn clean install
