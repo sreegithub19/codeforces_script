@@ -33,4 +33,4 @@ jobs:
       run: npm install  # Run this if you have dependencies; otherwise, skip
 
     - name: Run Inline Java Code via Node.js
-      run: node runInlineJava.js
+      run: node java_node.js
