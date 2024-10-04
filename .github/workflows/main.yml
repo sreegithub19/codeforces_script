@@ -27,12 +27,9 @@ jobs:
     - name: Compile and Run Java Files
       run: |
         #!/bin/bash
-        
-        # Navigate to the execute directory
-        cd execute  # Replace with your directory
 
         # Compile all Java files
-        javac *.java
+        javac execute/*.java
 
         # Check if compilation was successful
         if [ $? -eq 0 ]; then
@@ -40,8 +37,8 @@ jobs:
             for file in *.java; do
                 # Get the base name of the file (without .java)
                 class_name="${file%.java}"
-                echo "Running $class_name..."
-                java "$class_name"
+                echo "Class $class_name..."
+                java -cp execute "$class_name"
             done
         else
             echo "Compilation failed."
