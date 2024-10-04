@@ -6,11 +6,8 @@ import java.util.List;
 
 public class _50A_py {
     public static void main(String[] args) {
-        String currentFileName = new File(_50A_py.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
-        String dirPath = "./input/" + currentFileName.substring(0, currentFileName.lastIndexOf('.'));
-
-		System.out.println("currentFileName:" + currentFileName);
-		System.out.println("dirPath:" + dirPath);
+        String currentFileName = new Exception().getStackTrace()[0].getClassName();
+        String dirPath = "./input/" + currentFileName;
 
         File dir = new File(dirPath);
         if (dir.exists() && dir.isDirectory()) {
@@ -18,8 +15,8 @@ public class _50A_py {
 
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
-                    String inputFilePath = dirPath + "/input_" + currentFileName.substring(0, currentFileName.lastIndexOf('.')) + "_" + i + ".txt";
-                    String outputFilePath = "./output/output_" + currentFileName.substring(0, currentFileName.lastIndexOf('.')) + "_" + i + ".txt";
+                    String inputFilePath = dirPath + "/input" + currentFileName + "_" + i + ".txt";
+                    String outputFilePath = "./output/output_" + currentFileName + "_" + i + ".txt";
 
                     try {
                         List<String> inputLines = Files.readAllLines(Paths.get(inputFilePath));
