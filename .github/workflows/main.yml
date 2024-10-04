@@ -38,7 +38,7 @@ jobs:
                 # Get the base name of the file (without .java)
                 class_name="${file%.java}"
                 echo "Class $class_name..."
-                java -cp execute "$class_name"
+                java "$class_name"
             done
         else
             echo "Compilation failed."

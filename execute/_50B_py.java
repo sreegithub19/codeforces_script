@@ -7,7 +7,9 @@ import java.util.*;
 public class _50B_py {
     public static void main(String[] args) {
         String currentFileName = new Exception().getStackTrace()[0].getClassName();
-        String dirPath = "./input/" + currentFileName;
+        String dirPath = "../input/" + currentFileName;
+
+        System.out.println("dsdwddd:" + dirPath);
 
         System.out.println("/******************************************  "  + currentFileName + "  ******************************************/");
 
@@ -18,7 +20,7 @@ public class _50B_py {
             if (files != null) {
                 for (int i = 0; i < files.length; i++) {
                     String inputFilePath = dirPath + "/input" + currentFileName + "_" + i + ".txt";
-                    String outputFilePath = "./output/" + currentFileName + "/output" + currentFileName + "_" + i + ".txt";
+                    String outputFilePath = "../output/" + currentFileName + "/output" + currentFileName + "_" + i + ".txt";
 
                     try {
                         List<String> inputLines = Files.readAllLines(Paths.get(inputFilePath));
