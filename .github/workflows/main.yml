@@ -30,4 +30,4 @@ jobs:
 
     - name: Run Java File
       run: |
-        java -cp execute _50A_py  # Adjust the class name as necessary
+        java -cp execute _50A_py

@@ -9,6 +9,9 @@ public class _50A_py {
         String currentFileName = new File(_50A_py.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
         String dirPath = "./input/" + currentFileName.substring(0, currentFileName.lastIndexOf('.'));
 
+		System.out.println("currentFileName:" + currentFileName);
+		System.out.println("dirPath:" + dirPath);
+
         File dir = new File(dirPath);
         if (dir.exists() && dir.isDirectory()) {
             File[] files = dir.listFiles(File::isFile);
@@ -19,7 +22,6 @@ public class _50A_py {
                     String outputFilePath = "./output/output_" + currentFileName.substring(0, currentFileName.lastIndexOf('.')) + "_" + i + ".txt";
 
                     try {
-                        // Read integers from the input file
                         List<String> inputLines = Files.readAllLines(Paths.get(inputFilePath));
                         if (inputLines.size() >= 2) {
                             int num1 = Integer.parseInt(inputLines.get(0).trim());
@@ -45,9 +47,11 @@ public class _50A_py {
                                 System.out.println("Result " + result + " not found in output file.");
                             }
                         }
-                    } catch (IOException e) {
+                    } 
+					catch (IOException e) {
                         e.printStackTrace();
-                    } catch (NumberFormatException e) {
+                    } 
+					catch (NumberFormatException e) {
                         System.err.println("Invalid number format in file: " + inputFilePath);
                     }
                 }
