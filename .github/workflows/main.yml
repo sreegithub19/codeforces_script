@@ -24,34 +24,52 @@ jobs:
         overwrite-settings: true
         job-status: 'success'
 
-    - name: Compile Java File
+    - name: Compile and Run Java Files
       run: |
-        javac execute/_50A_py.java
+        #!/bin/bash
+        
+        # Navigate to the execute directory
+        cd execute  # Replace with your directory
 
-    - name: Run Java File
-      run: |
-        java -cp execute _50A_py
+        # Compile all Java files
+        javac *.java
+
+        # Check if compilation was successful
+        if [ $? -eq 0 ]; then
+            # Run each Java file in sequence
+            for file in *.java; do
+                # Get the base name of the file (without .java)
+                class_name="${file%.java}"
+                echo "Running $class_name..."
+                java "$class_name"
+            done
+        else
+            echo "Compilation failed."
+            exit 1
+        fi
 
 
 ####################################################################################
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        java-package: 'jdk'
-        architecture: 'x64'
-        check-latest: false
-        overwrite-settings: true
-        job-status: 'success'
+# for Java 17
 
-    - name: Compile Java File
-      run: |
-        javac execute/_50A_py.java
+    # - name: Set up JDK 17
+    #   uses: actions/setup-java@v2
+    #   with:
+    #     java-version: '17'
+    #     distribution: 'temurin'
+    #     java-package: 'jdk'
+    #     architecture: 'x64'
+    #     check-latest: false
+    #     overwrite-settings: true
+    #     job-status: 'success'
 
-    - name: Run Java File
-      run: |
-        java -cp execute _50A_py
+    # - name: Compile Java File
+    #   run: |
+    #     javac execute/_50A_py.java
+
+    # - name: Run Java File
+    #   run: |
+    #     java -cp execute _50A_py
 
 ####################################################################################
