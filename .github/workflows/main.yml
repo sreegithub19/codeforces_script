@@ -1,32 +1,33 @@
-name: Run Node.js Script
+name: Java CI
 
 on:
   push:
     branches:
-      - main
+      - java_  # Adjust the branch name as needed
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        java-package: 'jdk'
+        architecture: 'x64'
+        check-latest: false
+        overwrite-settings: true
+        job-status: 'success'
 
-      - name: Install dependencies
-        run: npm install
+    - name: Compile Java File
+      run: |
+        javac execute/_50A_py.java
 
-      - name: Run script
-        run: npm run pystart
-
-      # - name: Run script 50 times
-      #   run: |
-      #     for i in $(seq 1 50); do
-      #       echo "Run #$i"
-      #       npm run pystart  # Replace with the path to your script
-      #     done
+    - name: Run Java File
+      run: |
+        java -cp execute _50A_py  # Adjust the class name as necessary
