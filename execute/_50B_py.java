@@ -9,8 +9,6 @@ public class _50B_py {
         String currentFileName = new Exception().getStackTrace()[0].getClassName();
         String dirPath = "../input/" + currentFileName;
 
-        System.out.println("dsdwddd:" + dirPath);
-
         System.out.println("/******************************************  "  + currentFileName + "  ******************************************/");
 
         File dir = new File(dirPath);
