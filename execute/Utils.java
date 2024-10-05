@@ -4,6 +4,9 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Utils {
+    public static void main(String[] args) {
+    }
+    
     public static void commonFunction(String outputFilePath ,int result , int i) throws IOException {
          // Read contents from the output file
         List<String> outputLines = Files.readAllLines(Paths.get(outputFilePath));
