@@ -20,6 +20,14 @@ public class Utils {
             }
         }
 
+        String multilineString = """
+                This is a multiline string.
+                It can span multiple lines.
+                Each line is preserved as written.
+                """;
+
+        System.out.println(multilineString);
+
         // Output result of the comparison
         if (found) System.out.println(i + ":true");
         else {
