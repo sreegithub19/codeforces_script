@@ -1,5 +1,3 @@
-package com.example;
-
 import kotlin.script.experimental.api.*;
 import kotlin.script.experimental.host.*;
 import kotlin.script.experimental.jvm.*;
