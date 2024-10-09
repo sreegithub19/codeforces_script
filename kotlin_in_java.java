@@ -1,26 +1,18 @@
-import kotlin.script.experimental.api.*;
-import kotlin.script.experimental.host.*;
-import kotlin.script.experimental.jvm.*;
-import kotlin.script.experimental.jvm.host.*;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
-public class kotlin_in_java {
+public class KotlinInJava {
     public static void main(String[] args) {
-        String kotlinCode = """
-        println("Hello from Kotlin!")
-        """;
+        String kotlinCode = "println(\"Hello from Kotlin!\")";
 
-        ScriptCompilationConfiguration configuration = new ScriptCompilationConfiguration() {{
-            jvm {
-                dependencies.add("org.jetbrains.kotlin:kotlin-stdlib:" + KotlinVersion.CURRENT);
-            }
-        }};
-
-        ScriptEvaluationConfiguration evaluationConfiguration = new ScriptEvaluationConfiguration();
+        // Create a Kotlin script engine
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("kotlin");
 
         try {
-            KotlinJsr223Engine engine = new KotlinJsr223Engine(configuration, evaluationConfiguration);
+            // Evaluate the Kotlin code
             engine.eval(kotlinCode);
-        } catch (Exception e) {
+        } catch (ScriptException e) {
             e.printStackTrace();
         }
     }
