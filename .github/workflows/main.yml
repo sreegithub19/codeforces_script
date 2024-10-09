@@ -3,7 +3,7 @@ name: Create Kotlin Maven Project
 on:
   push:
     branches:
-      - main
+      - kotlin_
 
 jobs:
   create-project:
