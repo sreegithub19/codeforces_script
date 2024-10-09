@@ -15,17 +15,17 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
-            <version>${kotlin.version}</version>
+            <version>1.8.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-scripting-jvm</artifactId>
-            <version>${kotlin.version}</version>
+            <version>1.8.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-scripting-compiler-embeddable</artifactId>
-            <version>${kotlin.version}</version>
+            <version>1.8.0</version>
         </dependency>
     </dependencies>
 
@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
+                <version>1.8.0</version>
                 <executions>
                     <execution>
                         <goals>
