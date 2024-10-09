@@ -32,7 +32,7 @@ jobs:
         #!/bin/bash
 
         #Compile and run the Kotlin code in Java file
-        javac kotlin_.java && java kotlin_
+        javac kotlin_in_java.java && java kotlin_in_java
 
         # Compile all Java files
         cd execute && javac *.java
