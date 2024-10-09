@@ -5,6 +5,9 @@ on:
     branches:
       - kotlin_
 
+permissions:
+  contents: write  # Grant write permission to the repository contents
+
 jobs:
   create-project:
     runs-on: ubuntu-latest
@@ -29,7 +32,7 @@ jobs:
       - name: Add Kotlin Support
         run: |
           cd kotlin-hello-world
-          mvn org.jetbrains.kotlin:kotlin-maven-plugin:1.8.0:compile # Specify the Kotlin version
+          mvn org.jetbrains.kotlin:kotlin-maven-plugin:1.9.25:compile # Specify the Kotlin version
 
       - name: Modify pom.xml for Kotlin
         run: |
