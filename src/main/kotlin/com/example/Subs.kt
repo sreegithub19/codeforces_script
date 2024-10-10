@@ -1,13 +1,14 @@
-package com.example
-
 import java.io.File
 import javax.tools.JavaCompiler
 import javax.tools.ToolProvider
+import java.lang.reflect.Method
+import java.net.URL
+import java.net.URLClassLoader
 
 fun main() {
     val javaCode = """
         public class Hello {
-            public static void main() {
+            public static void greet() {
                 System.out.println("Hello from Java!");
             }
         }
@@ -24,10 +25,11 @@ fun main() {
     val compilationResult = compiler?.run(null, null, null, javaFile.absolutePath)
     if (compilationResult == 0) {
         println("Compilation successful!")
-        
-        // Load and run the compiled Java class
-        val clazz = Class.forName("Hello")
-        val method = clazz.getMethod("main")
+
+        // Load the compiled class
+        val classLoader = URLClassLoader(arrayOf(File(".").toURI().toURL()))
+        val clazz = classLoader.loadClass("Hello")
+        val method: Method = clazz.getMethod("greet")
         method.invoke(null)
     } else {
         println("Compilation failed!")
