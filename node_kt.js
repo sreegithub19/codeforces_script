@@ -4,7 +4,7 @@ const fs = require('fs');
 // Kotlin code as a string
 const kotlinCode = `
 fun greet(name: String): String {
-    return "Hello, \\$name!"
+    return "Hello node, \\$name!"
 }
 
 println(greet("World"))
