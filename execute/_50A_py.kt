@@ -15,8 +15,8 @@ object _50A_py {
         if (dir.exists() && dir.isDirectory) {
             val files = dir.listFiles { file -> file.isFile }
             files?.forEachIndexed { index, _ ->
-                val inputFilePath = "$dirPath/input$currentFileName_$index.txt"
-                val outputFilePath = "../output/$currentFileName/output$currentFileName_$index.txt"
+                val inputFilePath = "$dirPath/input_${currentFileName}_$index.txt"
+                val outputFilePath = "../output/$currentFileName/output_${currentFileName}_$index.txt"
 
                 try {
                     val inputLines = Files.readAllLines(Paths.get(inputFilePath))
