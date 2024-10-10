@@ -29,7 +29,7 @@ object _50B_py {
                             // Iterate through each string in the inputLines
                             for (line in inputLines) {
                                 for (c in line) {
-                                    freq[c.toInt()]++
+                                    freq[c.code]++
                                 }
                             }
                             var result = 0

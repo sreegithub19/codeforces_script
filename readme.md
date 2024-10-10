@@ -1,3 +1,1 @@
-### Online Java to Kotlin converter:
-
-https://www.codeconvert.ai/java-to-kotlin-converter
+### Online Java to Kotlin conversion done using ChatGPT.
