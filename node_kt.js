@@ -15,12 +15,19 @@ fun main() {
 // Write the Kotlin code to a temporary file
 fs.writeFileSync('temp.kt', kotlinCode);
 
-// Compile the Kotlin code to a JAR file
-execSync('kotlinc temp.kt -include-runtime -d temp.jar');
+try {
+    // Compile the Kotlin code to a JAR file
+    execSync('kotlinc temp.kt -include-runtime -d temp.jar');
 
-// Run the compiled Kotlin code
-execSync('java -jar temp.jar');
-
-// Clean up
-fs.unlinkSync('temp.kt');
-fs.unlinkSync('temp.jar');
+    // Run the compiled Kotlin code and capture output
+    const output = execSync('java -jar temp.jar', { encoding: 'utf8' });
+    
+    // Print the output to the console
+    console.log(output);
+} catch (error) {
+    console.error('Error:', error.message);
+} finally {
+    // Clean up
+    fs.unlinkSync('temp.kt');
+    fs.unlinkSync('temp.jar');
+}
