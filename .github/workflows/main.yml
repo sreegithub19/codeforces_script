@@ -24,17 +24,27 @@ jobs:
         overwrite-settings: true
         job-status: 'success'
 
-    - name: Compile and Run Kotlin Files
+    - name: Install Kotlin
+      run: |
+        curl -s https://get.sdkman.io | bash
+        source "$HOME/.sdkman/bin/sdkman-init.sh"
+        sdk install kotlin
+
+    - name: Compile Kotlin Code
       run: |
         #!/bin/bash
-        # Compile all Kotlin files
-        cd execute && kotlinc *.kt -d output.jar
+        # Compile all Kotlin files into a single JAR
+        cd execute && kotlinc *.kt -include-runtime -d output.jar
         # Check if compilation was successful
         if [ $? -eq 0 ]; then
-            # Run the output JAR file
-            echo "Running Kotlin application..."
-            java -jar output.jar
+            echo "Compilation successful."
         else
             echo "Compilation failed."
             exit 1
         fi
+
+    - name: Run Kotlin Application
+      run: |
+        #!/bin/bash
+        echo "Running Kotlin application..."
+        java -jar execute/output.jar
