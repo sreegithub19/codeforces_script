@@ -38,4 +38,5 @@ jobs:
         run: |
           java -jar Main.jar &&
           java -jar Subs.jar 
+          && node node_kt.js
     #    && java -jar Subs_.jar 
