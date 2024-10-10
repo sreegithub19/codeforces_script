@@ -1,74 +1,37 @@
-name: Create Kotlin Maven Project
+name: Build and Run Kotlin
 
 on:
   push:
     branches:
       - kotlin_
-
-permissions:
-  contents: write  # Grant write permission to the repository contents
+  pull_request:
+    branches:
+      - kotlin_
 
 jobs:
-  create-project:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Set up JDK
+      - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
-          java-version: '21' # Specify your Java version
+          java-version: '21'
           distribution: 'temurin'
 
-      - name: Create Maven Project
+      - name: Install Kotlin
         run: |
-          mvn archetype:generate -DgroupId=com.example \
-                                 -DartifactId=kotlin-hello-world \
-                                 -DarchetypeArtifactId=maven-archetype-quickstart \
-                                 -DinteractiveMode=false
+          curl -s https://get.sdkman.io | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install kotlin
 
-      - name: Add Kotlin Support
+      - name: Compile Kotlin Code
         run: |
-          cd kotlin-hello-world
-          mvn org.jetbrains.kotlin:kotlin-maven-plugin:1.9.25:compile # Specify the Kotlin version
+          kotlinc src/main/kotlin/com/example/Main.kt -include-runtime -d Main.jar
 
-      - name: Modify pom.xml for Kotlin
+      - name: Run Kotlin Application
         run: |
-          cd kotlin-hello-world
-          echo '<properties>' >> pom.xml
-          echo '    <kotlin.version>1.8.0</kotlin.version>' >> pom.xml
-          echo '</properties>' >> pom.xml
-          echo '<dependencies>' >> pom.xml
-          echo '    <dependency>' >> pom.xml
-          echo '        <groupId>org.jetbrains.kotlin</groupId>' >> pom.xml
-          echo '        <artifactId>kotlin-stdlib</artifactId>' >> pom.xml
-          echo '        <version>1.9.25</version>' >> pom.xml
-          echo '    </dependency>' >> pom.xml
-          echo '</dependencies>' >> pom.xml
-          echo '<build>' >> pom.xml
-          echo '    <plugins>' >> pom.xml
-          echo '        <plugin>' >> pom.xml
-          echo '            <groupId>org.jetbrains.kotlin</groupId>' >> pom.xml
-          echo '            <artifactId>kotlin-maven-plugin</artifactId>' >> pom.xml
-          echo '            <version>1.9.25</version>' >> pom.xml
-          echo '        </plugin>' >> pom.xml
-          echo '    </plugins>' >> pom.xml
-          echo '</build>' >> pom.xml
-
-      - name: Create Hello World Kotlin File
-        run: |
-          mkdir -p kotlin-hello-world/src/main/kotlin/com/example
-          echo 'package com.example' > kotlin-hello-world/src/main/kotlin/com/example/Main.kt
-          echo 'fun main() {' >> kotlin-hello-world/src/main/kotlin/com/example/Main.kt
-          echo '    println("Hello, World!")' >> kotlin-hello-world/src/main/kotlin/com/example/Main.kt
-          echo '}' >> kotlin-hello-world/src/main/kotlin/com/example/Main.kt
-
-      - name: Commit New Project
-        run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          git add kotlin-hello-world
-          git commit -m "Create Kotlin Hello World project"
-          git push
+          java -jar Main.jar
