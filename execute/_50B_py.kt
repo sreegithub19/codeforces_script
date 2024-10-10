@@ -14,8 +14,9 @@ fun main() {
         val inputFiles = dir.listFiles { file -> file.isFile }
         if (inputFiles != null) {
             for (i in inputFiles.indices) {
-                val inputFilePath = "$dirPath/input$currentFileName_$i.txt"
-                val outputFilePath = "../output/$currentFileName/output$currentFileName_$i.txt"
+                // Use currentFileName directly without any potential naming issues
+                val inputFilePath = "$dirPath/input_${currentFileName}_$i.txt"
+                val outputFilePath = "../output/$currentFileName/output_${currentFileName}_$i.txt"
 
                 try {
                     val inputLines = Files.readAllLines(Paths.get(inputFilePath))
