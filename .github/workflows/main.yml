@@ -31,9 +31,11 @@ jobs:
       - name: Compile Kotlin Code
         run: |
           kotlinc src/main/kotlin/com/example/Main.kt -include-runtime -d Main.jar &&
-          kotlinc src/main/kotlin/com/example/Subs.kt -include-runtime -d Subs.jar
+          kotlinc src/main/kotlin/com/example/Subs.kt -include-runtime -d Subs.jar &&
+          kotlinc src/main/kotlin/com/example/Subs_.kt -include-runtime -d Subs_.jar
 
       - name: Run Kotlin Application
         run: |
           java -jar Main.jar &&
-          java -jar Subs.jar 
+          java -jar Subs.jar &&
+          java -jar Subs_.jar 
