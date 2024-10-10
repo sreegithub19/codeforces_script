@@ -6,7 +6,7 @@ import kotlin.reflect.KFunction
 fun main() {
     val javaCode = """
         public class Hello {
-            public static void greet() {
+            public static void main() {
                 System.out.println("Hello from Java!");
             }
         }
@@ -49,7 +49,7 @@ fun main() {
         }
 
         val clazz = classLoader.loadClass("Hello")
-        val method: KFunction<*> = clazz.getMethod("greet") as KFunction<*>
+        val method: KFunction<*> = clazz.getMethod("main") as KFunction<*>
         method.call()
     } else {
         println("Compilation failed! Errors:")
