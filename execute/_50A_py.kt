@@ -1,34 +1,35 @@
-import java.io.*
-import java.nio.file.*
-import java.util.*
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 
 object _50A_py {
-    fun main(args: Array<String?>?) {
-        val currentFileName: String = Exception().getStackTrace().get(0).getClassName()
+    @JvmStatic
+    fun main(args: Array<String>) {
+        val currentFileName = Exception().stackTrace[0].className
         val dirPath = "../input/$currentFileName"
-        val dir: File = File(dirPath)
+        val dir = File(dirPath)
 
-        System.out.println("/******************************************  $currentFileName  ******************************************/")
+        println("/******************************************  $currentFileName  ******************************************/")
 
-        if (dir.exists() && dir.isDirectory()) {
-            if (dir.listFiles(File::isFile) != null) {
-                for (i in 0 until dir.listFiles(File::isFile).length) {
-                    val inputFilePath = dirPath.toString() + "/input" + currentFileName + "_" + i + ".txt"
-                    val outputFilePath = "../output/" + currentFileName + "/output" + currentFileName + "_" + i + ".txt"
+        if (dir.exists() && dir.isDirectory) {
+            dir.listFiles { file -> file.isFile }?.let { files ->
+                for (i in files.indices) {
+                    val inputFilePath = "$dirPath/input$currentFileName_$i.txt"
+                    val outputFilePath = "../output/$currentFileName/output$currentFileName_$i.txt"
 
                     try {
-                        val inputLines: List<String> = Files.readAllLines(Paths.get(inputFilePath))
-                        if (!inputLines.isEmpty()) {
-                            /******************************************** Answer code  */
-                            // Split the first line by spaces and parse the numbers
+                        val inputLines = Files.readAllLines(Paths.get(inputFilePath))
+                        if (inputLines.isNotEmpty()) {
 
-                            val numbers: Array<String> = inputLines[0].trim().split("\\s+")
+                            /******************************************** Answer code ************************************************/
+                            // Split the first line by spaces and parse the numbers
+                            val numbers = inputLines[0].trim().split("\\s+".toRegex())
                             if (numbers.size >= 2) {
-                                val num1: Int = Integer.parseInt(numbers[0])
-                                val num2: Int = Integer.parseInt(numbers[1])
+                                val num1 = numbers[0].toInt()
+                                val num2 = numbers[1].toInt()
                                 val result = (num1 * num2) / 2
 
-                                /******************************************** End of Answer code  */
+                            /******************************************** End of Answer code ********************************************/
                                 Utils.commonFunction(outputFilePath, result, i)
                             } else {
                                 System.err.println("Not enough numbers in input file: $inputFilePath")
@@ -46,3 +47,4 @@ object _50A_py {
         }
     }
 }
+
