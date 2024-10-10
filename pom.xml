@@ -8,24 +8,29 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <kotlin.version>1.8.0</kotlin.version> <!-- Set the desired Kotlin version -->
+        <kotlin.version>1.9.25</kotlin.version> <!-- Set the desired Kotlin version -->
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
-            <version>1.8.0</version>
+            <version>1.9.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-scripting-jsr223</artifactId>
+            <version>1.9.25</version> <!-- Use the latest version -->
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-scripting-jvm</artifactId>
-            <version>1.8.0</version>
+            <version>1.9.25</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-scripting-compiler-embeddable</artifactId>
-            <version>1.8.0</version>
+            <version>1.9.25</version>
         </dependency>
     </dependencies>
 
@@ -34,7 +39,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>1.8.0</version>
+                <version>1.9.25</version>
                 <executions>
                     <execution>
                         <goals>
