@@ -19,12 +19,12 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-scripting-jvm</artifactId>
+            <artifactId>kotlin-compiler-embeddable</artifactId>
             <version>1.9.25</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-scripting-compiler-embeddable</artifactId>
+            <artifactId>kotlin-compiler</artifactId>
             <version>1.9.25</version>
         </dependency>
     </dependencies>
