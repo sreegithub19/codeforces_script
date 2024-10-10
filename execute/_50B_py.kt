@@ -1,56 +1,52 @@
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 
-public class _50B_py {
-    public static void main(String[] args) {
-        String currentFileName = new Exception().getStackTrace()[0].getClassName(), dirPath = "../input/" + currentFileName;
-        File dir = new File(dirPath);
-        
-        System.out.println("/******************************************  "  + currentFileName + "  ******************************************/");
+fun main() {
+    val currentFileName = Exception().stackTrace[0].className
+    val dirPath = "../input/$currentFileName"
+    val dir = File(dirPath)
 
-        if (dir.exists() && dir.isDirectory()) {
-            if (dir.listFiles(File::isFile) != null) {
-                for (int i = 0; i < dir.listFiles(File::isFile).length; i++) {
-                    String inputFilePath = dirPath + "/input" + currentFileName + "_" + i + ".txt";
-                    String outputFilePath = "../output/" + currentFileName + "/output" + currentFileName + "_" + i + ".txt";
+    println("/******************************************  $currentFileName  ******************************************/")
 
-                    try {
-                        List<String> inputLines = Files.readAllLines(Paths.get(inputFilePath));
-                        if (!inputLines.isEmpty()) {
+    if (dir.exists() && dir.isDirectory) {
+        val inputFiles = dir.listFiles { file -> file.isFile }
+        if (inputFiles != null) {
+            for (i in inputFiles.indices) {
+                val inputFilePath = "$dirPath/input$currentFileName_$i.txt"
+                val outputFilePath = "../output/$currentFileName/output$currentFileName_$i.txt"
 
-  /******************************************** Answer code ************************************************/
-                            
-                                int freq[] = new int[128]; 
+                try {
+                    val inputLines = Files.readAllLines(Paths.get(inputFilePath))
+                    if (inputLines.isNotEmpty()) {
+                        /******************************************** Answer code ************************************************/
 
-                                // Iterate through each string in the inputLines
-                                for (String line : inputLines) {
-                                    for (char c : line.toCharArray()) {
-                                        freq[c]++;
-                                    }
-                                }
-                                int result = 0;
-                                for (int count : freq) {
-                                    if (count > 0) {
-                                        result += Math.pow(count, 2);
-                                    }
-                                }
-                                result = (int) result;
+                        val freq = IntArray(128)
 
- /******************************************** End of Answer code ********************************************/
-                                Utils.commonFunction(outputFilePath , result , i);
-                            } else {
-                                System.err.println("Not enough numbers in input file: " + inputFilePath);
-                                System.exit(1);
+                        // Iterate through each string in the inputLines
+                        for (line in inputLines) {
+                            for (c in line) {
+                                freq[c.toInt()]++
                             }
                         }
-                    catch (IOException e) {
-                        e.printStackTrace();
+                        var result = 0
+                        for (count in freq) {
+                            if (count > 0) {
+                                result += count * count
+                            }
+                        }
+
+                        /******************************************** End of Answer code ********************************************/
+                        Utils.commonFunction(outputFilePath, result, i)
+                    } else {
+                        System.err.println("Not enough numbers in input file: $inputFilePath")
+                        System.exit(1)
                     }
-                    catch (NumberFormatException e) {
-                        System.err.println("Invalid number format in file: " + inputFilePath);
-                        System.exit(1);
-                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                } catch (e: NumberFormatException) {
+                    System.err.println("Invalid number format in file: $inputFilePath")
+                    System.exit(1)
                 }
             }
         }
