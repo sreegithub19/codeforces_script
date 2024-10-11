@@ -6,9 +6,9 @@ import java.nio.file.Paths
 
 
 fun main() {
-        val currentFileName = Exception().stackTrace[0].className
-        val dirPath = "../input/$currentFileName"
-        val dir = File(dirPath)
+    val currentFileName = Exception().stackTrace[0].className
+    val dirPath = "../input/${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}"
+    val dir = File(dirPath)
 
         println("/******************************************  $currentFileName  ******************************************/")
 
@@ -17,8 +17,8 @@ fun main() {
             if (inputFiles != null) {
                 for (i in inputFiles.indices) {
                     // Use currentFileName directly without any potential naming issues
-                    val inputFilePath = "$dirPath/input_${currentFileName}_$i.txt"
-                    val outputFilePath = "../output/$currentFileName/output_${currentFileName}_$i.txt"
+                    val inputFilePath = "$dirPath/input${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}_$index.txt"
+                    val outputFilePath = "../output/${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}/output${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}_$index.txt"        
 
                     try {
                         val inputLines = Files.readAllLines(Paths.get(inputFilePath))
