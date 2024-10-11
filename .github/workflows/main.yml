@@ -37,6 +37,9 @@ jobs:
       - name: Compile and Run Kotlin Code
         run: |
           cd src/main/kotlin/com/execute
-          mkdir out/classes
+          mkdir out
+          cd out
+          mkdir classes
+          cd ..
           kotlinc -cp out/classes -d out/classes _50A_py.kt Utils.kt
           kotlin -cp out/classes com.execute._50A_pyKt
