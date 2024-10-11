@@ -36,23 +36,23 @@ jobs:
 # The dependencies shpould be compiled along with the dependent files
       - name: Compile and Run Kotlin Code
         run: |
-  #!/bin/bash
+          #!/bin/bash
 
-  # Navigate to the target directory and create the necessary directories
-  cd src/main/kotlin/com/execute || exit
-  mkdir -p out/classes
+          # Navigate to the target directory and create the necessary directories
+          cd src/main/kotlin/com/execute
+          mkdir -p out/classes
 
-  # Compile and run each .kt file in the current directory
-  for file in *.kt; do
-      # Check if the file exists
-      if [[ -f "$file" ]]; then
-          # Get the base name of the file without the extension
-          base_name="${file%.kt}"
+          # Compile and run each .kt file in the current directory
+          for file in *.kt; do
+              # Check if the file exists
+              if [[ -f "$file" ]]; then
+                  # Get the base name of the file without the extension
+                  base_name="${file%.kt}"
 
-          # Compile the Kotlin file along with Utils.kt
-          kotlinc -cp out/classes -d out/classes "$file" Utils.kt
+                  # Compile the Kotlin file along with Utils.kt
+                  kotlinc -cp out/classes -d out/classes "$file" Utils.kt
 
-          # Run the compiled Kotlin class
-          kotlin -cp out/classes com.execute."$base_name"Kt
-      fi
-  done
+                  # Run the compiled Kotlin class
+                  kotlin -cp out/classes com.execute."$base_name"Kt
+              fi
+          done
