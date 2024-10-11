@@ -17,8 +17,8 @@ fun main() {
             if (inputFiles != null) {
                 for (i in inputFiles.indices) {
                     // Use currentFileName directly without any potential naming issues
-                    val inputFilePath = "$dirPath/input${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}_$index.txt"
-                    val outputFilePath = "../output/${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}/output${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}_$index.txt"        
+                    val inputFilePath = "$dirPath/input${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}_$i.txt"
+                    val outputFilePath = "../output/${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}/output${currentFileName.substringAfterLast("/").removePrefix("com.execute.").removeSuffix("Kt")}_$i.txt"        
 
                     try {
                         val inputLines = Files.readAllLines(Paths.get(inputFilePath))
