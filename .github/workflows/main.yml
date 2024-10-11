@@ -33,7 +33,6 @@ jobs:
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           sdk install kotlin
 
-# The dependencies shpould be compiled along with the dependent files
       - name: Compile and Run Kotlin Code
         run: |
           #!/bin/bash
@@ -42,8 +41,13 @@ jobs:
           cd src/main/kotlin/com/execute
           mkdir -p out/classes
 
-          # Compile and run each .kt file in the current directory
+          # Compile and run each .kt file in the current directory, excluding Utils.kt
           for file in *.kt; do
+              # Skip Utils.kt
+              if [[ "$file" == "Utils.kt" ]]; then
+                  continue
+              fi
+
               # Check if the file exists
               if [[ -f "$file" ]]; then
                   # Get the base name of the file without the extension
