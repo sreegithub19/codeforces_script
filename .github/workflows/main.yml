@@ -8,6 +8,11 @@ on:
     branches:
       - kotlin1_
 
+permissions:
+  contents: write  # Allows write access to the repository contents
+  issues: write    # Optional: Allows write access to issues
+  pull-requests: write  # Optional: Allows write access to pull requests
+
 jobs:
   build:
     runs-on: ubuntu-latest
