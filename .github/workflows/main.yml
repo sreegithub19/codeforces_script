@@ -43,3 +43,5 @@ jobs:
           cd ..
           kotlinc -cp out/classes -d out/classes _50A_py.kt Utils.kt
           kotlin -cp out/classes com.execute._50A_pyKt
+          kotlinc -cp out/classes -d out/classes _50B_py.kt Utils.kt
+          kotlin -cp out/classes com.execute._50B_pyKt
