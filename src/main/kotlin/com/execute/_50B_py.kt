@@ -4,8 +4,8 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 
-object _50B_py {
-    fun main() {
+
+fun main() {
         val currentFileName = Exception().stackTrace[0].className
         val dirPath = "../input/$currentFileName"
         val dir = File(dirPath)
@@ -55,5 +55,4 @@ object _50B_py {
                 }
             }
         }
-    }
 }

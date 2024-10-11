@@ -28,13 +28,9 @@ jobs:
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           sdk install kotlin
 
-      - name: Compile Kotlin Code
+# The dependencies shpould be compiled along with the dependent files
+      - name: Compile and Run Kotlin Code
         run: |
-          kotlinc src/main/kotlin/com/execute/_50A_py.kt -include-runtime -d _50A_py.jar &&
-          kotlinc src/main/kotlin/com/execute/_50B_py.kt -include-runtime -d _50B_py.jar 
-
-      - name: Run Kotlin Application
-        run: |
-          java -jar _50A_py.jar &&
-          java -jar _50B_py.jar 
-    #    && java -jar Subs_.jar 
+          cd src/main/kotlin/com/execute
+          &&  mkdir out/classes
+          &&  kotlinc -cp out/classes -d out/classes _50A_py.kt Utils.kt && kotlin -cp out/classes com.execute._50A_pyKt

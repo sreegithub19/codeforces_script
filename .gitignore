@@ -1,3 +1,5 @@
 .DS_Store
-execute/*.class
+src/main/kotlin/com/execute/*.class
+src/main/kotlin/com/execute/*.jar
+src/main/kotlin/com/execute/out
 .idea
