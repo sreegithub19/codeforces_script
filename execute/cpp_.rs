@@ -5,7 +5,9 @@ fn main() {
 #include <iostream>
 
 int main() {
-    std::cout << "Hello from C++!" << std::endl;
+    std::cout << "R(
+    Hello from C++! in multiline!
+)" << std::endl;
     return 0;
 }
 "#;
