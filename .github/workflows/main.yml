@@ -1,31 +1,39 @@
-name: C++ CI
+name: C and C++ Build and Run
 
 on:
   push:
-    branches: [ cpp_ ]
+    branches:
+      - cpp_  # Change this to your default branch
   pull_request:
-    branches: [ cpp_ ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up GCC
-      run: sudo apt-get install g++
+      - name: Set up GCC
+        run: sudo apt-get install g++
 
-    - name: Compile C++ program
-      run: |
-       g++ hello.cpp -o hello
-       g++ c_.cpp -o c_
-       gcc helloc.c -o helloc
+      - name: Compile C++ programs
+        run: |
+          cd cpp_  # Change to the directory containing C++ files
+          g++ *.cpp -o program_cpp  # Compile all C++ files to a single executable
+          
+      - name: Run C++ programs
+        run: |
+          cd cpp_
+          ./program_cpp  # Run the C++ executable
 
+      - name: Compile C programs
+        run: |
+          cd c_  # Change to the directory containing C files
+          gcc *.c -o program_c  # Compile all C files to a single executable
 
-    - name: Run the program
-      run: |
-       ./hello
-       ./c_
-       ./helloc
+      - name: Run C programs
+        run: |
+          cd c_
+          ./program_c  # Run the C executable
+
