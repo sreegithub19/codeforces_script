@@ -5,7 +5,8 @@ extern "C" {
 
     // Pure C code
     void cFunction() {
-        printf("Hello from C code!\n");
+        printf("Hello from C code!
+        How are u?");
     }
 }
 
