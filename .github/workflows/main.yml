@@ -19,21 +19,32 @@ jobs:
 
       - name: Compile C++ programs
         run: |
-          cd cpp_  # Change to the directory containing C++ files
-          g++ *.cpp -o program_cpp  # Compile all C++ files to a single executable
-          
+          cd cpp_folder  # Change to the directory containing C++ files
+          for file in *.cpp; do
+            g++ "$file" -o "${file%.cpp}"  # Compile each C++ file to an executable
+          done
+
       - name: Run C++ programs
         run: |
-          cd cpp_
-          ./program_cpp  # Run the C++ executable
+          cd cpp_folder
+          for exe in *; do
+            if [[ -x "$exe" ]]; then  # Check if it is an executable
+              ./"$exe"  # Run the executable
+            fi
+          done
 
       - name: Compile C programs
         run: |
-          cd c_  # Change to the directory containing C files
-          gcc *.c -o program_c  # Compile all C files to a single executable
+          cd c_folder  # Change to the directory containing C files
+          for file in *.c; do
+            gcc "$file" -o "${file%.c}"  # Compile each C file to an executable
+          done
 
       - name: Run C programs
         run: |
-          cd c_
-          ./program_c  # Run the C executable
-
+          cd c_folder
+          for exe in *; do
+            if [[ -x "$exe" ]]; then  # Check if it is an executable
+              ./"$exe"  # Run the executable
+            fi
+          done
