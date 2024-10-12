@@ -1,4 +1,4 @@
-name: Ruby CI
+name: Julia CI
 
 on:
   push:
