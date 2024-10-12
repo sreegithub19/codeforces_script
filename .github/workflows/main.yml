@@ -18,7 +18,11 @@ jobs:
       run: sudo apt-get install g++
 
     - name: Compile C++ program
-      run: g++ hello.cpp -o hello
+      run: |
+       g++ hello.cpp -o hello
+       g++ c_.cpp -o c_
 
     - name: Run the program
-      run: ./hello
+      run: |
+       ./hello
+       ./c_
