@@ -17,7 +17,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 'latest'  # Specify the Ruby version you want
+        ruby-version: '3.3.5'  # Specify the Ruby version you want
 
     - name: Run all Ruby files in the execute folder
       run: |
