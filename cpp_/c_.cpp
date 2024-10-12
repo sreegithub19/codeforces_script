@@ -12,6 +12,8 @@ Hello from C code!
 How are u?
 )");
 
+    }
+
 
 typedef struct Contact {
     char name[50];
@@ -74,9 +76,6 @@ void freeContacts() {
     }
     head = NULL;
 }
-
-
-    }
 }
 
 int main() {
