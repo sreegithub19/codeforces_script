@@ -1,10 +1,10 @@
-name: Julia CI
+name: Rust CI
 
 on:
   push:
-    branches: [ julia_ ]
+    branches: [ rust_ ]
   pull_request:
-    branches: [ julia_ ]
+    branches: [ rust_ ]
 
 jobs:
   build:
@@ -14,14 +14,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Install Julia
-      uses: julia-actions/setup-julia@v1
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
       with:
-        julia-version: '1.11'  # Specify the Julia version you want
-        # or use 'latest' to always use the latest version
+        toolchain: stable  # Use the stable version of Rust
 
-    - name: Run all Julia files in the execute folder
+    - name: Run all Rust files in the execute folder
       run: |
-        for file in execute/*.jl; do
-          julia "$file"
+        for file in execute/*.rs; do
+          rustc "$file" && ./$(basename "$file" .rs)
         done
