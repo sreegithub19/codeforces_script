@@ -21,8 +21,11 @@ jobs:
       run: |
        g++ hello.cpp -o hello
        g++ c_.cpp -o c_
+       gcc helloc.c -o helloc
+
 
     - name: Run the program
       run: |
        ./hello
        ./c_
+       ./helloc
