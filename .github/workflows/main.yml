@@ -3,7 +3,7 @@ name: Run Jupyter Notebook
 on:
   push:
     branches:
-      - main
+      - python_
 
 jobs:
   run_notebook:
