@@ -1,9 +1,9 @@
-name: Run Jupyter Notebook
+name: Run Jupyter Notebook and Generate HTML
 
 on:
   push:
     branches:
-      - python_
+      - main
 
 jobs:
   run_notebook:
@@ -25,16 +25,19 @@ jobs:
 
       - name: Run Jupyter Notebook
         run: |
-          cd execute
-          touch executed_notebook.ipynb
           jupyter nbconvert --to notebook --execute notebook.ipynb --output executed_notebook.ipynb
-          cd ..
+
+      - name: Convert Executed Notebook to HTML
+        run: |
+          jupyter nbconvert --to html executed_notebook.ipynb --output executed_notebook
 
       - name: List files
         run: ls -la  # Debugging step
 
-      - name: Upload Notebook as Artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Notebook and HTML as Artifacts
+        uses: actions/upload-artifact@v2
         with:
-          name: executed_notebook
-          path: execute/executed_notebook.ipynb
+          name: executed_notebooks
+          path: |
+            executed_notebook.ipynb
+            executed_notebook.html
