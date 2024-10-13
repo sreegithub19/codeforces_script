@@ -1,13 +1,12 @@
 use std::process::Command;
 use std::env;
-use std::path::Path;
 
 fn main() {
     // Get the current directory of the Rust file
     let current_dir = env::current_dir().expect("Failed to get current directory");
 
     // Construct the absolute path for input.txt
-    let input_file_path = current_dir.join("input.txt");
+    let input_file_path = current_dir.join("execute/input.txt");
     let input_file_path_str = input_file_path.to_str().unwrap(); // Convert to &str
 
     let cpp_code = format!(r#"
