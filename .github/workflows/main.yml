@@ -25,7 +25,10 @@ jobs:
 
       - name: Run Jupyter Notebook
         run: |
-          jupyter nbconvert --to notebook --execute execute/notebook.ipynb --output execute/executed_notebook.ipynb
+          cd execute
+          touch executed_notebook.ipynb
+          jupyter nbconvert --to notebook --execute notebook.ipynb --output executed_notebook.ipynb
+          cd ..
 
       - name: List files
         run: ls -la  # Debugging step
