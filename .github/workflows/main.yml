@@ -31,7 +31,7 @@ jobs:
         run: ls -la  # Debugging step
 
       - name: Upload Notebook as Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: executed_notebook
           path: execute/executed_notebook.ipynb
