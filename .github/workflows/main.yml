@@ -25,11 +25,15 @@ jobs:
 
       - name: Run Jupyter Notebook
         run: |
+          cd execute
           jupyter nbconvert --to notebook --execute notebook.ipynb --output executed_notebook.ipynb
+          cd ..
 
       - name: Convert Executed Notebook to HTML
         run: |
+          cd execute
           jupyter nbconvert --to html executed_notebook.ipynb --output executed_notebook
+          cd ..
 
       - name: List files
         run: ls -la  # Debugging step
@@ -39,5 +43,5 @@ jobs:
         with:
           name: executed_notebooks
           path: |
-            executed_notebook.ipynb
-            executed_notebook.html
+            execute/executed_notebook.ipynb
+            execute/executed_notebook.html
