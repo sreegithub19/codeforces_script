@@ -16,7 +16,6 @@ public class rust_in_java {
                 fn main() {
                     use std::fs::File;
                     use std::io::{self, BufRead};
-                    use std::path::Path;
 
                     let path = "%s"; // Use the absolute path for the file
 
