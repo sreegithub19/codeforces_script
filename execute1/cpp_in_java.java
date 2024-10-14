@@ -1,9 +1,8 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Paths;
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
 
-public class Main {
+public class cpp_in_java {
     public static void main(String[] args) {
         try {
             // Get the current directory
