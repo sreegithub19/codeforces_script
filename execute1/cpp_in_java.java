@@ -9,7 +9,7 @@ public class cpp_in_java {
             String currentDir = System.getProperty("user.dir");
 
             // Construct the absolute path for input.txt
-            String inputFilePath = Paths.get(currentDir, "execute", "input.txt").toString();
+            String inputFilePath = Paths.get(currentDir, "execute1", "input.txt").toString();
 
             // Prepare the C++ code using a text block
             String cppCode = """
