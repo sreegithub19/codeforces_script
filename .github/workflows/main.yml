@@ -23,7 +23,7 @@ jobs:
         run: npm install -g elm
 
       - name: Install Elm dependencies
-        run: elm install --yes
+        run: elm install
 
       - name: Build Elm project
         run: elm make src/Main.elm --output=elm.js
