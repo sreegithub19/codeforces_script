@@ -19,10 +19,10 @@ public class cpp_in_java {
 
                 int main() {
                     // Take user input
-                    std::string name;
-                    std::cout << "Enter your name: ";
-                    std::getline(std::cin, name); // Read a line of text from stdin
-                    std::cout << "Hello, " << name << "! Welcome to the C++ program." << std::endl;
+                    //std::string name;
+                    //std::cout << "Enter your name: ";
+                    //std::getline(std::cin, name); // Read a line of text from stdin
+                    std::cout << "Hello, Welcome to the C++ program." << std::endl;
 
                     // Read from a file
                     std::ifstream inputFile("%s"); // Use the absolute path for the file
