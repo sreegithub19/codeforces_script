@@ -23,7 +23,7 @@ jobs:
         run: |
           mkdir -p ~/.local/share/jupyter/kernels/java
           curl -L https://github.com/SpencerPark/IJava/releases/latest/download/IJava-0.3.4.jar -o ~/.local/share/jupyter/kernels/java/IJava.jar
-          echo -e "{\n  \"argv\": [\n    \"java\",\n    \"-jar\",\n    \"{path_to_IJava.jar}\",\n    \"-i\",\n    \"{connection_file}\"\n  ],\n  \"display_name\": \"Java\",\n  \"language\": \"java\"\n}" > ~/.local/share/jupyter/kernels/java/kernel.json
+          echo -e "{\n  \"argv\": [\n    \"java\",\n    \"-jar\",\n    \"~/.local/share/jupyter/kernels/java/IJava.jar\",\n    \"-i\",\n    \"{connection_file}\"\n  ],\n  \"display_name\": \"Java\",\n  \"language\": \"java\"\n}" > ~/.local/share/jupyter/kernels/java/kernel.json
 
       - name: Run Jupyter Notebook
         run: |
