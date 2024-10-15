@@ -19,30 +19,30 @@ jobs:
         with:
           node-version: '14' # or any version you prefer
 
-      - name: Install Elm
-        run: npm install -g elm
+      # - name: Install Elm
+      #   run: npm install -g elm
 
-      - name: Build Elm project
-        run: elm make src/Main.elm --output=elm.js
+      # - name: Build Elm project
+      #   run: elm make src/Main.elm --output=elm.js
 
-      - name: Create HTML file
-        run: |
-          echo "<!DOCTYPE html>" > index.html
-          echo "<html lang=\"en\">" >> index.html
-          echo "<head>" >> index.html
-          echo "    <meta charset=\"UTF-8\">" >> index.html
-          echo "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" >> index.html
-          echo "    <title>Elm Hello World</title>" >> index.html
-          echo "    <script src=\"elm.js\"></script>" >> index.html
-          echo "</head>" >> index.html
-          echo "<body>" >> index.html
-          echo "    <div id=\"elm\"></div>" >> index.html
-          echo "    <script>Elm.Main.init({ node: document.getElementById('elm') });</script>" >> index.html
-          echo "</body>" >> index.html
-          echo "</html>" >> index.html
+      # - name: Create HTML file
+      #   run: |
+      #     echo "<!DOCTYPE html>" > index.html
+      #     echo "<html lang=\"en\">" >> index.html
+      #     echo "<head>" >> index.html
+      #     echo "    <meta charset=\"UTF-8\">" >> index.html
+      #     echo "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" >> index.html
+      #     echo "    <title>Elm Hello World</title>" >> index.html
+      #     echo "    <script src=\"elm.js\"></script>" >> index.html
+      #     echo "</head>" >> index.html
+      #     echo "<body>" >> index.html
+      #     echo "    <div id=\"elm\"></div>" >> index.html
+      #     echo "    <script>Elm.Main.init({ node: document.getElementById('elm') });</script>" >> index.html
+      #     echo "</body>" >> index.html
+      #     echo "</html>" >> index.html
 
-      - name: Upload HTML artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: elm-artifact
-          path: index.html
+      # - name: Upload HTML artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: elm-artifact
+      #     path: index.html
