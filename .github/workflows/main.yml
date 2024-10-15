@@ -31,14 +31,14 @@ jobs:
       - name: Compile Kotlin Code
         run: |
           kotlinc src/main/kotlin/com/example/Main.kt -include-runtime -d Main.jar &&
-          kotlinc src/main/kotlin/com/example/Subs.kt -include-runtime -d Subs.jar 
-    #      && kotlinc src/main/kotlin/com/example/Subs_.kt -include-runtime -d Subs_.jar
+          kotlinc src/main/kotlin/com/example/Subs.kt -include-runtime -d Subs.jar &&
+          kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin.kt -include-runtime -d java_inMemory_inKotlin.jar
 
       - name: Run Kotlin Application
         run: |
           java -jar Main.jar &&
-          java -jar Subs.jar 
-    #    && java -jar Subs_.jar 
+          java -jar Subs.jar &&
+          java -jar java_inMemory_inKotlin.jar 
 
 
       - name: Run Nodejs Application
