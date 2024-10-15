@@ -17,19 +17,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18' # or any version you prefer
+          node-version: '14' # or any version you prefer
 
       - name: Install Elm
         run: npm install -g elm
-
-      - name: Initialize Elm project
-        run: |
-          if [ ! -f elm.json ]; then
-            elm init
-          fi
-
-      - name: Install Elm dependencies
-        run: elm install
 
       - name: Build Elm project
         run: elm make src/Main.elm --output=elm.js
