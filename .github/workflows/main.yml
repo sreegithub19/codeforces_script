@@ -23,7 +23,7 @@ jobs:
         run: npm install -g elm
 
       - name: Build Elm project
-        run: elm install elm/html && elm install elm/browser && elm make src/Main.elm --output=elm.js
+        run: elm install elm/core && elm install elm/html && elm install elm/browser && elm make src/Main.elm --output=elm.js
 
       # - name: Create HTML file
       #   run: |
