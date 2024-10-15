@@ -13,6 +13,5 @@
             "elm/random": "1.0.0" 
         },
         "indirect": {}
-    },
-    "test-dependencies": {}
+    }
 }
