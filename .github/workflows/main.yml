@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: '14' # or any version you prefer
 
-      # - name: Install Elm
-      #   run: npm install -g elm
+      - name: Install Elm
+        run: npm install -g elm
 
       # - name: Build Elm project
       #   run: elm make src/Main.elm --output=elm.js
