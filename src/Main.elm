@@ -16,6 +16,6 @@ main =
 view : () -> Html msg
 view _ =
     div []
-        [ h1 [] [ text "Hello, Elm World!" ]
+        [ h1 [] [ text "Hello there, Elm World!" ]
         , p [] [ text "This is a simple Elm application rendering HTML." ]
         ]
