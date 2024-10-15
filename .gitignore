@@ -2,3 +2,5 @@
 execute/*.class
 .idea
 #.github/workflows/main_java.yml
+elm-stuff
+elm.js
