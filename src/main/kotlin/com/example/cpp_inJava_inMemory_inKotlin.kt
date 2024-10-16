@@ -62,7 +62,7 @@ val javaCode = """
                 String currentDir = System.getProperty("user.dir");
                 String inputFilePath = Paths.get(currentDir, "input.txt").toString();
 
-                String cppCode = \"$cppCode\".formatted(inputFilePath); // Use the absolute path
+                String cppCode = "$cppCode".formatted(inputFilePath); // Use the absolute path
 
                 // Prepare and run the C++ code
                 ProcessBuilder builder = new ProcessBuilder();
