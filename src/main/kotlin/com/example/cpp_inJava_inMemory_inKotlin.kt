@@ -25,19 +25,17 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
 
 fun main() {
 
-val code_ = """
-Hello from In-Memory Java!
-"""
-
-val javaCode = """
-    public class Hello {
-        public static void greet() {
-            System.out.println("""+
-            code_
-            +""");
+    val code_ = """
+    Hello from In-Memory Java!
+    """
+    
+    val javaCode = """
+        public class Hello {
+            public static void greet() {
+                System.out.println("$code_");
+            }
         }
-    }
-""".trimIndent()
+    """.trimIndent()
 
 
     val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
