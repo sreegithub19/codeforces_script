@@ -94,7 +94,7 @@ fun main() {
     using namespace std;
 
     int main() {
-        ifstream inputFile("input.txt"); // Open the input file
+        ifstream inputFile("src/main/kotlin/com/example/input.txt"); // Open the input file
         if (!inputFile) { // Check if the file opened successfully
             cerr << "Error opening input.txt" << endl;
             return 1; // Exit with error
@@ -106,7 +106,7 @@ fun main() {
         }
 
         inputFile.close(); // Close the file
-        
+
         cout << "Hello from C++! in Kotlin in 2nd file!" << endl;
         return 0; // Exit successfully
     }
