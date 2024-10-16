@@ -27,66 +27,70 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
 }
 
 fun main() {
-    val javaCode = """
-        import java.io.*;
-        import java.nio.file.*;
-        import java.util.*;
+    val cppCode = """
+    #include <iostream>
+    #include <fstream>
+    #include <string>
 
-        public class Hello {
-            public static void greet() {
-                try {
-                    String currentDir = System.getProperty("user.dir");
-                    String inputFilePath = Paths.get(currentDir, "input.txt").toString();
+    int main() {
+        std::cout << "Hello, Welcome to the C++ program." << std::endl;
+        std::ifstream inputFile("%s"); // Use the absolute path for the file
+        if (!inputFile) {
+            std::cerr << "Error opening file." << std::endl;
+            return 1; // Exit with an error code
+        }
 
-                    String cppCode = \"\"\" 
-                        #include <iostream>
-                        #include <fstream>
-                        #include <string>
+        std::string line;
+        std::cout << "Contents of input.txt:" << std::endl;
+        while (std::getline(inputFile, line)) {
+            std::cout << line << std::endl; // Print each line to the console
+        }
 
-                        int main() {
-                            std::cout << "Hello, Welcome to the C++ program." << std::endl;
-                            std::ifstream inputFile("%s"); // Use the absolute path for the file
-                            if (!inputFile) {
-                                std::cerr << "Error opening file." << std::endl;
-                                return 1; // Exit with an error code
-                            }
+        inputFile.close(); // Close the file
+        return 0;
+    }
+""".trimIndent()
 
-                            std::string line;
-                            std::cout << "Contents of input.txt:" << std::endl;
-                            while (std::getline(inputFile, line)) {
-                                std::cout << line << std::endl; // Print each line to the console
-                            }
+val javaCode = """
+    import java.io.*;
+    import java.nio.file.*;
+    import java.util.*;
 
-                            inputFile.close(); // Close the file
-                            return 0;
-                        }
-                    \"\"\".formatted(inputFilePath); // Use the absolute path
+    public class Hello {
+        public static void greet() {
+            try {
+                String currentDir = System.getProperty("user.dir");
+                String inputFilePath = Paths.get(currentDir, "input.txt").toString();
 
-                    ProcessBuilder builder = new ProcessBuilder();
-                    builder.command("bash", "-c", "echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
-                    builder.directory(new File(currentDir));
-                    builder.redirectErrorStream(true);
+                String cppCode = \"$cppCode\".formatted(inputFilePath); // Use the absolute path
 
-                    Process process = builder.start();
+                // Prepare and run the C++ code
+                ProcessBuilder builder = new ProcessBuilder();
+                builder.command("bash", "-c", "echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
+                builder.directory(new File(currentDir));
+                builder.redirectErrorStream(true);
 
-                    // Read the output
-                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            System.out.println(line);
-                        }
+                Process process = builder.start();
+
+                // Read the output
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
                     }
-
-                    // Wait for the process to complete
-                    int exitCode = process.waitFor();
-                    System.out.println("Process exited with code: " + exitCode);
-
-                } catch (IOException | InterruptedException e) {
-                    e.printStackTrace();
                 }
+
+                // Wait for the process to complete
+                int exitCode = process.waitFor();
+                System.out.println("Process exited with code: " + exitCode);
+
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
             }
         }
-    """.trimIndent()
+    }
+""".trimIndent()
+
 
     val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
     val fileManager = InMemoryJavaFileManager(compiler)
