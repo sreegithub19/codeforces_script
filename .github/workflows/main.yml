@@ -51,7 +51,7 @@ jobs:
             exit 1
         fi
 
-    - name: Compile and Run Java Files 1 - CPP and Rust and Kotlin
+    - name: Compile and Run Java Files 1 - CPP and Rust
       run: |
         #!/bin/bash
         # Compile all Java files

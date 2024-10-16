@@ -20,17 +20,11 @@ jobs:
           java-version: '21' # Specify your Java version
           distribution: 'adopt'
 
-      - name: Install Kotlin
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://github.com/JetBrains/kotlin/releases/download/v1.9.0/kotlin-compiler-1.9.0.zip
-          unzip kotlin-compiler-1.9.0.zip -d /opt/
-          echo "/opt/kotlin-compiler/bin" >> $GITHUB_PATH
-          echo "/opt/kotlin-compiler/lib/*" >> $GITHUB_CLASSPATH
+      - name: Build with Maven
+        run: mvn clean install
 
-      - name: Compile Java code
-        run: cd execute_kotlin && javac -cp "/opt/kotlin-compiler/lib/*" KotlinInJava.java
+    #   - name: Compile Java code
+    #     run: javac execute_kotlin/KotlinInJava.java
 
-      - name: Run Java code
-        run: cd execute_kotlin && java -cp ".:/opt/kotlin-compiler/lib/*" KotlinInJava
+    #   - name: Run Java code
+    #     run: cd execute_kotlin && java KotlinInJava
