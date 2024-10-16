@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-
 class InMemoryKotlinFileManager extends ForwardingJavaFileManager<JavaFileManager> {
     private final Map<String, byte[]> classBytes = new HashMap<>();
 
@@ -25,8 +24,8 @@ class InMemoryKotlinFileManager extends ForwardingJavaFileManager<JavaFileManage
                 return new ByteArrayOutputStream() {
                     @Override
                     public void close() throws IOException {
-                            classBytes.put(className, this.toByteArray());
-                            super.close(); // Ensure the superclass close method is called
+                        classBytes.put(className, this.toByteArray());
+                        super.close();
                     }
                 };
             }
@@ -38,10 +37,17 @@ class InMemoryKotlinFileManager extends ForwardingJavaFileManager<JavaFileManage
     }
 }
 
-
 public class kotlin_in_java {
     public static void main(String[] args) {
-        String kotlinCode = "fun greet() { println(\"Hello from in-memory Kotlin code!\") }";
+        String kotlinCode = """
+            fun main() {
+                greet()
+            }
+            
+            fun greet() {
+                println("Hello from in-memory Kotlin code!")
+            }
+        """;
 
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         InMemoryKotlinFileManager fileManager = new InMemoryKotlinFileManager(compiler);
@@ -73,7 +79,7 @@ public class kotlin_in_java {
 
             try {
                 Class<?> clazz = classLoader.loadClass("HelloKt"); // Kotlin uses "Kt" suffix for top-level functions
-                Method method = clazz.getMethod("greet");
+                Method method = clazz.getMethod("main");
                 method.invoke(null);
             } catch (Exception e) {
                 e.printStackTrace();
