@@ -20,6 +20,10 @@ public class KotlinInJava {
             ScriptEngineManager manager = new ScriptEngineManager();
             ScriptEngine engine = manager.getEngineByName("kotlin");
 
+            if (engine == null) {
+                throw new RuntimeException("Kotlin scripting engine not found.");
+            }
+
             // Compile and execute the Kotlin code
             engine.eval(kotlinCode);
             
