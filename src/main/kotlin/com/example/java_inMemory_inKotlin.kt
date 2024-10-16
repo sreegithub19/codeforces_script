@@ -31,14 +31,15 @@ fun main() {
     and more content here.
 """.trimIndent()
 
-    val javaCode = """
-        public class Hello {
-            public static void greet() {
-                System.out.println("Hello from In-Memory Java!");
-                 System.out.println("$dynamicPart");
-            }
+val javaCode = """
+    public class Hello {
+        public static void greet() {
+            System.out.println("Hello from In-Memory Java!");
+            System.out.println("${dynamicPart.replace("\"", "\\\"")}");
         }
-    """.trimIndent()
+    }
+""".trimIndent()
+
 
     val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
     val fileManager = InMemoryJavaFileManager(compiler)
