@@ -58,6 +58,9 @@
                     </goals>
                 </execution>
             </executions>
+            <configuration>
+                <mainClass>KotlinInJava</mainClass> <!-- Change this if using a package -->
+            </configuration>
         </plugin>
         </plugins>
     </build>

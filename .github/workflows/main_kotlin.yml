@@ -24,4 +24,5 @@ jobs:
         run: mvn clean install
 
       - name: Run Java Program
-        run: mvn exec:java -Dexec.mainClass="KotlinInJava"
+        run: mvn exec:java
+        #run: mvn exec:java -Dexec.mainClass="KotlinInJava"
