@@ -29,7 +29,7 @@ jobs:
           echo "/opt/kotlin-compiler/bin" >> $GITHUB_PATH
 
       - name: Compile Java code
-        run: javac execute_kotlin/kotlin_in_java.java
+        run: javac execute_kotlin/KotlinInJava.java
 
       - name: Run Java code
-        run: cd execute_kotlin && java kotlin_in_java
+        run: cd execute_kotlin && java KotlinInJava
