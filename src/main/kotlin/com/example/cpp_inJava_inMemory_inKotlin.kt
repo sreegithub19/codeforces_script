@@ -58,7 +58,7 @@ public class Hello {
             String inputFilePath = Paths.get(currentDir, "input.txt").toString();
 
             // Prepare the C++ code using concatenated one-line strings
-            String cppCode = """ + cppCode_ + """
+            String cppCode = """ + "${cppCode_}" + """
 
             // Compile and run the C++ code using a single command
             ProcessBuilder builder = new ProcessBuilder();
