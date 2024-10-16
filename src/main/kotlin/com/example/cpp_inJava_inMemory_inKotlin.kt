@@ -2,13 +2,19 @@ import javax.tools.*
 import java.lang.reflect.Method
 import java.net.URI
 import java.io.*
+import java.nio.file.*
 
 class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManager<JavaFileManager>(
     compiler.getStandardFileManager(null, null, null)
 ) {
     private val classBytes = mutableMapOf<String, ByteArray>()
 
-    override fun getJavaFileForOutput(location: JavaFileManager.Location, className: String, kind: JavaFileObject.Kind, sibling: FileObject?): JavaFileObject {
+    override fun getJavaFileForOutput(
+        location: JavaFileManager.Location,
+        className: String,
+        kind: JavaFileObject.Kind,
+        sibling: FileObject?
+    ): JavaFileObject {
         return object : SimpleJavaFileObject(URI.create("bytes://$className"), kind) {
             override fun openOutputStream(): OutputStream {
                 return object : ByteArrayOutputStream() {
@@ -28,69 +34,69 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
 
 fun main() {
     val cppCode = """
-    #include <iostream>
-    #include <fstream>
-    #include <string>
+        #include <iostream>
+        #include <fstream>
+        #include <string>
 
-    int main() {
-        std::cout << "Hello, Welcome to the C++ program." << std::endl;
-        std::ifstream inputFile("%s"); // Use the absolute path for the file
-        if (!inputFile) {
-            std::cerr << "Error opening file." << std::endl;
-            return 1; // Exit with an error code
+        int main() {
+            std::cout << "Hello, Welcome to the C++ program." << std::endl;
+            std::ifstream inputFile("%s");
+            if (!inputFile) {
+                std::cerr << "Error opening file." << std::endl;
+                return 1; // Exit with an error code
+            }
+
+            std::string line;
+            std::cout << "Contents of input.txt:" << std::endl;
+            while (std::getline(inputFile, line)) {
+                std::cout << line << std::endl; // Print each line to the console
+            }
+
+            inputFile.close(); // Close the file
+            return 0;
         }
+    """.trimIndent()
 
-        std::string line;
-        std::cout << "Contents of input.txt:" << std::endl;
-        while (std::getline(inputFile, line)) {
-            std::cout << line << std::endl; // Print each line to the console
-        }
+    val javaCode = """
+        import java.io.*;
+        import java.nio.file.*;
+        import java.util.*;
 
-        inputFile.close(); // Close the file
-        return 0;
-    }
-""".trimIndent()
+        public class Hello {
+            public static void greet() {
+                try {
+                    String currentDir = System.getProperty("user.dir");
+                    String inputFilePath = Paths.get(currentDir, "input.txt").toString();
 
-val javaCode = """
-    import java.io.*;
-    import java.nio.file.*;
-    import java.util.*;
+                    // Format the C++ code with the input file path
+                    String cppCode = String.format("%s", "${cppCode.replace("\"", "\\\"")}").formatted(inputFilePath);
 
-    public class Hello {
-        public static void greet() {
-            try {
-                String currentDir = System.getProperty("user.dir");
-                String inputFilePath = Paths.get(currentDir, "input.txt").toString();
+                    // Prepare and run the C++ code
+                    ProcessBuilder builder = new ProcessBuilder();
+                    builder.command("bash", "-c", "echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
+                    builder.directory(new File(currentDir));
+                    builder.redirectErrorStream(true);
 
-                String cppCode = "$cppCode".formatted(inputFilePath); // Use the absolute path
+                    Process process = builder.start();
 
-                // Prepare and run the C++ code
-                ProcessBuilder builder = new ProcessBuilder();
-                builder.command("bash", "-c", "echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
-                builder.directory(new File(currentDir));
-                builder.redirectErrorStream(true);
-
-                Process process = builder.start();
-
-                // Read the output
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        System.out.println(line);
+                    // Read the output
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                        }
                     }
+
+                    // Wait for the process to complete
+                    int exitCode = process.waitFor();
+                    System.out.println("Process exited with code: " + exitCode);
+
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-                // Wait for the process to complete
-                int exitCode = process.waitFor();
-                System.out.println("Process exited with code: " + exitCode);
-
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
             }
         }
-    }
-""".trimIndent()
-
+    """.trimIndent()
 
     val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
     val fileManager = InMemoryJavaFileManager(compiler)
