@@ -33,7 +33,7 @@ val javaCode = """
     public class Hello {
         public static void greet() {
             System.out.println("""+
-            code
+            code_
             +""");
         }
     }
