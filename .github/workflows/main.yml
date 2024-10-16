@@ -33,13 +33,16 @@ jobs:
           kotlinc src/main/kotlin/com/example/Main.kt -include-runtime -d Main.jar
           kotlinc src/main/kotlin/com/example/Subs.kt -include-runtime -d Subs.jar
           kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin.kt -include-runtime -d java_inMemory_inKotlin.jar
+          kotlinc src/main/kotlin/com/example/cpp_Java_inMemory_inKotlin.kt -include-runtime -d cpp_Java_inMemory_inKotlin.jar
           kotlinc src/main/kotlin/com/example/cpp_inJava_inMemory_inKotlin.kt -include-runtime -d cpp_inJava_inMemory_inKotlin.jar
+
 
       - name: Run Kotlin Application
         run: |
           java -jar Main.jar
           java -jar Subs.jar
           java -jar java_inMemory_inKotlin.jar 
+          java -jar cpp_Java_inMemory_inKotlin.jar
           java -jar cpp_inJava_inMemory_inKotlin.jar
 
 

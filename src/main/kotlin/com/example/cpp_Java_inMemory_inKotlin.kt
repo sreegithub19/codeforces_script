@@ -23,31 +23,27 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
     }
 }
 
+fun executeCppCode(cppCode: String) {
+    // Prepare the command to compile and run the C++ code
+    val processBuilder = ProcessBuilder("bash", "-c", """
+        echo '$cppCode' | g++ -x c++ -o TempProgram - && ./TempProgram
+    """.trimIndent())
+        .redirectErrorStream(true)
+
+    // Start the process and capture the output
+    val process = processBuilder.start()
+    val output = process.inputStream.bufferedReader().readText()
+    process.waitFor()
+
+    // Print the output
+    println("C++ Output:\n$output")
+}
+
 fun main() {
     val javaCode = """
         public class Hello {
             public static void greet() {
                 System.out.println("Hello from In-Memory Java in Kotlin!!");
-            }
-
-            public static void executeCppCode(String cppCode) {
-                try {
-                    // Prepare the command to compile and run the C++ code
-                    ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c",
-                        "echo '" + cppCode.replace("'", "\\'") + "' | g++ -x c++ -o TempProgram - && ./TempProgram");
-                    processBuilder.redirectErrorStream(true);
-                    
-                    // Start the process and capture the output
-                    Process process = processBuilder.start();
-                    String output = new BufferedReader(new InputStreamReader(process.getInputStream()))
-                        .lines().collect(Collectors.joining(System.lineSeparator()));
-                    process.waitFor();
-
-                    // Print the output
-                    System.out.println("C++ Output:\n" + output);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         }
     """.trimIndent()
@@ -80,7 +76,7 @@ fun main() {
         val method: Method = clazz.getMethod("greet")
         method.invoke(null)
 
-        // Define C++ code and execute it
+        // Define and execute C++ code
         val cppCode = """
             #include <iostream>
             using namespace std;
@@ -90,8 +86,7 @@ fun main() {
             }
         """.trimIndent()
 
-        val cppMethod: Method = clazz.getMethod("executeCppCode", String::class.java)
-        cppMethod.invoke(null, cppCode)
+        executeCppCode(cppCode)
     } else {
         println("Compilation failed!")
     }
