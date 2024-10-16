@@ -4,9 +4,11 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 class InMemoryKotlinFileManager extends ForwardingJavaFileManager<JavaFileManager> {
-    private final Map<String, ByteArray> classBytes = new HashMap<>();
+    private final Map<String, byte[]> classBytes = new HashMap<>();
 
     protected InMemoryKotlinFileManager(JavaCompiler compiler) {
         super(compiler.getStandardFileManager(null, null, null));
@@ -34,7 +36,7 @@ class InMemoryKotlinFileManager extends ForwardingJavaFileManager<JavaFileManage
     }
 }
 
-public class Main {
+public class kotlin_in_java {
     public static void main(String[] args) {
         String kotlinCode = "fun greet() { println(\"Hello from in-memory Kotlin code!\") }";
 
