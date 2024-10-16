@@ -41,7 +41,7 @@ public class cpp_in_java {
             String inputFilePath = Paths.get(currentDir,  "input.txt").toString();
 
             // Prepare the C++ code using a text block
-            String cppCode = \"\"\"""" + """
+            String cppCode = """ + """
                 #include <iostream>
                 #include <fstream>
                 #include <string>
@@ -65,7 +65,7 @@ public class cpp_in_java {
                     inputFile.close(); // Close the file
                     return 0;
                 }
-                """ + """\"\"\".formatted(inputFilePath); // Use the absolute path
+                """ + """.formatted(inputFilePath); // Use the absolute path
 
             // Compile and run the C++ code using a single command
             ProcessBuilder builder = new ProcessBuilder();
