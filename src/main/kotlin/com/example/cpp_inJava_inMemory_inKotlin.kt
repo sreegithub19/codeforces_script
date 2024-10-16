@@ -26,7 +26,7 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
 fun executeCppCode(cppCode: String) {
     // Prepare the command to compile and run the C++ code
     val processBuilder = ProcessBuilder("bash", "-c", """
-        echo '$cppCode' | g++ -o TempProgram - && ./TempProgram
+        echo '$cppCode' | g++ -x c++ -o TempProgram - && ./TempProgram
     """.trimIndent())
         .redirectErrorStream(true)
 
