@@ -25,51 +25,16 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
 
 fun main() {
 
-    val cppCode = """
-    #include <iostream>
-    #include <fstream>
-    #include <string>
-
-    int main() {
-        std::cout << "Hello, Welcome to the C++ program." << std::endl;
-
-        std::ifstream inputFile("%s"); // Use the absolute path for the file
-        if (!inputFile) {
-            std::cerr << "Error opening file." << std::endl;
-            return 1; // Exit with an error code
-        }
-
-        std::string line;
-        std::cout << "Contents of input.txt:" << std::endl;
-        while (std::getline(inputFile, line)) {
-            std::cout << line << std::endl; // Print each line to the console
-        }
-
-        inputFile.close(); // Close the file
-        return 0;
-    }
-""".trimIndent()
+val code_ = """
+Hello from In-Memory Java!
+"""
 
 val javaCode = """
-    import java.io.*
-    import java.nio.file.*
-
     public class Hello {
-        public static void greet(args: Array<String>) {
-            try {
-                // Get the current directory
-                val currentDir = System.getProperty("user.dir")
-
-                // Construct the absolute path for input.txt
-                val inputFilePath = Paths.get(currentDir, "input.txt").toString()
-
-                // Prepare the C++ code
-                val cppCode = "${cppCode.replace("\"", "\\\"")}"
-
-                // Compile and run the C++ code here...
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+        public static void greet() {
+            System.out.println("""+
+            code
+            +""");
         }
     }
 """.trimIndent()
