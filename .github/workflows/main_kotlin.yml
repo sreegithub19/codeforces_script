@@ -20,9 +20,5 @@ jobs:
           java-version: '21' # Specify your Java version
           distribution: 'adopt'
 
-      - name: Build with Maven
-        run: mvn clean install
-
-      - name: Run Java Program
-        run: mvn exec:java
-        #run: mvn exec:java -Dexec.mainClass="KotlinInJava"
+      - name: Build and run with Maven
+        run: mvn clean install && mvn compile && mvn exec:java
