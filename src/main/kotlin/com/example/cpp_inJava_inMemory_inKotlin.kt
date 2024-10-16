@@ -60,7 +60,6 @@ fun main() {
     val javaCode = """
         import java.io.*;
         import java.nio.file.*;
-        import java.util.*;
 
         public class Hello {
             public static void greet() {
@@ -69,7 +68,8 @@ fun main() {
                     String inputFilePath = Paths.get(currentDir, "input.txt").toString();
 
                     // Format the C++ code with the input file path
-                    String cppCode = String.format("%s", "${cppCode.replace("\"", "\\\"")}").formatted(inputFilePath);
+                    String cppCode = String.format("%s", "${cppCode.replace("\"", "\\\"")}")
+                            .formatted(inputFilePath);
 
                     // Prepare and run the C++ code
                     ProcessBuilder builder = new ProcessBuilder();
