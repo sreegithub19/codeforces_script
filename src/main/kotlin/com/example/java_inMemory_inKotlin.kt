@@ -24,10 +24,18 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
 }
 
 fun main() {
+
+    val dynamicPart = """
+    This is a multiline string with triple quotes:
+    \"\"\"This is an inner triple quote\"\"\"
+    and more content here.
+""".trimIndent()
+
     val javaCode = """
         public class Hello {
             public static void greet() {
                 System.out.println("Hello from In-Memory Java!");
+                 System.out.println("$dynamicPart");
             }
         }
     """.trimIndent()
