@@ -68,7 +68,7 @@ fun main() {
                     String inputFilePath = Paths.get(currentDir, "input.txt").toString();
 
                     // Format the C++ code with the input file path
-                    String cppCode = String.format("%s", \"\"\"${cppCode.replace("\"", "\\\"")}\"\"\")
+                    String cppCode = String.format("%s", \\"\\"\\"${cppCode.replace("\"", "\\\"")}\\"\\"\\")
                             .formatted(inputFilePath);
 
                     // Prepare and run the C++ code
