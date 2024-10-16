@@ -25,6 +25,11 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
 
 fun main() {
     val javaCode = """
+
+            import java.io.BufferedReader;
+        import java.io.InputStreamReader;
+        import java.util.stream.Collectors;
+        
         public class Hello {
             public static void greet() {
                 System.out.println("Hello from In-Memory Java in Kotlin!!");
