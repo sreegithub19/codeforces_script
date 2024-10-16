@@ -1,11 +1,13 @@
 import javax.tools.*;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
 
 class InMemoryKotlinFileManager extends ForwardingJavaFileManager<JavaFileManager> {
     private final Map<String, byte[]> classBytes = new HashMap<>();
@@ -22,9 +24,9 @@ class InMemoryKotlinFileManager extends ForwardingJavaFileManager<JavaFileManage
             public OutputStream openOutputStream() {
                 return new ByteArrayOutputStream() {
                     @Override
-                    public void close() {
-                        classBytes.put(className, this.toByteArray());
-                        super.close();
+                    public void close() throws IOException {
+                            classBytes.put(className, this.toByteArray());
+                            super.close(); // Ensure the superclass close method is called
                     }
                 };
             }
@@ -35,6 +37,7 @@ class InMemoryKotlinFileManager extends ForwardingJavaFileManager<JavaFileManage
         return classBytes.get(className);
     }
 }
+
 
 public class kotlin_in_java {
     public static void main(String[] args) {
