@@ -72,11 +72,11 @@ fun main() {
                     String inputFilePath = Paths.get(currentDir,  "input.txt").toString();
 
                     // Prepare the C++ code using a text block
-                    String cppCode = "".formatted(inputFilePath); // Use the absolute path
+                    String cppCode = "${cppcode_.replace("\n", "\\n")}".formatted(inputFilePath); // Use the absolute path
 
                     // Compile and run the C++ code using a single command
                     ProcessBuilder builder = new ProcessBuilder();
-                    builder.command("bash", "-c", "echo \"" + ${cppcode_.replace("\n", "\\n")} + "\" | g++ -x c++ -o hello - && ./hello");
+                    builder.command("bash", "-c", "echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
                     builder.directory(new File(currentDir));
                     builder.redirectErrorStream(true);
 
