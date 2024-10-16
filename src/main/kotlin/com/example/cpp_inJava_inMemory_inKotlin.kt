@@ -27,12 +27,12 @@ fun main() {
 
     val code_ = """
     Hello from In-Memory Java!
-    """
+    """.trimIndent()
     
     val javaCode = """
         public class Hello {
             public static void greet() {
-                System.out.println("$code_");
+                System.out.println("${code_.replace("\n", "\\n")}");
             }
         }
     """.trimIndent()
