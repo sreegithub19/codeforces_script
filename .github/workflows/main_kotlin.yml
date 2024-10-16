@@ -32,4 +32,4 @@ jobs:
         run: javac execute_kotlin/kotlin_in_java.java
 
       - name: Run Java code
-        run: java execute_kotlin/kotlin_in_java
+        run: java kotlin_in_java
