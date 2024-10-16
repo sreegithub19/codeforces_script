@@ -23,8 +23,5 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-    #   - name: Compile Java code
-    #     run: javac execute_kotlin/KotlinInJava.java
-
-    #   - name: Run Java code
-    #     run: cd execute_kotlin && java KotlinInJava
+      - name: Run Java Program
+        run: cd execute_kotlin && mvn exec:java -Dexec.mainClass="KotlinInJava"
