@@ -1,6 +1,8 @@
 import javax.tools.*
 import java.lang.reflect.Method
 import java.net.URI
+import java.nio.file.Paths
+import java.io.*
 
 class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManager<JavaFileManager>(compiler.getStandardFileManager(null, null, null)) {
     private val classBytes = mutableMapOf<String, ByteArray>()
@@ -45,10 +47,6 @@ public class cpp_in_java {
                 #include <string>
 
                 int main() {
-                    // Take user input
-                    //std::string name;
-                    //std::cout << "Enter your name: ";
-                    //std::getline(std::cin, name); // Read a line of text from stdin
                     std::cout << "Hello, Welcome to the C++ program." << std::endl;
 
                     // Read from a file
@@ -99,7 +97,7 @@ public class cpp_in_java {
     val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
     val fileManager = InMemoryJavaFileManager(compiler)
 
-    val fileObject = object : SimpleJavaFileObject(URI.create("string:///Hello.java"), JavaFileObject.Kind.SOURCE) {
+    val fileObject = object : SimpleJavaFileObject(URI.create("string:///cpp_in_java.java"), JavaFileObject.Kind.SOURCE) {
         override fun getCharContent(ignoreEncodingErrors: Boolean): CharSequence {
             return javaCode
         }
@@ -120,9 +118,9 @@ public class cpp_in_java {
             }
         }
         
-        val clazz = classLoader.loadClass("Hello")
-        val method: Method = clazz.getMethod("greet")
-        method.invoke(null)
+        val clazz = classLoader.loadClass("cpp_in_java")
+        val method: Method = clazz.getMethod("main", Array<String>::class.java)
+        method.invoke(null, arrayOf<String>())
     } else {
         println("Compilation failed!")
     }
