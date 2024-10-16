@@ -87,13 +87,30 @@ fun main() {
 
         // Define C++ code and execute it
         val cppCode = """
-            #include <iostream>
-            using namespace std;
-            int main() {
-                cout << "Hello from C++! in Kotlin in 2nd file!" << endl;
-                return 0;
-            }
-        """.trimIndent()
+    #include <iostream>
+    #include <fstream>
+    #include <string>
+
+    using namespace std;
+
+    int main() {
+        ifstream inputFile("input.txt"); // Open the input file
+        if (!inputFile) { // Check if the file opened successfully
+            cerr << "Error opening input.txt" << endl;
+            return 1; // Exit with error
+        }
+
+        string line;
+        while (getline(inputFile, line)) { // Read the file line by line
+            cout << line << endl; // Print each line
+        }
+
+        inputFile.close(); // Close the file
+        
+        cout << "Hello from C++! in Kotlin in 2nd file!" << endl;
+        return 0; // Exit successfully
+    }
+""".trimIndent()
 
         val cppMethod: Method = clazz.getMethod("executeCppCode", String::class.java)
         cppMethod.invoke(null, cppCode)
