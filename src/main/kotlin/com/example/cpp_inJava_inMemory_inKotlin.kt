@@ -29,10 +29,10 @@ fun main() {
             import java.io.BufferedReader;
         import java.io.InputStreamReader;
         import java.util.stream.Collectors;
-        
+
         public class Hello {
             public static void greet() {
-                System.out.println("Hello from In-Memory Java in Kotlin!!");
+                System.out.println("Hello from In-Memory Java in Kotlin in 2nd file!!");
             }
 
             public static void executeCppCode(String cppCode) {
@@ -90,7 +90,7 @@ fun main() {
             #include <iostream>
             using namespace std;
             int main() {
-                cout << "Hello from C++! in Kotlin!" << endl;
+                cout << "Hello from C++! in Kotlin in 2nd file!" << endl;
                 return 0;
             }
         """.trimIndent()
