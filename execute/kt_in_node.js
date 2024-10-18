@@ -1,18 +1,25 @@
 const { spawn } = require('child_process');
 
+
 // Function to run Kotlin code from a string
 function runKotlinCode(code) {
     const kotlinREPL = spawn('kotlin', ['-e', code]);
 
     kotlinREPL.stdout.on('data', (data) => {
-        console.log(`${data}`);
+        console.log(`${data.toString()}`);
     });
 
     kotlinREPL.stderr.on('data', (data) => {
-        console.error(`Error: ${data}`);
+        console.error(`Error: ${data.toString()}`);
     });
 
-    kotlinREPL.on('close', () => {});
+    kotlinREPL.on('error', (err) => {
+        console.error(`Failed to start subprocess: ${err.message}`);
+    });
+
+    kotlinREPL.on('close', (code) => {
+        console.log(`Process exited with code: ${code}`);
+    });
 }
 
 // Kotlin code as a string
@@ -68,7 +75,7 @@ fun main() {
                     process.waitFor();
 
                     // Print the output
-                    System.out.println("C++ Output:\n" + output);
+                    System.out.println("C++ Output:\\n" + output);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -113,7 +120,7 @@ fun main() {
     using namespace std;
 
     int main() {
-        ifstream inputFile("execute/input_1.txt"); // Open the input file
+        ifstream inputFile("execute/input.txt"); // Open the input file
         if (!inputFile) { // Check if the file opened successfully
             cerr << "Error opening input.txt" << endl;
             return 1; // Exit with error
@@ -137,6 +144,8 @@ fun main() {
         println("Compilation failed!")
     }
 }
+
+main()
 
 `;
 
