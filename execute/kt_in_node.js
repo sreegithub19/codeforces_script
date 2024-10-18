@@ -113,7 +113,7 @@ fun main() {
     using namespace std;
 
     int main() {
-        ifstream inputFile("execute/input.txt"); // Open the input file
+        ifstream inputFile("execute/input_1.txt"); // Open the input file
         if (!inputFile) { // Check if the file opened successfully
             cerr << "Error opening input.txt" << endl;
             return 1; // Exit with error
