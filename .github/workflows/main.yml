@@ -1,35 +1,27 @@
-name: Run Node.js Script
+name: Run Java Code In-Memory
 
 on:
   push:
     branches:
-      - main
+      - js_  # Change this to your target branch
+  pull_request:
 
 jobs:
-  build:
+  run-java:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up Java
+        uses: actions/setup-java@v2
         with:
-          node-version: '18'
+          java-version: '11'  # Specify the Java version you want to use
 
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Install C++ Compiler
-        run: sudo apt-get install g++
-
-      - name: Run script
-        run: npm run pystart
-
-      # - name: Run script 50 times
-      #   run: |
-      #     for i in $(seq 1 50); do
-      #       echo "Run #$i"
-      #       npm run pystart  # Replace with the path to your script
-      #     done
+      - name: Run Java code
+        run: |
+          java -Dfile.encoding=UTF-8 -cp . \
+          "javax.script.ScriptEngineManager" \
+          -e "String code = \"public class Temp { public static void main(String[] args) { System.out.println('Hello from in-memory Java execution!'); }}\"; \
+          new javax.tools.ToolProvider.getSystemJavaCompiler().getTask(null, null, null, null, null, java.util.Arrays.asList(new javax.tools.SimpleJavaFileObject(javax.tools.JavaFileObject.Kind.CLASS, null, code)).toList()).call();"
