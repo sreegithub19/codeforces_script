@@ -44,8 +44,3 @@ jobs:
           java -jar java_inMemory_inKotlin.jar 
           java -jar cpp_Java_inMemory_inKotlin.jar
           java -jar cpp_inJava_inMemory_inKotlin.jar
-
-
-      - name: Run Nodejs Application
-        run: |
-          node kt_file_in_node.js
