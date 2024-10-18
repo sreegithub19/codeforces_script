@@ -48,4 +48,4 @@ jobs:
 
       - name: Run Nodejs Application
         run: |
-          node node_kt.js
+          node kt_file_in_node.js
