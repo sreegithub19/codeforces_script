@@ -5,16 +5,14 @@ function runKotlinCode(code) {
     const kotlinREPL = spawn('kotlin', ['-e', code]);
 
     kotlinREPL.stdout.on('data', (data) => {
-        console.log(`Output: ${data}`);
+        console.log(`${data}`);
     });
 
     kotlinREPL.stderr.on('data', (data) => {
         console.error(`Error: ${data}`);
     });
 
-    kotlinREPL.on('close', (code) => {
-        console.log(`Kotlin REPL exited with code ${code}`);
-    });
+    kotlinREPL.on('close', () => {});
 }
 
 // Kotlin code as a string
