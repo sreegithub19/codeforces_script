@@ -27,15 +27,15 @@ jobs:
 
       - name: Compile Elm
         run: |
-          elm make <(echo '
+          elm make -o output.js - <<EOF
           module Main exposing (..)
 
           import Html exposing (text)
 
           main : Html msg
           main =
-              text "Hello Embedded Elm!"
-          ') --output=output.js
+              text "Hello, Elm!"
+          EOF
 
 
       - name: Upload HTML artifact
