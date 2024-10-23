@@ -25,18 +25,6 @@ jobs:
       - name: Build Elm project
         run: elm install elm/core && elm install elm/html && elm install elm/browser && elm make src/Main.elm --output=elm.js
 
-      - name: Compile Elm
-        run: |
-          elm make -o output.js - <<EOF
-          module Main exposing (..)
-
-          import Html exposing (text)
-
-          main : Html msg
-          main =
-              text "Hello, Elm!"
-          EOF
-
 
       - name: Upload HTML artifact
         uses: actions/upload-artifact@v4
@@ -45,5 +33,3 @@ jobs:
           path: |
            index.html
            elm.js
-           index_1.html
-           output.js
