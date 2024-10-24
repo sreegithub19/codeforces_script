@@ -1,0 +1,6 @@
+name: your_project_name
+description: A simple Dart project
+environment:
+  sdk: ">=2.18.0 <3.5.0"
+dependencies:
+  # Add your dependencies here
