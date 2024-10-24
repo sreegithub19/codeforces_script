@@ -25,4 +25,4 @@ jobs:
       run: dart run execute/hello.dart
 
     - name: Compile Dart application
-      run: dart compile exe execute/hello.dart -o bin/hello
+      run: dart compile exe execute/hello.dart -o execute/hello
