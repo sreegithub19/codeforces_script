@@ -23,6 +23,7 @@ jobs:
 
     - name: Run Dart application
       run: |
+       echo "void main() { print('Hello, runline Dart!'); }" | dart run
        dart run execute/hello.dart
        dart run execute/stub.dart
  #      python execute/dart_in_python.py
