@@ -8,8 +8,7 @@ def run_dart_code(dart_code):
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
     return result.stdout, result.stderr
 
-if __name__ == "__main__":
-    dart_code = '''
+dart_code = '''
 import 'package:dart_eval/dart_eval.dart';
 
 void main() {
@@ -29,9 +28,9 @@ void main() {
       
       eval(program, function: 'main'); // Calls main(), which prints 'I'm Fluffy!'
 }
-    '''
+'''
 
-    output, error = run_dart_code(dart_code)
-    print("Output:\n", output)
-    if error:
-        print("Error:\n", error)
+output, error = run_dart_code(dart_code)
+print("Output:\n", output)
+if error:
+    print("Error:\n", error)
