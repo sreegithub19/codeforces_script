@@ -1,22 +1,26 @@
-import 'dart:io';
+// import 'dart:io';
 
-void main() async {
-  // Dart code to run
-  String dartCode = "void main() { print('Hello, inline Dart execution!'); }";
+// void main() async {
+//   // Dart code to run
+//   String dartCode = "void main() { print('Hello, inline Dart execution!'); }";
 
-  // Prepare the command
-  var result = await Process.run('bash', ['-c', 'echo "$dartCode" | dart run']);
+//   // Prepare the command
+//   var result = await Process.run('bash', ['-c', 'echo "$dartCode" | dart run']);
 
-  // Print the output
-  print(result.stdout);
+//   // Print the output
+//   print(result.stdout);
 
-  // Print any errors
-  if (result.stderr.isNotEmpty) {
-    print('Errors:');
-    print(result.stderr);
-  }
-}
+//   // Print any errors
+//   if (result.stderr.isNotEmpty) {
+//     print('Errors:');
+//     print(result.stderr);
+//   }
+// }
 
+/*
+Errors:
+Could not find `bin/your_project_name.dart` in package `your_project_name`.
+*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
