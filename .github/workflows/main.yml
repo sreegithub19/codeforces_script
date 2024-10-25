@@ -24,12 +24,12 @@ jobs:
     - name: Run Dart application
       run: |
        dart run <<EOF
-        void main() {
+       void main() {
           print('Hello, runline Dart!');
-        }
-        EOF
-       dart run execute/hello.dart
-       dart run execute/stub.dart
+       }
+       EOF
+      #  dart run execute/hello.dart
+      #  dart run execute/stub.dart
 
  #      python execute/dart_in_python.py
  #      dart eval "print('Hello, runline Dart!');"
