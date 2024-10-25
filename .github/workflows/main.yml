@@ -23,11 +23,12 @@ jobs:
 
     - name: Run Dart application
       run: |
-       dart run -e "void main() { print('Hello, runline Dart!'); }"
+       dart eval "print('Hello, runline Dart!');"
        dart run execute/hello.dart
        dart run execute/stub.dart
  #      python execute/dart_in_python.py
  #     echo "void main() { print('Hello, runline Dart!'); }" | dart run
+ #      dart run -e "void main() { print('Hello, runline Dart!'); }"
 
     # - name: Compile Dart application
     #   run: dart compile exe execute/hello.dart -o execute /hello
