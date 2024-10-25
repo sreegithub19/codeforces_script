@@ -23,19 +23,22 @@ jobs:
 
     - name: Run Dart application
       run: |
-       dart run <<EOF
-       void main() {
-          print('Hello, runline Dart!');
-       }
-       EOF
+       dart run --eval "print('Hello, runline Dart!');"
       #  dart run execute/hello.dart
       #  dart run execute/stub.dart
+
 
  #      python execute/dart_in_python.py
  #      dart eval "print('Hello, runline Dart!');"
  #     echo "void main() { print('Hello, runline Dart!'); }" | dart run
  #      dart run -e "void main() { print('Hello, runline Dart!'); }"
  #      echo "void main() { print('Hello, runline Dart!'); }" | dart run --stdin
+
+#  dart run <<EOF
+#        void main() {
+#           print('Hello, runline Dart!');
+#        }
+#        EOF
 
     # - name: Compile Dart application
     #   run: dart compile exe execute/hello.dart -o execute /hello
