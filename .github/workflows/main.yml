@@ -23,10 +23,9 @@ jobs:
 
     - name: Run Dart application
       run: |
-       printf "void main() { print('Hello, runline Dart!'); }" | dart run
-      #  dart run execute/hello.dart
-      #  dart run execute/stub.dart
-
+        dart run execute/hello.dart
+        dart run execute/stub.dart
+        dart run execute/ins.dart
 
  #      python execute/dart_in_python.py
  #      dart eval "print('Hello, runline Dart!');"
@@ -34,6 +33,7 @@ jobs:
  #      dart run -e "void main() { print('Hello, runline Dart!'); }"
  #      echo "void main() { print('Hello, runline Dart!'); }" | dart run --stdin
  #      dart run --eval "print('Hello, runline Dart!');"
+ #      printf "void main() { print('Hello, runline Dart!'); }" | dart run
 
 #  dart run <<EOF
 #        void main() {
