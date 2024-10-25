@@ -23,7 +23,11 @@ jobs:
 
     - name: Run Dart application
       run: |
-       echo "void main() { print('Hello, runline Dart!'); }" | dart run --stdin
+       dart run <<EOF
+        void main() {
+          print('Hello, runline Dart!');
+        }
+        EOF
        dart run execute/hello.dart
        dart run execute/stub.dart
 
@@ -31,6 +35,7 @@ jobs:
  #      dart eval "print('Hello, runline Dart!');"
  #     echo "void main() { print('Hello, runline Dart!'); }" | dart run
  #      dart run -e "void main() { print('Hello, runline Dart!'); }"
+ #      echo "void main() { print('Hello, runline Dart!'); }" | dart run --stdin
 
     # - name: Compile Dart application
     #   run: dart compile exe execute/hello.dart -o execute /hello
