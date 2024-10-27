@@ -21,8 +21,6 @@ jobs:
 
     - name: Create C# Project
       run: |
-        mkdir HelloWorld
-        cd HelloWorld
         dotnet new console -n HelloWorld
 
     - name: Write Hello World Program
