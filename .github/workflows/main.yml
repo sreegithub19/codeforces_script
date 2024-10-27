@@ -50,9 +50,9 @@ jobs:
               
               namespace HelloWorld
               {
-                  class first
+                  public class first
                   {
-                      static void Main(string[] args)
+                      public static void Main(string[] args)
                       {
                           Console.WriteLine("Hello, World from first.cs");
                       }
@@ -67,9 +67,9 @@ jobs:
           
           namespace HelloWorld
           {
-              class Program
+              public class Program
               {
-                  static void Main(string[] args)
+                  public static void Main(string[] args)
                   {
                       Console.WriteLine("Hello, World from Program.cs");
                       first.Main();  // Call the method from FirstProgram
