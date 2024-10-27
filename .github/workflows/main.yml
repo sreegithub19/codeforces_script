@@ -96,4 +96,4 @@ jobs:
         export PATH="$PATH:/home/runner/.dotnet/tools"
 
     - name: Run inline C# code
-      run: dotnet script -e "Console.WriteLine(\"Hello from inline dotnet_script C# code!\");"
+      run: echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | csi
