@@ -25,6 +25,7 @@ jobs:
       run: |
         dart run execute/hello.dart
         dart run execute/stub.dart
+        dart run -c 'void main() { print("Hello from Dart!"); }'
       # dart run execute/ins.dart
 
  #      python execute/dart_in_python.py
