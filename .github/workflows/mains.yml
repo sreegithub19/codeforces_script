@@ -27,7 +27,7 @@ jobs:
       - name: Create Flask app
         run: |
           mkdir -p app
-          echo 'from flask import Flask, render_template_string' > app/app.py
+          echo 'from flask import Flask, render_template_string, url_for' > app/app.py
           echo 'app = Flask(__name__)' >> app/app.py
           echo '' >> app/app.py
           echo '@app.route("/")' >> app/app.py
@@ -35,8 +35,8 @@ jobs:
           echo '    return """<h1>Home Page</h1>' >> app/app.py
           echo '    <p>Welcome to the Flask web server!</p>' >> app/app.py
           echo '    <ul>' >> app/app.py
-          echo '        <li><a href="/about">About</a></li>' >> app/app.py
-          echo '        <li><a href="/contact">Contact</a></li>' >> app/app.py
+          echo '        <li><a href="{{ url_for("about") }}">About</a></li>' >> app/app.py
+          echo '        <li><a href="{{ url_for("contact") }}">Contact</a></li>' >> app/app.py
           echo '    </ul>"""' >> app/app.py
           echo '' >> app/app.py
           echo '@app.route("/about")' >> app/app.py
@@ -63,7 +63,7 @@ jobs:
           curl http://localhost:8000/contact -o app/contact.html
 
       - name: Upload web pages as artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
           name: web-pages
           path: app/*.html
