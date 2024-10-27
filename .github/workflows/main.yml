@@ -45,6 +45,23 @@ jobs:
 
     - name: Write Hello World Program
       run: |
+              cat <<EOF > HelloWorld/first.cs
+              using System;
+              
+              namespace HelloWorld
+              {
+                  class first
+                  {
+                      static void Main(string[] args)
+                      {
+                          Console.WriteLine("Hello, World from first.cs");
+                      }
+                  }
+              }
+              EOF
+
+    - name: Write Hello World Program
+      run: |
           cat <<EOF > HelloWorld/Program.cs
           using System;
           
@@ -60,23 +77,6 @@ jobs:
               }
           }
           EOF
-
-    - name: Write Hello World Program
-      run: |
-              cat <<EOF > HelloWorld/first.cs
-              using System;
-              
-              namespace HelloWorld
-              {
-                  class first
-                  {
-                      static void Main(string[] args)
-                      {
-                          Console.WriteLine("Hello, World from first.cs");
-                      }
-                  }
-              }
-              EOF
 
     - name: Build the Project
       run: dotnet build HelloWorld/HelloWorld.csproj
