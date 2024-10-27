@@ -27,8 +27,7 @@ jobs:
 
     - name: Write Hello World Program
       run: |
-          mkdir -p HelloWorld/HelloWorld
-          cat <<EOF > HelloWorld/HelloWorld/Program.cs
+          cat <<EOF > HelloWorld/Program.cs
           using System;
           
           namespace HelloWorld
@@ -37,14 +36,31 @@ jobs:
               {
                   static void Main(string[] args)
                   {
-                      Console.WriteLine("Hello, World!");
+                      Console.WriteLine("Hello, World from Program.cs");
                   }
               }
           }
           EOF
 
+    - name: Write Hello World Program
+      run: |
+              cat <<EOF > HelloWorld/first.cs
+              using System;
+              
+              namespace HelloWorld
+              {
+                  class Program
+                  {
+                      static void Main(string[] args)
+                      {
+                          Console.WriteLine("Hello, World from first.cs");
+                      }
+                  }
+              }
+              EOF
+
     - name: Build the Project
-      run: dotnet build HelloWorld/HelloWorld/HelloWorld.csproj
+      run: dotnet build HelloWorld/HelloWorld.csproj
 
     - name: Run the Project
-      run: dotnet run --project HelloWorld/HelloWorld/HelloWorld.csproj
+      run: dotnet run --project HelloWorld/HelloWorld.csproj
