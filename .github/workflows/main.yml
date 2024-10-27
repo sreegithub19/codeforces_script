@@ -96,4 +96,23 @@ jobs:
         export PATH="$PATH:/home/runner/.dotnet/tools"
 
     - name: Run inline C# code
-      run: echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | csi
+      run: |
+       echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | csi
+
+
+    - name: Run multiline C# code
+      run: |
+        csi <<EOF
+        using System;
+
+        class Program
+        {
+            static void Main()
+            {
+                Console.WriteLine("Hello from C# Interactive in GitHub Actions multiline!");
+                Console.WriteLine("This is a multiline C# code example.");
+            }
+        }
+
+        Program.Main();
+        EOF
