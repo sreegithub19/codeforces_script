@@ -3,3 +3,4 @@ codeforces_script.iml
 target
 .idea
 TempProgram
+.mypy_cache

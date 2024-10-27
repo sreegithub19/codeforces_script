@@ -1,46 +1,47 @@
-name: Dart CI
+name: C# Hello World CI
 
 on:
   push:
-    branches: [ dart_ ]
+    branches:
+      - c_sharp
+  pull_request:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Dart
-      uses: dart-lang/setup-dart@v1
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
       with:
-        sdk: '3.4.0'
+        dotnet-version: '7.0.20'  # Specify the .NET version you want
 
-    - name: Get dependencies
-      run: dart pub get
-
-    - name: Run Dart application
+    - name: Create C# Project
       run: |
-        dart run execute/hello.dart
-        dart run execute/stub.dart
-      # dart run execute/ins.dart
+        mkdir HelloWorld
+        cd HelloWorld
+        dotnet new console -n HelloWorld
 
- #      python execute/dart_in_python.py
- #      dart eval "print('Hello, runline Dart!');"
- #     echo "void main() { print('Hello, runline Dart!'); }" | dart run
- #      dart run -e "void main() { print('Hello, runline Dart!'); }"
- #      echo "void main() { print('Hello, runline Dart!'); }" | dart run --stdin
- #      dart run --eval "print('Hello, runline Dart!');"
- #      printf "void main() { print('Hello, runline Dart!'); }" | dart run
- #      dart run -c 'void main() { print("Hello from Dart!"); }'
+    - name: Write Hello World Program
+      run: |
+        echo 'using System;' > HelloWorld/Program.cs
+        echo '' >> HelloWorld/Program.cs
+        echo 'namespace HelloWorld' >> HelloWorld/Program.cs
+        echo '{' >> HelloWorld/Program.cs
+        echo '    class Program' >> HelloWorld/Program.cs
+        echo '    {' >> HelloWorld/Program.cs
+        echo '        static void Main(string[] args)' >> HelloWorld/Program.cs
+        echo '        {' >> HelloWorld/Program.cs
+        echo '            Console.WriteLine("Hello, World!");' >> HelloWorld/Program.cs
+        echo '        }' >> HelloWorld/Program.cs
+        echo '    }' >> HelloWorld/Program.cs
+        echo '}' >> HelloWorld/Program.cs
 
-#  dart run <<EOF
-#        void main() {
-#           print('Hello, runline Dart!');
-#        }
-#        EOF
+    - name: Build the Project
+      run: dotnet build HelloWorld/HelloWorld.csproj
 
-    # - name: Compile Dart application
-    #   run: dart compile exe execute/hello.dart -o execute /hello
+    - name: Run the Project
+      run: dotnet run --project HelloWorld/HelloWorld.csproj
