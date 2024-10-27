@@ -84,3 +84,6 @@ jobs:
 
     - name: Run the Project
       run: dotnet run --project HelloWorld/HelloWorld.csproj
+
+    - name: Run the Project
+      run: csc standalone.cs && ./standalone
