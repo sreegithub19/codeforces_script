@@ -27,21 +27,24 @@ jobs:
 
     - name: Write Hello World Program
       run: |
-        echo 'using System;' > HelloWorld/Program.cs
-        echo '' >> HelloWorld/Program.cs
-        echo 'namespace HelloWorld' >> HelloWorld/Program.cs
-        echo '{' >> HelloWorld/Program.cs
-        echo '    class Program' >> HelloWorld/Program.cs
-        echo '    {' >> HelloWorld/Program.cs
-        echo '        static void Main(string[] args)' >> HelloWorld/Program.cs
-        echo '        {' >> HelloWorld/Program.cs
-        echo '            Console.WriteLine("Hello, World!");' >> HelloWorld/Program.cs
-        echo '        }' >> HelloWorld/Program.cs
-        echo '    }' >> HelloWorld/Program.cs
-        echo '}' >> HelloWorld/Program.cs
+          mkdir -p HelloWorld/HelloWorld
+          cat <<EOF > HelloWorld/HelloWorld/Program.cs
+          using System;
+          
+          namespace HelloWorld
+          {
+              class Program
+              {
+                  static void Main(string[] args)
+                  {
+                      Console.WriteLine("Hello, World!");
+                  }
+              }
+          }
+          EOF
 
     - name: Build the Project
-      run: dotnet build HelloWorld/HelloWorld.csproj
+      run: dotnet build HelloWorld/HelloWorld/HelloWorld.csproj
 
     - name: Run the Project
-      run: dotnet run --project HelloWorld/HelloWorld.csproj
+      run: dotnet run --project HelloWorld/HelloWorld/HelloWorld.csproj
