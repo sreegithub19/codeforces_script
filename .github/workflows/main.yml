@@ -47,7 +47,7 @@ jobs:
               
               namespace HelloWorld
               {
-                  class Program
+                  class first
                   {
                       static void Main(string[] args)
                       {
