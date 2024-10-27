@@ -105,9 +105,9 @@ jobs:
         csi <<EOF
         using System;
 
-        class Program
+        public class Program
         {
-            static void Main()
+            public static void Main()
             {
                 Console.WriteLine("Hello from C# Interactive in GitHub Actions multiline!");
                 Console.WriteLine("This is a multiline C# code example.");
