@@ -85,5 +85,15 @@ jobs:
     - name: Run the Project
       run: dotnet run --project HelloWorld/HelloWorld.csproj
 
-    - name: Run the Project
+    - name: Run the Standalone file
       run: csc standalone.cs && ls -la && chmod +x standalone.exe && ./standalone.exe
+
+
+
+    - name: Install dotnet-script
+      run: |
+        dotnet tool install -g dotnet-script
+        export PATH="$PATH:/home/runner/.dotnet/tools"
+
+    - name: Run inline C# code
+      run: dotnet script -e "Console.WriteLine(\"Hello from inline dotnet_script C# code!\");"
