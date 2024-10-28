@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 
 // Function to execute Python code
 function runPythonCode() {
-    const command = `csi <<
+    const command = `csi <<END
         using System;
 
         public class Program
@@ -12,10 +12,16 @@ function runPythonCode() {
                 Console.WriteLine("Hello from C# Interactive in GitHub Actions multiline from nodejs!");
                 Console.WriteLine("This is a multiline C# code example from nodejs.");
             }
+
+            public static void Sub()
+                {
+                    Console.WriteLine("Hello from C# Interactive in GitHub Actions multiline from Sub!");
+                    Console.WriteLine("This is a multiline C# code example from Sub.");
+                }
         }
 
         Program.Main();
-        `;
+        END`;
     return exec(command);
 }
 
