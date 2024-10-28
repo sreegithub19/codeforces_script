@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 
 // Function to execute Python code
 function runPythonCode() {
-    const command = `csi <<EOF
+    const command = `csi -E <<END
         using System;
 
         public class Program
@@ -15,7 +15,7 @@ function runPythonCode() {
         }
 
         Program.Main();
-        EOF`;
+        END`;
     return exec(command);
 }
 
@@ -24,7 +24,7 @@ const pythonProcess = runPythonCode();
 
 // Handle the output from the Python process
 pythonProcess.stdout.on('data', (data) => {
-    console.log(`Output: ${data}`);
+    console.log(`${data}`);
 });
 
 // Handle errors
