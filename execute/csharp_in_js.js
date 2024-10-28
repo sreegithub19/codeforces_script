@@ -21,6 +21,7 @@ function runPythonCode() {
         }
 
         Program.Main();
+        Program.Sub();
         END`;
     return exec(command);
 }
