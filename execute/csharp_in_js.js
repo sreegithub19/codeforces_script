@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 
 // Function to execute Python code
 function runPythonCode() {
-    const command = `csi -E <<END
+    const command = `csi <<END
         using System;
 
         public class Program
