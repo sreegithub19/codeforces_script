@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
 
-class child_process
+public class child_process
 {
-    static void Main()
+    public static void Main()
     {
         // Define the Python command as a multiline string
         string pythonCommand = @"
