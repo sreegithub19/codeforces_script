@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-class Program
+class child_process
 {
     static void Main()
     {
