@@ -1,2 +1,0 @@
-rust through c++ in memory
-welcome in memory!!

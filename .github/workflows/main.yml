@@ -1,9 +1,9 @@
-name: C and C++ Build and Run
+name: Lua Build and Run
 
 on:
   push:
     branches:
-      - cpp_  # Change this to your default branch
+      - lua_  # Change this to your default branch
   pull_request:
 
 jobs:
@@ -17,34 +17,40 @@ jobs:
       - name: Set up GCC
         run: sudo apt-get install g++
 
-      - name: Compile C++ programs
-        run: |
-          cd cpp_  # Change to the directory containing C++ files
-          for file in *.cpp; do
-            g++ "$file" -o "${file%.cpp}"  # Compile each C++ file to an executable
-          done
+      - name: Set up Lua
+        run: sudo apt-get install lua5.3
 
-      - name: Run C++ programs
-        run: |
-          cd cpp_
-          for exe in *; do
-            if [[ -x "$exe" ]]; then  # Check if it is an executable
-              ./"$exe"  # Run the executable
-            fi
-          done
+      - name: Run Hello World
+        run: lua lua_/hello.lua
 
-      - name: Compile C programs
-        run: |
-          cd c_  # Change to the directory containing C files
-          for file in *.c; do
-            gcc "$file" -o "${file%.c}"  # Compile each C file to an executable
-          done
+      # - name: Compile C++ programs
+      #   run: |
+      #     cd cpp_  # Change to the directory containing C++ files
+      #     for file in *.cpp; do
+      #       g++ "$file" -o "${file%.cpp}"  # Compile each C++ file to an executable
+      #     done
 
-      - name: Run C programs
-        run: |
-          cd c_
-          for exe in *; do
-            if [[ -x "$exe" ]]; then  # Check if it is an executable
-              ./"$exe"  # Run the executable
-            fi
-          done
+      # - name: Run C++ programs
+      #   run: |
+      #     cd cpp_
+      #     for exe in *; do
+      #       if [[ -x "$exe" ]]; then  # Check if it is an executable
+      #         ./"$exe"  # Run the executable
+      #       fi
+      #     done
+
+      # - name: Compile C programs
+      #   run: |
+      #     cd c_  # Change to the directory containing C files
+      #     for file in *.c; do
+      #       gcc "$file" -o "${file%.c}"  # Compile each C file to an executable
+      #     done
+
+      # - name: Run C programs
+      #   run: |
+      #     cd c_
+      #     for exe in *; do
+      #       if [[ -x "$exe" ]]; then  # Check if it is an executable
+      #         ./"$exe"  # Run the executable
+      #       fi
+      #     done
