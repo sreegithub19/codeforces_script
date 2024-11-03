@@ -42,7 +42,6 @@ jobs:
       - name: Compile and run Objective-C++ code
         run: |
           clang++ -x objective-c++ -framework Foundation -o hello - <<EOF
-          #import <Foundation/Foundation.h>
   
           int main(int argc, const char * argv[]) {
               @autoreleasepool {
@@ -55,9 +54,7 @@ jobs:
 
       - name: Compile and run Objective-C++ code
         run: |
-          echo '#import <Foundation/Foundation.h>
-  
-          int main(int argc, const char * argv[]) {
+          echo 'int main(int argc, const char * argv[]) {
               @autoreleasepool {
                   NSLog(@"Hello from Objective-C++ on GitHub Actions!");
               }
