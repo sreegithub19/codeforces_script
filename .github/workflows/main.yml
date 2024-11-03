@@ -39,6 +39,11 @@ jobs:
       - name: Run script
         run: npm run pystart
 
+      - name: List Foundation Framework Headers
+        run: |
+          echo "Listing contents of Foundation framework headers..."
+          ls -l /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers
+
       - name: Compile and run Objective-C++ code
         run: |
           # Create the Objective-C++ source file
