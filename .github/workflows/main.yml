@@ -39,6 +39,12 @@ jobs:
       - name: Run script
         run: npm run pystart
 
+      - name: Find Foundation Framework Path
+        run: |
+          echo "Finding Foundation framework path..."
+          FRAMEWORK_PATH=$(mdfind Foundation.framework | head -n 1)
+          echo "Foundation framework path: $FRAMEWORK_PATH"
+
       - name: Compile and run Objective-C++ code
         run: |
           echo '#import <Foundation/Foundation.h>
