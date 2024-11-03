@@ -39,14 +39,15 @@ jobs:
       - name: Run script
         run: npm run pystart
 
-      - name: Check for GNUstep Foundation headers
+      - name: Find Foundation.h Header
         run: |
-          if [ -d /usr/include/GNUstep/Foundation ]; then
-            echo "GNUstep Foundation headers found."
-            ls /usr/include/GNUstep/Foundation
-          else
-            echo "GNUstep Foundation headers not found."
+          echo "Searching for Foundation.h..."
+          FOUND=$(find /usr -name Foundation.h 2>/dev/null)
+          if [ -z "$FOUND" ]; then
+            echo "Foundation.h not found."
             exit 1
+          else
+            echo "Found Foundation.h at: $FOUND"
           fi
 
       - name: Compile and run Objective-C++ code
