@@ -1,18 +1,63 @@
+// #import <Foundation/Foundation.h>
+
+// int main(int argc, const char * argv[]) {
+//     @autoreleasepool {
+//         // Define the Python code as a string
+//         NSString *pythonCode = @"print('Hello, Python from Objective-C World!')\n";
+
+//         // Create the NSTask instance
+//         NSTask *task = [[NSTask alloc] init];
+
+//         // Set the executable to the Python interpreter
+//         [task setExecutableURL:[NSURL fileURLWithPath:@"/opt/homebrew/bin/python3"]];
+        
+//         // Set the arguments: -c for command and the Python code
+//         [task setArguments:@[@"-c", pythonCode]];
+        
+//         // Create a pipe to capture standard output
+//         NSPipe *pipe = [NSPipe pipe];
+//         [task setStandardOutput:pipe];
+
+//         // Launch the task
+//         NSError *error = nil;
+//         [task launchAndReturnError:&error];
+
+//         if (error) {
+//             NSLog(@"Error launching task: %@", error);
+//             return 1;
+//         }
+
+//         // Wait for the task to finish
+//         [task waitUntilExit];
+
+//         // Read the output from the pipe
+//         NSData *data = [[pipe fileHandleForReading] readDataToEndOfFile];
+//         NSString *output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+//         // Print the output
+//         NSLog(@"%@", output);
+//     }
+//     return 0;
+// }
+
+
+
+
 #import <Foundation/Foundation.h>
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // Define the Python code as a string
-        NSString *pythonCode = @"print('Hello, Python from Objective-C World!')\n";
+        // Define the Python command as a shell command
+        NSString *pythonCommand = @"python -c \"print('Hello from Python!')\"";
 
-        // Create the NSTask instance
+        // Create an NSTask instance
         NSTask *task = [[NSTask alloc] init];
 
-        // Set the executable to the Python interpreter
-        [task setExecutableURL:[NSURL fileURLWithPath:@"/opt/homebrew/bin/python3"]];
+        // Set the executable to the shell
+        [task setExecutableURL:[NSURL fileURLWithPath:@"/bin/sh"]];
         
-        // Set the arguments: -c for command and the Python code
-        [task setArguments:@[@"-c", pythonCode]];
+        // // Set the arguments: -c for command and the Python command
+        // [task setArguments:@[@"-c", pythonCommand]];
         
         // Create a pipe to capture standard output
         NSPipe *pipe = [NSPipe pipe];
