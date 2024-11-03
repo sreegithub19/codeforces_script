@@ -39,25 +39,6 @@ jobs:
       - name: Run script
         run: npm run pystart
 
-
-      # - name: Compile and run Objective-C++ code
-      #   run: |
-      #     # Create the Objective-C++ source file
-      #     echo '#import </Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h>
-
-      #     int main(int argc, const char * argv[]) {
-      #         @autoreleasepool {
-      #             NSLog(@"Hello from Objective-C++ on GitHub Actions from here!");
-      #         }
-      #         return 0;
-      #     }' > hello.mm
-
-      #     # Compile the source file
-      #     clang++ -std=c++11 -framework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework -o hello hello.mm
-
-      #     # Run the compiled executable
-      #     ./hello
-
   build-macos:
     runs-on: macos-latest
 
@@ -91,3 +72,22 @@ jobs:
         if ! $found; then
             echo "Foundation.h not found in the specified paths."
         fi
+
+
+    - name: Compile and run Objective-C++ code
+      run: |
+          # Create the Objective-C++ source file
+          echo '#import </Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h>
+
+          int main(int argc, const char * argv[]) {
+              @autoreleasepool {
+                  NSLog(@"Hello from Objective-C++ on GitHub Actions from here!");
+              }
+              return 0;
+          }' > hello.mm
+
+          # Compile the source file
+          clang++ -std=c++11 -framework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework -o hello hello.mm
+
+          # Run the compiled executable
+          ./hello
