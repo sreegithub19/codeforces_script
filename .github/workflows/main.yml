@@ -39,15 +39,19 @@ jobs:
       - name: Run script
         run: npm run pystart
 
-      - name: Find Foundation Framework Path
+      - name: Compile and run Objective-C++ code
         run: |
-          echo "Finding Foundation framework path..."
-          FRAMEWORK_PATH="/System/Library/Frameworks/Foundation.framework"
-          if [ -d "$FRAMEWORK_PATH" ]; then
-            echo "Foundation framework path: $FRAMEWORK_PATH"
-          else
-            echo "Foundation framework not found!"
-          fi
+          clang++ -x objective-c++ -framework Foundation -o hello - <<EOF
+          #import <Foundation/Foundation.h>
+  
+          int main(int argc, const char * argv[]) {
+              @autoreleasepool {
+                  NSLog(@"Hello from Objective-C++ on GitHub Actions!");
+              }
+              return 0;
+          }
+          EOF
+                  ./hello
 
       - name: Compile and run Objective-C++ code
         run: |
@@ -59,6 +63,8 @@ jobs:
               }
               return 0;
           }' | clang++ -x objective-c++ -framework Foundation -o hello - && ./hello
+
+      
 
       # - name: Run script 50 times
       #   run: |
