@@ -9,7 +9,7 @@ int main(int argc, const char * argv[]) {
         NSTask *task = [[NSTask alloc] init];
 
         // Set the executable to the Python interpreter
-        [task setExecutableURL:[NSURL fileURLWithPath:@"python"]];
+        [task setExecutableURL:[NSURL fileURLWithPath:@"/opt/homebrew/bin/python3"]];
         
         // Set the arguments: -c for command and the Python code
         [task setArguments:@[@"-c", pythonCode]];
