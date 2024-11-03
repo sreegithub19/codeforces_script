@@ -48,7 +48,7 @@ jobs:
                   NSLog(@"Hello from Objective-C++ on GitHub Actions!");
               }
               return 0;
-          }' | clang++ -x -std=c++11 -framework Foundation -o hello - && ./hello
+          }' | clang++ -x objective-c++ -framework Foundation -o hello - && ./hello
 
       # - name: Run script 50 times
       #   run: |
