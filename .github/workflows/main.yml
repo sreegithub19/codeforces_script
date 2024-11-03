@@ -39,6 +39,16 @@ jobs:
       - name: Run script
         run: npm run pystart
 
+      - name: Check for GNUstep Foundation headers
+        run: |
+          if [ -d /usr/include/GNUstep/Foundation ]; then
+            echo "GNUstep Foundation headers found."
+            ls /usr/include/GNUstep/Foundation
+          else
+            echo "GNUstep Foundation headers not found."
+            exit 1
+          fi
+
       - name: Compile and run Objective-C++ code
         run: |
           # Create the Objective-C++ source file
