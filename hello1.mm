@@ -1,4 +1,4 @@
-#import <Foundation/Foundation.h>
+#import </Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h>
 
 void findFoundationHeader() {
     NSArray *searchPaths = @[
