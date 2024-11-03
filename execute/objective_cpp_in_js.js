@@ -13,7 +13,7 @@ int main(int argc, const char * argv[]) {
 
 try {
     // Compile and run the Objective-C++ code using a single command
-    const output = execSync(`echo '${objcCode.replace(/'/g, "'\\''")}' | clang++ -x objective-c++ -framework Foundation -o hello - -isysroot $(xcrun --sdk macosx --show-sdk-path) && ./hello`, { stdio: 'pipe' });
+    const output = execSync(`echo '${objcCode.replace(/'/g, "'\\''")}' | clang++ -x objective-c++ -framework Foundation -o hello - && ./hello`, { stdio: 'pipe' });
 
     // Print the output of the Objective-C++ program
     console.log(output.toString());

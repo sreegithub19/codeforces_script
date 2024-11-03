@@ -39,6 +39,17 @@ jobs:
       - name: Run script
         run: npm run pystart
 
+      - name: Compile and run Objective-C++ code
+        run: |
+          echo '#import <Foundation/Foundation.h>
+  
+          int main(int argc, const char * argv[]) {
+              @autoreleasepool {
+                  NSLog(@"Hello from Objective-C++ on GitHub Actions!");
+              }
+              return 0;
+          }' | clang++ -x objective-c++ -framework Foundation -o hello - && ./hello
+
       # - name: Run script 50 times
       #   run: |
       #     for i in $(seq 1 50); do
