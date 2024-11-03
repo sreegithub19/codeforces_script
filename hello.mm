@@ -12,7 +12,7 @@ int main(int argc, const char * argv[]) {
         [task setExecutableURL:[NSURL fileURLWithPath:@"/bin/bash"]]; // Use bash for better compatibility
         
         // Set the arguments: -c for command and the full command including Python
-        [task setArguments:@[[NSString stringWithFormat:@"python3 -c \"%@\"", pythonCommand]]];
+        [task setArguments:@[@"-c", [NSString stringWithFormat:@"python3 -c \"%@\"", pythonCommand]]];
 
         // Create a pipe to capture standard output
         NSPipe *pipe = [NSPipe pipe];
