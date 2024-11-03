@@ -48,17 +48,17 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // Define the Python command as a shell command
-        NSString *pythonCommand = @"python -c \"print('Hello from Python!')\"";
+        NSString *pythonCommand = @"print('Hello here from Python!')";
 
         // Create an NSTask instance
         NSTask *task = [[NSTask alloc] init];
 
         // Set the executable to the shell
-        [task setExecutableURL:[NSURL fileURLWithPath:@"/bin/sh"]];
+        [task setExecutableURL:[NSURL fileURLWithPath:@"/bin/bash"]]; // Use bash for better compatibility
         
-        // // Set the arguments: -c for command and the Python command
-        // [task setArguments:@[@"-c", pythonCommand]];
-        
+        // Set the arguments: -c for command and the full command including Python
+        [task setArguments:@[@"-c", [NSString stringWithFormat:@"python3 -c \"%@\"", pythonCommand]]];
+
         // Create a pipe to capture standard output
         NSPipe *pipe = [NSPipe pipe];
         [task setStandardOutput:pipe];
