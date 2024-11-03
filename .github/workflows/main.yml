@@ -41,8 +41,33 @@ jobs:
 
       - name: List Foundation Framework Headers
         run: |
-          echo "Listing contents of Foundation framework headers..."
-          ls -l /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers
+          #!/bin/bash
+
+          # Array of potential paths to check for Foundation.h
+          search_paths=(
+              "/usr/include/GNUstep/Foundation/Foundation.h"
+              "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h"
+              "/usr/local/include/Foundation/Foundation.h"
+              "/usr/include/Foundation/Foundation.h"
+          )
+
+          # Flag to track if the file was found
+          found=false
+
+          # Check each path
+          for path in "${search_paths[@]}"; do
+              if [[ -f "$path" ]]; then
+                  echo "Found Foundation.h at: $path"
+                  found=true
+                  break
+              fi
+          done
+
+          # If not found, print a message
+          if ! $found; then
+              echo "Foundation.h not found in the specified paths."
+          fi
+
 
       - name: Compile and run Objective-C++ code
         run: |
