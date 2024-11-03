@@ -42,8 +42,12 @@ jobs:
       - name: Find Foundation Framework Path
         run: |
           echo "Finding Foundation framework path..."
-          FRAMEWORK_PATH=$(mdfind Foundation.framework | head -n 1)
-          echo "Foundation framework path: $FRAMEWORK_PATH"
+          FRAMEWORK_PATH="/System/Library/Frameworks/Foundation.framework"
+          if [ -d "$FRAMEWORK_PATH" ]; then
+            echo "Foundation framework path: $FRAMEWORK_PATH"
+          else
+            echo "Foundation framework not found!"
+          fi
 
       - name: Compile and run Objective-C++ code
         run: |
