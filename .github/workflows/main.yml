@@ -35,3 +35,5 @@ jobs:
           ./hello
           clang++ -std=c++11 -framework Foundation -o run_python hello.mm
           ./run_python
+          clang++ -std=c++11 -framework Foundation -o find_path hello1.mm
+          ./find_path
