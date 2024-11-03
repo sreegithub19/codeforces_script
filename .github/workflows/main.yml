@@ -41,26 +41,21 @@ jobs:
 
       - name: Compile and run Objective-C++ code
         run: |
-          clang++ -x objective-c++ -framework Foundation -o hello - <<EOF
-  
+          # Create the Objective-C++ source file
+          echo '#import <Foundation/Foundation.h>
+
           int main(int argc, const char * argv[]) {
               @autoreleasepool {
-                  NSLog(@"Hello from Objective-C++ on GitHub Actions!");
+                  NSLog(@"Hello from Objective-C++ on GitHub Actions from here!");
               }
               return 0;
-          }
-          EOF
-                  ./hello
+          }' > hello.mm
 
-      - name: Compile and run Objective-C++ code
-        run: |
-          echo 'int main(int argc, const char * argv[]) {
-              @autoreleasepool {
-                  NSLog(@"Hello from Objective-C++ on GitHub Actions!");
-              }
-              return 0;
-          }' | clang++ -x objective-c++ -framework Foundation -o hello - && ./hello
+          # Compile the source file
+          clang++ -x objective-c++ -framework Foundation -o hello hello.mm
 
+          # Run the compiled executable
+          ./hello
       
 
       # - name: Run script 50 times
