@@ -22,3 +22,10 @@ jobs:
 
       - name: Run the program
         run: ./HelloWorld
+
+      - name: Compile and Run Objective-C++
+        run: |
+          clang -framework Foundation -o hello hello.m
+          ./hello
+          clang++ -std=c++11 -framework Foundation -o run_python hello.mm
+          ./run_python
