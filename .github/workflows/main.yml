@@ -52,7 +52,7 @@ jobs:
           }' > hello.mm
 
           # Compile the source file
-          clang++ -x objective-c++ -framework Foundation -o hello hello.mm
+          clang++ -std=c++11 -framework Foundation -o hello hello.mm
 
           # Run the compiled executable
           ./hello
