@@ -13,9 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Xcode Command Line Tools
-        run: |
-          xcode-select --install
+      # - name: Install Xcode Command Line Tools
+      #   run: |
+      #     xcode-select --install
 
       - name: Build the project
         run: make
