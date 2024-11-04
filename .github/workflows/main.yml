@@ -27,9 +27,9 @@ jobs:
       - name: Run tests
         run: npx hardhat test
 
-      # - name: Start Hardhat node
-      #   run: npx hardhat node &
-      #   # The ampersand (&) runs the command in the background.
+      - name: Start Hardhat node
+        run: npx hardhat node &
+        # The ampersand (&) runs the command in the background.
 
       # - name: Deploy and display message
       #   run: npx hardhat run scripts/deploy.js --network localhost
