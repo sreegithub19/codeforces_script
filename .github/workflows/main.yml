@@ -1,63 +1,18 @@
-name: Run the Node.js Script
+name: CI
 
 on:
   push:
     branches:
-      - main
-
+      - solidity_
 jobs:
-  build-ubuntu:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v2
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Install Kotlin
-        run: |
-          curl -s https://get.sdkman.io | bash
-          source "$HOME/.sdkman/bin/sdkman-init.sh"
-          sdk install kotlin
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Install C++ Compiler
-        run: sudo apt-get install g++
-
-      - name: Run script
-        run: npm run pystart
-
-  build-macos:
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v2
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Install Kotlin
-        run: |
-          curl -s https://get.sdkman.io | bash
-          source "$HOME/.sdkman/bin/sdkman-init.sh"
-          sdk install kotlin
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -66,5 +21,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run script
-        run: npm run pystartmac
+      - name: Compile Solidity contracts
+        run: npx hardhat compile
+
+      - name: Run tests
+        run: npx hardhat test
