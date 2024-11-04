@@ -1,2 +1,3 @@
 - npm install --save-dev hardhat
+- npm install --save-dev @nomiclabs/hardhat-ethers ethers
 - npx hardhat

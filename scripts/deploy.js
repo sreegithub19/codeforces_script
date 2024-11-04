@@ -3,9 +3,9 @@ const hre = require("hardhat");
 async function main() {
     // Deploy the HelloWorld contract
     const HelloWorld = await hre.ethers.getContractFactory("HelloWorld");
-    const helloWorld = await HelloWorld.deploy();
+    const helloWorld = await HelloWorld.deploy(); // Wait for deployment
 
-    await helloWorld.deployed();
+    await helloWorld.deployTransaction.wait(); // Wait for the transaction to be mined
 
     console.log("HelloWorld deployed to:", helloWorld.address);
 
