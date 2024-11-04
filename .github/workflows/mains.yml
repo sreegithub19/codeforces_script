@@ -19,7 +19,7 @@ jobs:
           node-version: '18'  # Use the desired Node.js version
 
       - name: Install solc
-        run: sudo apt-get install -y solc
+        run: npm install
 
       - name: Compile Hello World Solidity contract
         run: |
