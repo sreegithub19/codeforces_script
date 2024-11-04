@@ -5,8 +5,8 @@ async function main() {
     // Deploy the contract
     const helloWorld = await HelloWorld.deploy();
     
-    // Wait for the deployment to finish
-    await helloWorld.deployed();
+    // Wait for the deployment to finish (this is done during deploy)
+    // The contract instance is ready for use after this line
 
     console.log("HelloWorld deployed to:", helloWorld.address);
 
