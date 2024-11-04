@@ -1,0 +1,41 @@
+name: Compile Hello World Solidity
+
+on:
+  push:
+    branches:
+      - solidity_  # Adjust as needed for your branch
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'  # Use the desired Node.js version
+
+      - name: Install solc
+        run: npm install -g solc
+
+      - name: Compile Hello World Solidity contract
+        run: |
+          echo 'pragma solidity ^0.8.0; 
+          contract HelloWorld { 
+              string public greeting; 
+              constructor() { 
+                  greeting = "Hello, World!"; 
+              } 
+              function setGreeting(string memory _greeting) public { 
+                  greeting = _greeting; 
+              } 
+              function getGreeting() public view returns (string memory) { 
+                  return greeting; 
+              } 
+          }' | solc --bin --abi --optimize --stdin -o output.json
+
+      - name: Show output
+        run: cat output.json
