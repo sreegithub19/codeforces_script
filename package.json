@@ -5,7 +5,8 @@
   "main": "50A.js",
 "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
-  "pystart": "for file in execute/*.js; do node \"$file\"; done"
+  "pystart": "for file in execute/*.js; do node \"$file\"; done",
+  "pystartmac": "for file in mac_execute/*.js; do node \"$file\"; done"
 },
   "author": "",
   "license": "ISC"
