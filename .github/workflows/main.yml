@@ -90,11 +90,12 @@ jobs:
 
       - name: Compile and run the Objective-C++ code using echo piping
         run: |
-          echo '#import </Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h>
+              echo '#import </Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h>
           
-          int main(int argc, const char * argv[]) {
-              @autoreleasepool {
-                  NSLog(@"Hello from Objective-C++ on GitHub Actions from here!");
-              }
-              return 0;
-          }' | clang++ -std=c++11 -framework Foundation -o hello0 - && ./hello0
+              int main(int argc, const char * argv[]) {
+                  @autoreleasepool {
+                      NSLog(@"Hello from Objective-C++ on GitHub Actions from here inline!");
+                  }
+                  return 0;
+              }' | clang++ -std=c++11 -framework Foundation -x objective-c++ -o hello0 - && ./hello0
+          
