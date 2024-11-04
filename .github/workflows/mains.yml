@@ -19,7 +19,7 @@ jobs:
           node-version: '18'  # Use the desired Node.js version
 
       - name: Install solc
-        run: npm install
+        run: npm install -g solc
 
       - name: Compile Hello World Solidity contract
         run: |
@@ -35,7 +35,7 @@ jobs:
               function getGreeting() public view returns (string memory) { 
                   return greeting; 
               } 
-          }' | solc --bin --abi --optimize --stdin -o output.json
+          }' | solcjs --bin --abi --optimize --stdin -o output.json
 
       - name: Show output
         run: cat output.json
