@@ -20,25 +20,8 @@ jobs:
 
       - name: Install solc
         run: |
-            npm install -g solc
-            sudo add-apt-repository ppa:ethereum/ethereum
-            sudo apt-get install solc
+            npm install
 
       - name: Compile Hello World Solidity contract
         run: |
-          echo 'pragma solidity ^0.8.0; 
-          contract HelloWorld { 
-              string public greeting; 
-              constructor() { 
-                  greeting = "Hello, World!"; 
-              } 
-              function setGreeting(string memory _greeting) public { 
-                  greeting = _greeting; 
-              } 
-              function getGreeting() public view returns (string memory) { 
-                  return greeting; 
-              } 
-          }' | solc --bin --abi --optimize --stdin -o output.json
-
-      - name: Show output
-        run: cat output.json
+          node tests.js
