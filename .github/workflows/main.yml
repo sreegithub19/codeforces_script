@@ -21,7 +21,7 @@ jobs:
         run: sudo apt-get install lua5.3
 
       - name: Run Hello World
-        run: lua lua_/hello.lua
+        run: lua lua_code/hello.lua
 
       # - name: Compile C++ programs
       #   run: |
