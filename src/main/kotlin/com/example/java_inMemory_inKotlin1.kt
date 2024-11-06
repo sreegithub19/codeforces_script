@@ -9,9 +9,9 @@ fun main() {
 
         class MyGreeter {
             public static String greet(String name) {
-                String message = \"""
+                String message = """
                 hello there again from Kotlin, 
-                \""" + name;
+                """ + name;
                 String capitalized = StringUtils.capitalize(message);
                 return capitalized;
             }
