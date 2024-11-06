@@ -32,6 +32,11 @@ fun main() {
     if (libsPath != null) {
         // Remove extra quotes in the classpath (if any)
         val classpath = libsPath.replace("\"", "")
+        /* 
+        String message = \"\"\"hello there!!
+             \"\"\";
+
+        */
 
         // JShell script content to be passed as input
         val script = """
@@ -39,8 +44,8 @@ fun main() {
     
     class MyGreeter {
         public static String greet(String name) {
-            String message = \"\"\"hello there!!
-            \"\"\";
+             String message = \\\"\\\"\\\"hello there!!
+             \\\"\\\"\\\";
             String combinedMessage = message + name;
             String capitalized = StringUtils.capitalize(combinedMessage);
             return capitalized;
