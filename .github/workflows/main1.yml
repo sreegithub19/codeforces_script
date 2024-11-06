@@ -72,4 +72,4 @@ jobs:
           CLASS_PATH="${{ steps.maven-classpath.outputs.classpath }}"
           
           # Run the Kotlin script directly using the `kotlin` command and pass in the classpath
-          kotlin -cp "$CLASS_PATH" src/main/kotlin/com/example/java_inMemory_inKotlin1.kt
+          kotlin -cp "$CLASS_PATH" src/main/kotlin/com/example/java_inMemory_inKotlin1.kts
