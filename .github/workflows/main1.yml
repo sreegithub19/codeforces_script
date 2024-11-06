@@ -29,6 +29,13 @@ jobs:
       - name: Download Maven Dependencies
         run: mvn dependency:copy-dependencies -DoutputDirectory=libs
 
+
+      - name: Install Kotlin
+        run: |
+          curl -s https://get.sdkman.io | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install kotlin
+
       # Step 2: Run JShell with the dependencies in the classpath
       - name: Run JShell and Control Output
         run: |
@@ -40,7 +47,7 @@ jobs:
             class MyGreeter {
                 public static String greet(String name) {
                     String message = """
-                    hello there again, 
+                    hello there, 
                     """ + name;
                     String capitalized = StringUtils.capitalize(message);
                     return capitalized;
@@ -51,3 +58,12 @@ jobs:
             System.out.println(MyGreeter.greet("world"));
             
             EOF
+
+      - name: Compile Kotlin Code
+        run: |
+              kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
+    
+    
+      - name: Run Kotlin Application
+        run: |
+              java -jar java_inMemory_inKotlin1.jar
