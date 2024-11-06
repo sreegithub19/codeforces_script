@@ -18,8 +18,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-            java-version: '21'
-            distribution: 'temurin'
+          java-version: '21'
+          distribution: 'temurin'
 
       # Step 3: Install Kotlin
       - name: Install Kotlin
@@ -65,11 +65,17 @@ jobs:
           mvn dependency:build-classpath -Dmdep.outputFile=classpath.txt
           echo "::set-output name=classpath::$(cat classpath.txt)"
 
-      # Step 7: Run Kotlin script directly with dependencies
-      - name: Run Kotlin script for dynamic Java compilation
+      # Step 7: Compile Kotlin code into a JAR file
+      - name: Compile Kotlin Code into JAR
         run: |
           # Get the classpath from the previous step
           CLASS_PATH="${{ steps.maven-classpath.outputs.classpath }}"
-          
-          # Run the Kotlin script directly using the `kotlin` command and pass in the classpath
-          kotlin -cp "$CLASS_PATH" src/main/kotlin/com/example/java_inMemory_inKotlin1.kts
+
+          # Compile the Kotlin file into a JAR file, including the dependencies
+          kotlinc -cp "$CLASS_PATH" src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d myProgram.jar
+
+      # Step 8: Run the compiled Kotlin JAR file with dependencies
+      - name: Run Compiled Kotlin JAR
+        run: |
+          # Run the compiled JAR with the Maven dependencies
+          java -cp "$CLASS_PATH:myProgram.jar" com.example.java_inMemory_inKotlin1Kt
