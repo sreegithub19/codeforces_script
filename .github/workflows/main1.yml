@@ -1,4 +1,4 @@
-name: Run Kotlin In-Memory Java Compilation
+name: Run In-Memory Java Code with Maven Dependencies
 
 on:
   push:
@@ -10,84 +10,47 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Repository
+      - name: Check out code
         uses: actions/checkout@v2
 
-      # Step 2: Set up JDK
-      - name: Set up JDK
+      - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      # Step 3: Install Kotlin
-      - name: Install Kotlin
-        run: |
-          sudo apt update
-          sudo apt install -y kotlin
-
-      # Step 4: Install Maven
+      # Step 3: Install Maven to resolve dependencies
       - name: Install Maven
+        run: sudo apt install -y maven
+
+      # Step 4: Download Maven dependencies (e.g., commons-lang3)
+      - name: Download Maven Dependencies
         run: |
-          sudo apt install -y maven
+          mkdir -p libs
+          mvn dependency:copy-dependencies -DoutputDirectory=libs -DincludeScope=runtime
 
-      # Step 5: Resolve Maven dependencies using Maven
-      - name: Resolve Maven dependencies
+      # Step 5: Compile and run in-memory Java code with dependencies
+      - name: Compile and Run In-Memory Java Code
         run: |
-          # Create the pom.xml file to resolve dependencies
-          echo "
-          <project xmlns=\"http://maven.apache.org/POM/4.0.0\"
-                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-                   xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">
-              <modelVersion>4.0.0</modelVersion>
-              <groupId>com.example</groupId>
-              <artifactId>dynamic-java</artifactId>
-              <version>1.0-SNAPSHOT</version>
-              <dependencies>
-                  <dependency>
-                      <groupId>org.apache.commons</groupId>
-                      <artifactId>commons-lang3</artifactId>
-                      <version>3.12.0</version>
-                  </dependency>
-              </dependencies>
-          </project>
-          " > pom.xml
+          # Write the Java code in memory
+          JAVA_CODE=$(cat <<EOF
+          import org.apache.commons.lang3.StringUtils;
+          
+          public class Hello {
+              public static void greet() {
+                  String message = "Hello from dynamically compiled Java!";
+                  String capitalizedMessage = StringUtils.capitalize(message);
+                  System.out.println(capitalizedMessage);
+              }
+          }
+          EOF
+          )
 
-          # Run Maven to download the dependencies into the local repository
-          mvn clean install
+          # Save the Java code to a file
+          echo "$JAVA_CODE" > Hello.java
 
-      # Step 6: Resolve classpath using Maven
-      - name: Get Maven dependencies classpath
-        id: maven-classpath
-        run: |
-          # Get the classpath for Maven dependencies
-          mvn dependency:build-classpath -Dmdep.outputFile=classpath.txt
-          echo "::set-output name=classpath::$(cat classpath.txt)"
+          # Compile the in-memory Java code with downloaded dependencies
+          javac -cp ".:libs/*" Hello.java
 
-    # Step 7: Compile Kotlin Code into JAR
-      - name: Compile Kotlin Code into JAR
-        run: |
-            # Get the classpath from the previous step
-            CLASS_PATH="${{ steps.maven-classpath.outputs.classpath }}"
-
-            # Clean up the classpath by removing JDK modules (if needed)
-            CLEAN_CLASS_PATH=$(echo $CLASS_PATH | sed 's|/usr/lib/jvm/temurin-21-jdk-amd64/lib/modules/java.base| |g')
-
-            # Compile the Kotlin file into a JAR file, including the dependencies
-            kotlinc -cp "$CLEAN_CLASS_PATH" src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d myProgram.jar
-
-
-    # Step 8: Run the compiled Kotlin JAR file with dependencies
-      - name: Run Compiled Kotlin JAR
-        run: |
-            # Get the classpath from the previous step
-            CLASS_PATH="${{ steps.maven-classpath.outputs.classpath }}"
-
-            # Exclude JDK internal modules from classpath by filtering them out
-            # (you can manually remove certain paths from the classpath if needed)
-            CLEAN_CLASS_PATH=$(echo $CLASS_PATH | sed 's|/usr/lib/jvm/temurin-21-jdk-amd64/lib/modules/java.base| |g')
-
-            # Run the compiled JAR with the correct classpath
-            java -cp "$CLEAN_CLASS_PATH:myProgram.jar" com.example.java_inMemory_inKotlin1Kt
-
+          # Run the compiled Java code
+          java -cp ".:libs/*" Hello
