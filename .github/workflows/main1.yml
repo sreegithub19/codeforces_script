@@ -70,4 +70,4 @@ jobs:
               ls ~/.m2/repository/org/apache/commons
               java -jar java_inMemory_inKotlin1.jar
               #java -jar java_inMemory_inKotlin2.jar
-              java -cp java_inMemory_inKotlin2.jar:~/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar Java_inMemory_inKotlin1Kt
+              java -cp java_inMemory_inKotlin2.jar:~/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar Java_inMemory_inKotlin2Kt
