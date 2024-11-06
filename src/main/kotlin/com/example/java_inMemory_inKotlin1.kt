@@ -14,24 +14,23 @@ fun main() {
     runShellCommand("""echo 'Hello from \"\"\" abd \"\"\" Kotlin Shell Script!'
     """)
 
-    runShellCommand("""# Run JShell with the classes from the libs directory (Maven dependencies)
-            jshell --class-path "libs/*" <<EOF
-            
-            import org.apache.commons.lang3.StringUtils;
-            
-            class MyGreeter {
-                public static String greet(String name) {
-                    String message = \"\"\"
-                    hello there!!
-                    \"\"\" + name;
-                    String capitalized = StringUtils.capitalize(message);
-                    return capitalized;
-                }
+    val command = """
+        jshell --class-path "libs/*" <<EOF
+        import org.apache.commons.lang3.StringUtils;
+        
+        class MyGreeter {
+            public static String greet(String name) {
+                String message = "hello there!!" + name;
+                String capitalized = StringUtils.capitalize(message);
+                return capitalized;
             }
-            
-            // Call the greet method and print the result
-            System.out.println(MyGreeter.greet("world"));
-            
-            EOF
-    """)
+        }
+
+        // Call the greet method and print the result
+        System.out.println(MyGreeter.greet("world"));
+
+        EOF
+    """
+
+    runShellCommand(command)
 }
