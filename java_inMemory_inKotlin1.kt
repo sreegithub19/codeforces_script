@@ -23,8 +23,7 @@ fun main() {
         // Remove extra quotes in the classpath (if any)
         val classpath = libsPath.replace("\"", "")
 
-        val command = """
-            jshell --class-path $classpath <<EOF
+        val command = """jshell --class-path $classpath <<EOF
             import org.apache.commons.lang3.StringUtils;
             
             class MyGreeter {
