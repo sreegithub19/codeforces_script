@@ -63,7 +63,7 @@ jobs:
 
 
        # Step 6: Compile and run in-memory Java code with dependencies again
-      - name: Compile and Run In-Memory Java Code
+      - name: Compile and Run In-Memory Java Code again
         run: |
           kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
           java -jar java_inMemory_inKotlin1.jar 
