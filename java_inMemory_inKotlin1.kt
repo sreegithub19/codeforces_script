@@ -48,6 +48,7 @@ fun main() {
     }
 
     // Call the greet method and print the result
+    System.out.println(MyGreeter.greet("world"));
     """
     
     
