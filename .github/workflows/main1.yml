@@ -62,8 +62,10 @@ jobs:
       - name: Compile Kotlin Code
         run: |
               kotlinc java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
+              kotlinc java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin2.jar
     
     
       - name: Run Kotlin Application
         run: |
               java -jar java_inMemory_inKotlin1.jar
+              java -jar java_inMemory_inKotlin2.jar
