@@ -19,6 +19,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
+      - name: Install Kotlin
+        run: |
+          curl -s https://get.sdkman.io | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install kotlin
+
       # Step 3: Install Maven to resolve dependencies
       - name: Install Maven
         run: sudo apt install -y maven
@@ -38,7 +44,7 @@ jobs:
           
           public class Hello {
               public static void main(String[] args) {
-                  String message = "Hello from dynamically compiled Java!";
+                  String message = "hello from dynamically compiled java!" + " : dsgsdgsg";
                   String capitalizedMessage = StringUtils.capitalize(message);
                   System.out.println(capitalizedMessage);
               }
@@ -54,3 +60,10 @@ jobs:
 
           # Run the compiled Java code
           java -cp ".:libs/*" Hello
+
+
+       # Step 6: Compile and run in-memory Java code with dependencies again
+      - name: Compile and Run In-Memory Java Code
+        run: |
+          kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
+          java -jar java_inMemory_inKotlin1.jar 
