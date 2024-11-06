@@ -1,0 +1,74 @@
+name: Run Kotlin In-Memory Java Compilation
+
+on:
+  push:
+    branches:
+      - kotlin_
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+
+      # Step 3: Install Kotlin
+      - name: Install Kotlin
+        run: |
+          sudo apt update
+          sudo apt install -y kotlin
+
+      # Step 4: Install Maven
+      - name: Install Maven
+        run: |
+          sudo apt install -y maven
+
+      # Step 5: Resolve Maven dependencies using Maven
+      - name: Resolve Maven dependencies
+        run: |
+          # Create the pom.xml file to resolve dependencies
+          echo "
+          <project xmlns=\"http://maven.apache.org/POM/4.0.0\"
+                   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
+                   xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">
+              <modelVersion>4.0.0</modelVersion>
+              <groupId>com.example</groupId>
+              <artifactId>dynamic-java</artifactId>
+              <version>1.0-SNAPSHOT</version>
+              <dependencies>
+                  <dependency>
+                      <groupId>org.apache.commons</groupId>
+                      <artifactId>commons-lang3</artifactId>
+                      <version>3.12.0</version>
+                  </dependency>
+              </dependencies>
+          </project>
+          " > pom.xml
+
+          # Run Maven to download the dependencies into the local repository
+          mvn clean install
+
+      # Step 6: Resolve classpath using Maven
+      - name: Get Maven dependencies classpath
+        id: maven-classpath
+        run: |
+          # Get the classpath for Maven dependencies
+          mvn dependency:build-classpath -Dmdep.outputFile=classpath.txt
+          echo "::set-output name=classpath::$(cat classpath.txt)"
+
+      # Step 7: Run Kotlin script directly with dependencies
+      - name: Run Kotlin script for dynamic Java compilation
+        run: |
+          # Get the classpath from the previous step
+          CLASS_PATH="${{ steps.maven-classpath.outputs.classpath }}"
+          
+          # Run the Kotlin script directly using the `kotlin` command and pass in the classpath
+          kotlin -cp "$CLASS_PATH" src/main/kotlin/com/example/java_inMemory_inKotlin1.kt
