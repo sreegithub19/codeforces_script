@@ -3,3 +3,4 @@ execute/*.class
 .idea
 codeforces_script.iml
 target
+node_modules
