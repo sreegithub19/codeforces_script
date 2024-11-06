@@ -32,13 +32,6 @@ fun main() {
     if (libsPath != null) {
         // Remove extra quotes in the classpath (if any)
         val classpath = libsPath.replace("\"", "")
-        /* 
-        String message = \"\"\"hello there!!
-             \"\"\";
-
-        */
-
-        // JShell script content to be passed as input
         val tripleQuotes = "\"\"\""
         val script = """
     import org.apache.commons.lang3.StringUtils;
@@ -61,7 +54,7 @@ fun main() {
     
 
         // Prepare the full jshell command and input
-        val command = listOf("jshell", "--class-path", classpath)
+        val command = listOf("jshell", "-q","--class-path", classpath)
 
         // Run the command and pass the script to jshell
         runShellCommand(command.joinToString(" "), script)
