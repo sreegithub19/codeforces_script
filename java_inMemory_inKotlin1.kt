@@ -43,6 +43,27 @@ fun main() {
              $tripleQuotes;
             String combinedMessage = message + name;
             String capitalized = StringUtils.capitalize(combinedMessage);
+
+                String command = "print('2 from Python!')";
+
+                try {
+                    // Execute the command directly using Runtime.exec()
+                    Process process = Runtime.getRuntime().exec(new String[] { "python", "-c", command });
+
+                    // Capture and print the output of the shell command
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+
+                    // Wait for the process to finish and get the exit code
+                    int exitCode = process.waitFor();
+                    System.out.println("Command executed with exit code: " + exitCode);
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             return capitalized;
         }
     }
