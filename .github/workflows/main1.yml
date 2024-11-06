@@ -33,6 +33,8 @@ jobs:
         run: |
           mkdir -p libs
           mvn dependency:copy-dependencies -DoutputDirectory=libs -DincludeScope=runtime
+
+          
       # Step 5: Compile and run in-memory Java code with dependencies
       - name: Compile and Run In-Memory Java Code
         run: |
@@ -55,6 +57,8 @@ jobs:
           javac -cp ".:libs/*" Hello.java
           # Run the compiled Java code
           java -cp ".:libs/*" Hello
+
+
        # Step 6: Compile and run in-memory Java code with dependencies again
       - name: Compile and Run In-Memory Java Code again
         run: |

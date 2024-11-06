@@ -1,90 +1,73 @@
-import javax.tools.*
 import java.io.File
+import javax.tools.JavaCompiler
+import javax.tools.ToolProvider
 import java.lang.reflect.Method
-import java.net.URI
-import java.nio.file.Files
-import java.nio.file.Paths
 
-class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManager<JavaFileManager>(compiler.getStandardFileManager(null, null, null)) {
-    private val classBytes = mutableMapOf<String, ByteArray>()
-
-    override fun getJavaFileForOutput(location: JavaFileManager.Location, className: String, kind: JavaFileObject.Kind, sibling: FileObject?): JavaFileObject {
-        return object : SimpleJavaFileObject(URI.create("bytes://$className"), kind) {
-            override fun openOutputStream(): java.io.OutputStream {
-                return object : java.io.ByteArrayOutputStream() {
-                    override fun close() {
-                        classBytes[className] = this.toByteArray()
-                        super.close()
-                    }
-                }
-            }
+fun main() {
+    // Step 1: Java code to be compiled (as a string)
+    val javaCode = """
+    import org.apache.commons.lang3.StringUtils;
+    
+    public class Hello {
+        public static void main(String[] args) {
+            String message = "hello from dynamically compiled java again here!" + " : dsgsdgsg";
+            String capitalizedMessage = StringUtils.capitalize(message);
+            System.out.println(capitalizedMessage);
         }
     }
+""".trimIndent()
 
-    fun getClassBytes(className: String): ByteArray? {
-        return classBytes[className]
+    // Step 2: Compile and run the Java code with Maven dependencies in classpath
+    compileAndRunWithClasspath(javaCode)
+}
+
+fun compileAndRunWithClasspath(javaCode: String) {
+    // Step 3: Get Maven dependencies classpath
+    val classpath = getClasspathFromMaven()
+
+    // Step 4: Get the Java compiler
+    val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
+
+    // Step 5: Prepare in-memory file manager
+    val fileManager = compiler.getStandardFileManager(null, null, null)
+
+    // Step 6: Create virtual file for the source code
+    val file = JavaSourceFromString("Hello", javaCode)
+
+    // Step 7: Compile the source code with classpath
+    val compilationUnits = listOf(file)
+    val task = compiler.getTask(null, fileManager, null, listOf("-cp", classpath), null, compilationUnits)
+
+    val success = task.call()
+
+    if (success) {
+        // Step 8: Dynamically load the compiled class (from memory)
+        val cls = Class.forName("Hello")
+
+        // Step 9: Invoke the 'greet' method
+        val method: Method = cls.getDeclaredMethod("greet")
+        method.invoke(null) // Static method, so we pass null
+    } else {
+        println("Compilation failed.")
     }
 }
 
-fun main() {
-    // Step 1: Download Maven dependencies (e.g., commons-lang3)
-    val mavenDependenciesDir = "libs"
-    val mavenCmd = "mvn dependency:copy-dependencies -DoutputDirectory=libs -DincludeScope=runtime"
+// Get the classpath string of Maven dependencies (in 'libs' directory)
+fun getClasspathFromMaven(): String {
+    val classpath = StringBuilder()
+    val libsDir = File("libs")
+    val libs = libsDir.listFiles { _, name -> name.endsWith(".jar") }
 
-    val process = ProcessBuilder(mavenCmd.split(" "))
-        .directory(File("."))
-        .inheritIO()
-        .start()
-
-    val exitCode = process.waitFor()
-    if (exitCode != 0) {
-        println("Maven dependency download failed!")
-        return
+    libs?.forEach { lib ->
+        classpath.append(lib.absolutePath).append(File.pathSeparator)
     }
 
-    // Step 2: Prepare Java code
-    val javaCode = """
-        import org.apache.commons.lang3.StringUtils;
-        
-        public class Hello {
-            public static void main(String[] args) {
-                String message = "hello from dynamically compiled java again here!" + " : dsgsdgsg";
-                String capitalizedMessage = StringUtils.capitalize(message);
-                System.out.println(capitalizedMessage);
-            }
-        }
-    """.trimIndent()
+    return classpath.toString()
+}
 
-    // Step 3: Compile the Java code dynamically
-    val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
-    val fileManager = InMemoryJavaFileManager(compiler)
-
-    val fileObject = object : SimpleJavaFileObject(URI.create("string:///Hello.java"), JavaFileObject.Kind.SOURCE) {
-        override fun getCharContent(ignoreEncodingErrors: Boolean): CharSequence {
-            return javaCode
-        }
-    }
-
-    val compilationUnits = listOf(fileObject)
-
-    val compilationResult = compiler.getTask(null, fileManager, null, null, null, compilationUnits)?.call()
-    if (compilationResult == true) {
-        println("Compilation successful!")
-
-        // Step 4: Load the compiled class
-        val classLoader = object : ClassLoader() {
-            override fun findClass(name: String): Class<*> {
-                val classBytes = fileManager.getClassBytes(name)
-                    ?: throw ClassNotFoundException(name)
-                return defineClass(name, classBytes, 0, classBytes.size)
-            }
-        }
-
-        // Step 5: Load the Hello class and invoke the main method
-        val clazz = classLoader.loadClass("Hello")
-        val method: Method = clazz.getMethod("main", Array<String>::class.java)
-        method.invoke(null, arrayOf<String>())
-    } else {
-        println("Compilation failed!")
-    }
+// Custom JavaFileObject to represent source code in memory
+class JavaSourceFromString(name: String, private val code: String) : javax.tools.SimpleJavaFileObject(
+    java.net.URI.create("string:///$name.java"), javax.tools.JavaFileObject.Kind.SOURCE
+) {
+    override fun getCharContent(ignoreEncodingErrors: Boolean): CharSequence = code
 }
