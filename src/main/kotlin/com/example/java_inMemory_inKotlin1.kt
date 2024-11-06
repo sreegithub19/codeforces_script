@@ -7,6 +7,7 @@ import javax.tools.JavaFileObject
 import javax.tools.SimpleJavaFileObject
 import javax.tools.StandardLocation
 import javax.tools.ForwardingJavaFileManager
+import java.net.URI
 
 fun main() {
     // Java code to be compiled (as a string)
@@ -52,7 +53,9 @@ fun compileAndRunWithClasspath(javaCode: String) {
                 override fun delete(): Boolean = false
                 override fun isNameCompatible(name: String?, kind: JavaFileObject.Kind?): Boolean = true
                 override fun getKind(): JavaFileObject.Kind = JavaFileObject.Kind.CLASS
-                override fun toUri(): java.net.URI = URI.create("byte:///$className")
+                override fun toUri(): URI = URI.create("byte:///$className")
+                override fun getNestingKind(): javax.tools.JavaFileObject.NestingKind = javax.tools.JavaFileObject.NestingKind.TOP_LEVEL
+                override fun getAccessLevel(): javax.lang.model.element.Modifier = javax.lang.model.element.Modifier.PUBLIC
             }
         }
 
@@ -97,7 +100,7 @@ fun getClasspathFromMaven(): String {
 
 // Custom JavaFileObject to represent source code in memory
 class JavaSourceFromString(name: String, private val code: String) : SimpleJavaFileObject(
-    java.net.URI.create("string:///$name.java"), JavaFileObject.Kind.SOURCE
+    URI.create("string:///$name.java"), JavaFileObject.Kind.SOURCE
 ) {
     override fun getCharContent(ignoreEncodingErrors: Boolean): CharSequence = code
 }
