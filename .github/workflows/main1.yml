@@ -67,5 +67,6 @@ jobs:
     
       - name: Run Kotlin Application
         run: |
+              ls ~/.m2/repository/org/apache/commons
               java -jar java_inMemory_inKotlin1.jar
               java -jar java_inMemory_inKotlin2.jar
