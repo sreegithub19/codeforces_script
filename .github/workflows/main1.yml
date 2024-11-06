@@ -29,28 +29,24 @@ jobs:
       - name: Download Maven Dependencies
         run: mvn dependency:copy-dependencies -DoutputDirectory=libs
 
-      # Step 5: Run JShell with classes and print output at the end
+      # Step 2: Run JShell with the dependencies in the classpath
       - name: Run JShell and Control Output
         run: |
-          # Create and run the shell script to execute JShell with classes
-          echo '#!/bin/bash
-          mvn dependency:copy-dependencies -DoutputDirectory=libs
-          jshell --class-path "libs/*" <<EOF
-          
-          import org.apache.commons.lang3.StringUtils;
-          
-          class MyGreeter {
-              public static String greet(String name) {
-                  String message = "hello there, " + name;
-                  String capitalized = StringUtils.capitalize(message);
-                  return capitalized;
-              }
-          }
-          
-          String result = MyGreeter.greet("world");
-          System.out.println(result);
-          
-          EOF
-          ' > run_jshell.sh
-          chmod +x run_jshell.sh
-          ./run_jshell.sh
+            # Run JShell with the classes from the libs directory (Maven dependencies)
+            jshell --class-path "libs/*" <<EOF
+            
+            import org.apache.commons.lang3.StringUtils;
+            
+            class MyGreeter {
+                public static String greet(String name) {
+                    String message = "hello there again, " + name;
+                    String capitalized = StringUtils.capitalize(message);
+                    return capitalized;
+                }
+            }
+            
+            // Call the greet method and print the result
+            String result = MyGreeter.greet("world");
+            System.out.println(result);
+            
+            EOF
