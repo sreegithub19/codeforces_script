@@ -38,7 +38,7 @@ fun main() {
             
             class MyGreeter {
                 public static String greet(String name) {
-                    String message = "hello there!!" + name;
+                    String message = \"\"\"hello there!!\"\"\" + name;
                     String capitalized = StringUtils.capitalize(message);
                     return capitalized;
                 }
