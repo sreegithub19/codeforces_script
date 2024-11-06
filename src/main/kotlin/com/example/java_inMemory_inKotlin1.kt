@@ -11,6 +11,6 @@ fun runShellCommand(command: String) {
 
 fun main() {
     // Example shell command (you can replace this with any shell command or script)
-    runShellCommand("""echo 'Hello from Kotlin Shell Script!'
+    runShellCommand("""echo 'Hello from \"\"\" abd \"\"\" Kotlin Shell Script!'
     """)
 }
