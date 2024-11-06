@@ -29,7 +29,7 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
 fun main() {
     // Step 1: Download Maven dependencies (e.g., commons-lang3)
     val mavenDependenciesDir = "libs"
-    val mavenCmd = "mvn dependency:copy-dependencies -DoutputDirectory=$mavenDependenciesDir -DincludeScope=runtime"
+    val mavenCmd = "mvn dependency:copy-dependencies -DoutputDirectory=libs -DincludeScope=runtime"
 
     val process = ProcessBuilder(mavenCmd.split(" "))
         .directory(File("."))
