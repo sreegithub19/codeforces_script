@@ -1,95 +1,116 @@
-import javax.tools.*
-import java.lang.reflect.Method
-import java.net.URI
-import java.nio.file.Files
-import java.nio.file.Paths
+import java.io.File
 import java.io.ByteArrayOutputStream
+import java.lang.reflect.Method
+import javax.tools.JavaCompiler
+import javax.tools.ToolProvider
 import javax.tools.JavaFileObject
-
-class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManager<JavaFileManager>(compiler.getStandardFileManager(null, null, null)) {
-    private val classBytes = mutableMapOf<String, ByteArray>()
-
-    override fun getJavaFileForOutput(
-        location: JavaFileManager.Location,
-        className: String,
-        kind: JavaFileObject.Kind,
-        sibling: FileObject?
-    ): JavaFileObject {
-        return object : SimpleJavaFileObject(URI.create("bytes://$className"), kind) {
-            override fun openOutputStream(): java.io.OutputStream {
-                return object : ByteArrayOutputStream() {
-                    override fun close() {
-                        classBytes[className] = this.toByteArray()
-                        super.close()
-                    }
-                }
-            }
-
-            // Implement the missing abstract method
-            override fun toUri(): URI {
-                return URI.create("bytes://$className")
-            }
-
-            // You can implement other methods as needed.
-            override fun getNestingKind(): javax.lang.model.element.NestingKind {
-                return javax.lang.model.element.NestingKind.TOP_LEVEL
-            }
-
-            override fun getAccessLevel(): javax.lang.model.element.Modifier {
-                return javax.lang.model.element.Modifier.PUBLIC
-            }
-        }
-    }
-
-    fun getClassBytes(className: String): ByteArray? {
-        return classBytes[className]
-    }
-}
+import javax.tools.SimpleJavaFileObject
+import javax.tools.StandardLocation
+import javax.tools.ForwardingJavaFileManager
 
 fun main() {
-    // Java code to be compiled in-memory
+    // Java code to be compiled (as a string)
     val javaCode = """
         import org.apache.commons.lang3.StringUtils;
-
+        
         public class Hello {
             public static void main(String[] args) {
-                String message = "hello from dynamically compiled java again here!" + " : dsgsdgsg";
+                String message = "Hello from dynamically compiled Java!";
                 String capitalizedMessage = StringUtils.capitalize(message);
                 System.out.println(capitalizedMessage);
             }
         }
     """.trimIndent()
 
-    // Use JavaCompiler to compile the Java code dynamically
+    // Compile and run the Java code with Maven dependencies in classpath
+    compileAndRunWithClasspath(javaCode)
+}
+
+fun compileAndRunWithClasspath(javaCode: String) {
+    // Step 1: Get the classpath string of Maven dependencies (in 'libs' directory)
+    val classpath = getClasspathFromMaven()
+
+    // Step 2: Get the Java compiler
     val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
-    val fileManager = InMemoryJavaFileManager(compiler)
 
-    val fileObject = object : SimpleJavaFileObject(URI.create("string:///Hello.java"), JavaFileObject.Kind.SOURCE) {
-        override fun getCharContent(ignoreEncodingErrors: Boolean): CharSequence {
-            return javaCode
-        }
-    }
+    // Step 3: Prepare in-memory file manager
+    val fileManager = object : ForwardingJavaFileManager<javax.tools.JavaFileManager>(compiler.getStandardFileManager(null, null, null)) {
+        private val byteArrayOutputStream = ByteArrayOutputStream()
 
-    val compilationUnits = listOf(fileObject)
-
-    val compilationResult = compiler.getTask(null, fileManager, null, null, null, compilationUnits)?.call()
-    if (compilationResult == true) {
-        println("Compilation successful!")
-
-        // Load the compiled class in-memory
-        val classLoader = object : ClassLoader() {
-            override fun findClass(name: String): Class<*> {
-                val classBytes = fileManager.getClassBytes(name)
-                    ?: throw ClassNotFoundException(name)
-                return defineClass(name, classBytes, 0, classBytes.size)
+        override fun getJavaFileForOutput(
+            location: StandardLocation?,
+            className: String?,
+            kind: JavaFileObject.Kind?,
+            sibling: JavaFileObject?
+        ): JavaFileObject {
+            // Return an in-memory file object to capture the compiled bytecode
+            return object : JavaFileObject {
+                override fun getName(): String = className ?: ""
+                override fun openOutputStream(): ByteArrayOutputStream = byteArrayOutputStream
+                override fun openReader(ignoreEncodingErrors: Boolean): java.io.Reader = throw UnsupportedOperationException()
+                override fun openInputStream(): java.io.InputStream = throw UnsupportedOperationException()
+                override fun delete(): Boolean = false
+                override fun isNameCompatible(name: String?, kind: JavaFileObject.Kind?): Boolean = true
+                override fun getKind(): JavaFileObject.Kind = JavaFileObject.Kind.CLASS
+                override fun toUri(): java.net.URI = URI.create("byte:///$className")
             }
         }
 
-        // Load and invoke the compiled class
-        val clazz = classLoader.loadClass("Hello")
-        val method: Method = clazz.getMethod("main", Array<String>::class.java)
-        method.invoke(null, arrayOf<String>())
-    } else {
-        println("Compilation failed!")
+        // Return the compiled bytecode as a byte array
+        fun getByteArray(): ByteArray = byteArrayOutputStream.toByteArray()
     }
+
+    // Step 4: Create virtual file for the source code
+    val file = JavaSourceFromString("Hello", javaCode)
+
+    // Step 5: Compile the source code with classpath
+    val compilationUnits = listOf(file)
+    val task = compiler.getTask(null, fileManager, null, listOf("-cp", classpath), null, compilationUnits)
+
+    val success = task.call()
+
+    if (success) {
+        // Step 6: Dynamically load the compiled class (from memory)
+        val classData = fileManager.getByteArray()
+        val cls = loadClassFromByteArray("Hello", classData)
+
+        // Step 7: Invoke the 'main' method
+        val method: Method = cls.getDeclaredMethod("main", Array<String>::class.java)
+        method.invoke(null, arrayOf<String>()) // No arguments for main method
+    } else {
+        println("Compilation failed.")
+    }
+}
+
+// Get the classpath string of Maven dependencies (in 'libs' directory)
+fun getClasspathFromMaven(): String {
+    val classpath = StringBuilder()
+    val libsDir = File("libs")
+    val libs = libsDir.listFiles { _, name -> name.endsWith(".jar") }
+
+    libs?.forEach { lib ->
+        classpath.append(lib.absolutePath).append(File.pathSeparator)
+    }
+
+    return classpath.toString()
+}
+
+// Custom JavaFileObject to represent source code in memory
+class JavaSourceFromString(name: String, private val code: String) : SimpleJavaFileObject(
+    java.net.URI.create("string:///$name.java"), JavaFileObject.Kind.SOURCE
+) {
+    override fun getCharContent(ignoreEncodingErrors: Boolean): CharSequence = code
+}
+
+// Load class from the compiled bytecode (using a custom class loader)
+fun loadClassFromByteArray(className: String, classData: ByteArray): Class<*> {
+    val classLoader = object : ClassLoader() {
+        override fun findClass(name: String): Class<*> {
+            if (name == className) {
+                return defineClass(name, classData, 0, classData.size)
+            }
+            return super.findClass(name)
+        }
+    }
+    return classLoader.loadClass(className)
 }
