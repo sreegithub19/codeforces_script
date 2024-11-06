@@ -39,6 +39,7 @@ fun main() {
         */
 
         // JShell script content to be passed as input
+        val tripleQuotes = "\"\"\""
         val script = """
     import org.apache.commons.lang3.StringUtils;
     
@@ -64,8 +65,6 @@ fun main() {
 
         // Run the command and pass the script to jshell
         runShellCommand(command.joinToString(" "), script)
-
-        val tripleQuotes = "\"\"\""
         val script_ = """
             This is a raw string containing triple quotes:
             $tripleQuotes
