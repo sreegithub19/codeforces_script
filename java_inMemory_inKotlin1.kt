@@ -62,6 +62,14 @@ fun main() {
 
         // Run the command and pass the script to jshell
         runShellCommand(command.joinToString(" "), script)
+
+        val tripleQuotes = "\"\"\""
+        val script_ = """
+            This is a raw string containing triple quotes:
+            $tripleQuotes
+            End of script
+        """
+        println(script_)
     } else {
         println("Error: 'libs' directory not found or no JAR files present.")
     }
