@@ -46,7 +46,7 @@ jobs:
             }
             
             // Call the greet method and print the result
-            String result = MyGreeter.greet("world");
-            System.out.println(result);
+            //String result = MyGreeter.greet("world");
+            System.out.println(MyGreeter.greet("world"));
             
             EOF
