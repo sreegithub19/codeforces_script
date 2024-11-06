@@ -35,18 +35,19 @@ fun main() {
 
         // JShell script content to be passed as input
         val script = """import org.apache.commons.lang3.StringUtils;
-            
-            class MyGreeter {
-                public static String greet(String name) {
-                    String message = \"\"\"hello there!!\"\"\" + name;
-                    String capitalized = StringUtils.capitalize(message);
-                    return capitalized;
-                }
-            }
+    
+    class MyGreeter {
+        public static String greet(String name) {
+            String message = "\"\"\"hello there!!\"\"\"" + name;
+            String capitalized = StringUtils.capitalize(message);
+            return capitalized;
+        }
+    }
 
-            // Call the greet method and print the result
-            System.out.println(MyGreeter.greet("world"));
-        """
+    // Call the greet method and print the result
+    System.out.println(MyGreeter.greet("world"));
+    """
+    
 
         // Prepare the full jshell command and input
         val command = listOf("jshell", "--class-path", classpath)
