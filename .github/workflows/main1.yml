@@ -37,7 +37,7 @@ jobs:
           import org.apache.commons.lang3.StringUtils;
           
           public class Hello {
-              public static void greet() {
+              public static void main(String[] args) {
                   String message = "Hello from dynamically compiled Java!";
                   String capitalizedMessage = StringUtils.capitalize(message);
                   System.out.println(capitalizedMessage);
