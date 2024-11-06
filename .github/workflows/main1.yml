@@ -1,4 +1,74 @@
-name: Run In-Memory Java Code with Maven Dependencies
+# name: Run In-Memory Java Code with Maven Dependencies
+
+# on:
+#   push:
+#     branches:
+#       - kotlin_
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Check out code
+#         uses: actions/checkout@v2
+
+#       - name: Set up JDK 21
+#         uses: actions/setup-java@v2
+#         with:
+#           java-version: '21'
+#           distribution: 'temurin'
+
+#       - name: Install Kotlin
+#         run: |
+#           curl -s https://get.sdkman.io | bash
+#           source "$HOME/.sdkman/bin/sdkman-init.sh"
+#           sdk install kotlin
+#       # Step 3: Install Maven to resolve dependencies
+#       - name: Install Maven
+#         run: sudo apt install -y maven
+
+#       # Step 4: Download Maven dependencies (e.g., commons-lang3)
+#       - name: Download Maven Dependencies
+#         run: |
+#           mkdir -p libs
+#           mvn dependency:copy-dependencies -DoutputDirectory=libs -DincludeScope=runtime
+
+
+#       # Step 5: Compile and run in-memory Java code with dependencies
+#       - name: Compile and Run In-Memory Java Code
+#         run: |
+#           # Write the Java code in memory
+#           JAVA_CODE=$(cat <<EOF
+#           import org.apache.commons.lang3.StringUtils;
+          
+#           public class Hello {
+#               public static void main(String[] args) {
+#                   String message = "hello from dynamically compiled java!" + " : dsgsdgsg";
+#                   String capitalizedMessage = StringUtils.capitalize(message);
+#                   System.out.println(capitalizedMessage);
+#               }
+#           }
+#           EOF
+#           )
+#           # Save the Java code to a file
+#           echo "$JAVA_CODE" > Hello.java
+#           # Compile the in-memory Java code with downloaded dependencies
+#           javac -cp ".:libs/*" Hello.java
+#           # Run the compiled Java code
+#           java -cp ".:libs/*" Hello
+
+
+#        # Step 6: Compile and run in-memory Java code with dependencies again
+#       - name: Compile and Run In-Memory Java Code again
+#         run: |
+#           kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
+#           java -cp ".:libs/*" -jar java_inMemory_inKotlin1.jar
+
+
+
+
+name: Run JShell with Maven Dependencies
 
 on:
   push:
@@ -10,57 +80,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Check out the repository
       - name: Check out code
         uses: actions/checkout@v2
 
+      # Step 2: Set up Java 21
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Install Kotlin
-        run: |
-          curl -s https://get.sdkman.io | bash
-          source "$HOME/.sdkman/bin/sdkman-init.sh"
-          sdk install kotlin
-      # Step 3: Install Maven to resolve dependencies
+      # Step 3: Install Maven and download dependencies
       - name: Install Maven
-        run: sudo apt install -y maven
+        run: sudo apt-get install -y maven
 
-      # Step 4: Download Maven dependencies (e.g., commons-lang3)
       - name: Download Maven Dependencies
-        run: |
-          mkdir -p libs
-          mvn dependency:copy-dependencies -DoutputDirectory=libs -DincludeScope=runtime
+        run: mvn dependency:copy-dependencies -DoutputDirectory=libs
 
-          
-      # Step 5: Compile and run in-memory Java code with dependencies
-      - name: Compile and Run In-Memory Java Code
+      # Step 4: Run JShell with Maven dependencies
+      - name: Run JShell with Java code
         run: |
-          # Write the Java code in memory
-          JAVA_CODE=$(cat <<EOF
+          jshell --class-path "libs/*" <<EOF
           import org.apache.commons.lang3.StringUtils;
           
-          public class Hello {
-              public static void main(String[] args) {
-                  String message = "hello from dynamically compiled java!" + " : dsgsdgsg";
-                  String capitalizedMessage = StringUtils.capitalize(message);
-                  System.out.println(capitalizedMessage);
+          class MyGreeter {
+              public static void greet(String name) {
+                  String message = "hello, " + name;
+                  String capitalized = StringUtils.capitalize(message);
+                  System.out.println(capitalized);
               }
           }
+          
+          MyGreeter.greet("world");
           EOF
-          )
-          # Save the Java code to a file
-          echo "$JAVA_CODE" > Hello.java
-          # Compile the in-memory Java code with downloaded dependencies
-          javac -cp ".:libs/*" Hello.java
-          # Run the compiled Java code
-          java -cp ".:libs/*" Hello
-
-
-       # Step 6: Compile and run in-memory Java code with dependencies again
-      - name: Compile and Run In-Memory Java Code again
-        run: |
-          kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
-          java -cp ".:libs/*" -jar java_inMemory_inKotlin1.jar
