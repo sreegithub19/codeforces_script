@@ -39,7 +39,8 @@ fun main() {
     
     class MyGreeter {
         public static String greet(String name) {
-            String message = "\"\"\"hello there!!\"\"\"";
+            String message = \"\"\"hello there!!
+            \"\"\";
             String combinedMessage = message + name;
             String capitalized = StringUtils.capitalize(combinedMessage);
             return capitalized;
