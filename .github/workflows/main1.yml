@@ -39,14 +39,15 @@ jobs:
             
             class MyGreeter {
                 public static String greet(String name) {
-                    String message = "hello there again, " + name;
+                    String message = """
+                    hello there again, 
+                    """ + name;
                     String capitalized = StringUtils.capitalize(message);
                     return capitalized;
                 }
             }
             
             // Call the greet method and print the result
-            //String result = MyGreeter.greet("world");
             System.out.println(MyGreeter.greet("world"));
             
             EOF
