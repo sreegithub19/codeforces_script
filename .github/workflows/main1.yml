@@ -61,7 +61,7 @@ jobs:
 
       - name: Compile Kotlin Code
         run: |
-              kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
+              kotlinc java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
     
     
       - name: Run Kotlin Application
