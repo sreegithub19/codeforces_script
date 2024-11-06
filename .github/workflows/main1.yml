@@ -10,116 +10,53 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
       - name: Check out code
         uses: actions/checkout@v2
 
-      # Step 2: Set up JDK 21
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      # Step 3: Install Kotlin
       - name: Install Kotlin
         run: |
           curl -s https://get.sdkman.io | bash
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           sdk install kotlin
-
-      # Step 4: Install Maven
+      # Step 3: Install Maven to resolve dependencies
       - name: Install Maven
         run: sudo apt install -y maven
 
-      # Step 5: Download Maven dependencies (e.g., commons-lang3)
+      # Step 4: Download Maven dependencies (e.g., commons-lang3)
       - name: Download Maven Dependencies
         run: |
           mkdir -p libs
           mvn dependency:copy-dependencies -DoutputDirectory=libs -DincludeScope=runtime
-
-      # Step 6: Run Kotlin script for in-memory Java compilation and execution
-      - name: Compile and Run In-Memory Java Code with Dependencies
+      # Step 5: Compile and run in-memory Java code with dependencies
+      - name: Compile and Run In-Memory Java Code
         run: |
-          # Write the Kotlin code to a file
-          echo '''
-          import javax.tools.*
-          import java.io.File
-          import java.lang.reflect.Method
-          import java.net.URI
-
-          class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManager<JavaFileManager>(compiler.getStandardFileManager(null, null, null)) {
-              private val classBytes = mutableMapOf<String, ByteArray>()
-
-              override fun getJavaFileForOutput(location: JavaFileManager.Location, className: String, kind: JavaFileObject.Kind, sibling: FileObject?): JavaFileObject {
-                  return object : SimpleJavaFileObject(URI.create("bytes://$className"), kind) {
-                      override fun openOutputStream(): java.io.OutputStream {
-                          return object : java.io.ByteArrayOutputStream() {
-                              override fun close() {
-                                  classBytes[className] = this.toByteArray()
-                                  super.close()
-                              }
-                          }
-                      }
-                  }
-              }
-
-              fun getClassBytes(className: String): ByteArray? {
-                  return classBytes[className]
+          # Write the Java code in memory
+          JAVA_CODE=$(cat <<EOF
+          import org.apache.commons.lang3.StringUtils;
+          
+          public class Hello {
+              public static void main(String[] args) {
+                  String message = "hello from dynamically compiled java!" + " : dsgsdgsg";
+                  String capitalizedMessage = StringUtils.capitalize(message);
+                  System.out.println(capitalizedMessage);
               }
           }
-
-          fun main() {
-              // Step 1: Prepare Java code
-              val javaCode = \"""
-                  import org.apache.commons.lang3.StringUtils;
-                  
-                  public class Hello {
-                      public static void main(String[] args) {
-                          String message = "hello from dynamically compiled java again here!" + " : dsgsdgsg";
-                          String capitalizedMessage = StringUtils.capitalize(message);
-                          System.out.println(capitalizedMessage);
-                      }
-                  }
-              \".trimIndent()
-
-              // Step 2: Compile the Java code dynamically
-              val compiler: JavaCompiler = ToolProvider.getSystemJavaCompiler()
-              val fileManager = InMemoryJavaFileManager(compiler)
-
-              val fileObject = object : SimpleJavaFileObject(URI.create("string:///Hello.java"), JavaFileObject.Kind.SOURCE) {
-                  override fun getCharContent(ignoreEncodingErrors: Boolean): CharSequence {
-                      return javaCode
-                  }
-              }
-
-              val compilationUnits = listOf(fileObject)
-
-              val compilationResult = compiler.getTask(null, fileManager, null, null, null, compilationUnits)?.call()
-              if (compilationResult == true) {
-                  println("Compilation successful!")
-
-                  // Step 3: Load the compiled class
-                  val classLoader = object : ClassLoader() {
-                      override fun findClass(name: String): Class<*> {
-                          val classBytes = fileManager.getClassBytes(name)
-                              ?: throw ClassNotFoundException(name)
-                          return defineClass(name, classBytes, 0, classBytes.size)
-                      }
-                  }
-
-                  // Step 4: Load the Hello class and invoke the main method
-                  val clazz = classLoader.loadClass("Hello")
-                  val method: Method = clazz.getMethod("main", Array<String>::class.java)
-                  method.invoke(null, arrayOf<String>())
-              } else {
-                  println("Compilation failed!")
-              }
-          }
-          ''' > InMemoryJavaCompilation.kt
-
-        # Step 7: Compile the Kotlin code
-      - name: Compile and Run In-Memory Java Code with Dependencies
+          EOF
+          )
+          # Save the Java code to a file
+          echo "$JAVA_CODE" > Hello.java
+          # Compile the in-memory Java code with downloaded dependencies
+          javac -cp ".:libs/*" Hello.java
+          # Run the compiled Java code
+          java -cp ".:libs/*" Hello
+       # Step 6: Compile and run in-memory Java code with dependencies again
+      - name: Compile and Run In-Memory Java Code again
         run: |
-         kotlinc InMemoryJavaCompilation.kt -include-runtime -d InMemoryJavaCompilation.jar
-         java -cp ".:libs/*" -jar InMemoryJavaCompilation.jar
+          kotlinc src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
+          java -cp ".:libs/*" -jar java_inMemory_inKotlin1.jar
