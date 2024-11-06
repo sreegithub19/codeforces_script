@@ -65,17 +65,29 @@ jobs:
           mvn dependency:build-classpath -Dmdep.outputFile=classpath.txt
           echo "::set-output name=classpath::$(cat classpath.txt)"
 
-      # Step 7: Compile Kotlin code into a JAR file
+    # Step 7: Compile Kotlin Code into JAR
       - name: Compile Kotlin Code into JAR
         run: |
-          # Get the classpath from the previous step
-          CLASS_PATH="${{ steps.maven-classpath.outputs.classpath }}"
+            # Get the classpath from the previous step
+            CLASS_PATH="${{ steps.maven-classpath.outputs.classpath }}"
 
-          # Compile the Kotlin file into a JAR file, including the dependencies
-          kotlinc -cp "$CLASS_PATH" src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d myProgram.jar
+            # Clean up the classpath by removing JDK modules (if needed)
+            CLEAN_CLASS_PATH=$(echo $CLASS_PATH | sed 's|/usr/lib/jvm/temurin-21-jdk-amd64/lib/modules/java.base| |g')
 
-      # Step 8: Run the compiled Kotlin JAR file with dependencies
+            # Compile the Kotlin file into a JAR file, including the dependencies
+            kotlinc -cp "$CLEAN_CLASS_PATH" src/main/kotlin/com/example/java_inMemory_inKotlin1.kt -include-runtime -d myProgram.jar
+
+
+    # Step 8: Run the compiled Kotlin JAR file with dependencies
       - name: Run Compiled Kotlin JAR
         run: |
-          # Run the compiled JAR with the Maven dependencies
-          java -cp "$CLASS_PATH:myProgram.jar" com.example.java_inMemory_inKotlin1Kt
+            # Get the classpath from the previous step
+            CLASS_PATH="${{ steps.maven-classpath.outputs.classpath }}"
+
+            # Exclude JDK internal modules from classpath by filtering them out
+            # (you can manually remove certain paths from the classpath if needed)
+            CLEAN_CLASS_PATH=$(echo $CLASS_PATH | sed 's|/usr/lib/jvm/temurin-21-jdk-amd64/lib/modules/java.base| |g')
+
+            # Run the compiled JAR with the correct classpath
+            java -cp "$CLEAN_CLASS_PATH:myProgram.jar" com.example.java_inMemory_inKotlin1Kt
+
