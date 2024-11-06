@@ -20,7 +20,11 @@ fun main() {
 
     // If libs/*.jar exists, create the classpath string for jshell
     if (libsPath != null) {
-        val command = """jshell --class-path "$libsPath" <<EOF
+        // Remove extra quotes in the classpath (if any)
+        val classpath = libsPath.replace("\"", "")
+
+        val command = """
+            jshell --class-path $classpath <<EOF
             import org.apache.commons.lang3.StringUtils;
             
             class MyGreeter {
