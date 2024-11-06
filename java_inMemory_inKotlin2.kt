@@ -1,12 +1,16 @@
 import javax.tools.*
 import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.io.OutputStream
 import java.lang.reflect.Method
 import java.net.URI
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.*
+import java.nio.file.StandardCopyOption
+import java.net.URL
+import java.net.URLClassLoader
 
+// In-memory file manager
 class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManager<JavaFileManager>(compiler.getStandardFileManager(null, null, null)) {
     private val classBytes = mutableMapOf<String, ByteArray>()
     private val pomFiles = mutableMapOf<String, ByteArray>()
@@ -39,17 +43,34 @@ class InMemoryJavaFileManager(compiler: JavaCompiler) : ForwardingJavaFileManage
     }
 }
 
+fun downloadDependency(groupId: String, artifactId: String, version: String, repoUrl: String, targetDir: Path) {
+    // Convert groupId from 'org.apache.commons' to 'org/apache/commons'
+    val groupIdPath = groupId.replace('.', '/')
+    
+    val url = "$repoUrl/$groupIdPath/$artifactId/$version/${artifactId}-$version.jar"
+    val jarUrl = URL(url)
+    val targetFile = targetDir.resolve("${artifactId}-$version.jar")
+
+    // Download the JAR file
+    jarUrl.openStream().use { inputStream ->
+        Files.copy(inputStream, targetFile, StandardCopyOption.REPLACE_EXISTING)
+    }
+    println("Downloaded $artifactId version $version to $targetFile")
+}
+
 fun main() {
-    // Java code for the example class
     val javaCode = """
+        import org.apache.commons.lang3.StringUtils;
+        
         public class Hello {
             public static void greet() {
-                System.out.println("Hello from In-Memory Java with pom.xml!");
+                String message = "Hello from In-Memory Java!";
+                System.out.println(StringUtils.upperCase(message));
             }
         }
     """.trimIndent()
 
-    // Simulated pom.xml content in memory
+    // Simulated pom.xml content in memory with dependency on commons-lang3
     val pomXmlContent = """
         <?xml version="1.0" encoding="UTF-8"?>
         <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -75,7 +96,7 @@ fun main() {
     // Add the pom.xml content to the in-memory file manager
     fileManager.addPomFile(pomXmlContent)
 
-    // Access and print the pom.xml content
+    // Access and print the pom.xml content (just for validation)
     val pomFileBytes = fileManager.getPomFile()
     if (pomFileBytes != null) {
         println("In-Memory POM file content:")
@@ -84,7 +105,17 @@ fun main() {
         println("No in-memory POM file found.")
     }
 
-    // Compile Java code
+    // Step 1: Download the commons-lang3 JAR
+    val targetDir = Path.of("libs")
+    Files.createDirectories(targetDir)
+
+    // Maven repository URL
+    val mavenRepoUrl = "https://repo.maven.apache.org/maven2"
+
+    // Download commons-lang3 version 3.12.0
+    downloadDependency("org.apache.commons", "commons-lang3", "3.12.0", mavenRepoUrl, targetDir)
+
+    // Step 2: Compile Java code with the external dependency
     val fileObject = object : SimpleJavaFileObject(URI.create("string:///Hello.java"), JavaFileObject.Kind.SOURCE) {
         override fun getCharContent(ignoreEncodingErrors: Boolean): CharSequence {
             return javaCode
@@ -97,16 +128,13 @@ fun main() {
     if (compilationResult == true) {
         println("Compilation successful!")
 
-        // Load the compiled class from memory
-        val classLoader = object : ClassLoader() {
-            override fun findClass(name: String): Class<*> {
-                val classBytes = fileManager.getClassBytes(name)
-                    ?: throw ClassNotFoundException(name)
-                return defineClass(name, classBytes, 0, classBytes.size)
-            }
-        }
+        // Step 3: Load the compiled class and add the dependency to the classpath
+        val classLoader = URLClassLoader(
+            arrayOf(targetDir.resolve("commons-lang3-3.12.0.jar").toUri().toURL()),
+            InMemoryJavaFileManager::class.java.classLoader // Fix this part
+        )
 
-        // Invoke the greet method from the compiled Hello class
+        // Load the compiled class from memory
         val clazz = classLoader.loadClass("Hello")
         val method: Method = clazz.getMethod("greet")
         method.invoke(null)
