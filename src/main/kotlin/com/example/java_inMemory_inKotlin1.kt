@@ -14,8 +14,7 @@ fun main() {
     runShellCommand("""echo 'Hello from \"\"\" abd \"\"\" Kotlin Shell Script!'
     """)
 
-    val command = """
-        jshell --class-path "libs/*" <<EOF
+    val command = """jshell --class-path "libs/*" <<EOF
         import org.apache.commons.lang3.StringUtils;
         
         class MyGreeter {
