@@ -23,6 +23,7 @@ jobs:
 
     - name: Run Dart application
       run: |
+        echo 'print("Hello from Dart shell!");' | dart
         dart run execute/hello.dart
         dart run execute/stub.dart
       # dart run execute/ins.dart
