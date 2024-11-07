@@ -24,7 +24,7 @@ jobs:
     - name: Run Dart application
       run: |
         dart pub global activate interactive
-
+        interactive
         dart run execute/hello.dart
         dart run execute/stub.dart
       # dart run execute/ins.dart
