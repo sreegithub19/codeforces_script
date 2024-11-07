@@ -24,12 +24,13 @@ jobs:
     - name: Run Dart application
       run: |
         dart pub global activate interactive
-        echo 'print("Hello from Dart shell!");' | interactive
+        
         dart run execute/hello.dart
         dart run execute/stub.dart
       # dart run execute/ins.dart
 
  #      python execute/dart_in_python.py
+ #      echo 'print("Hello from Dart shell!");' | interactive
  #       echo 'print("Hello from Dart shell!");' | dart
  #      dart eval "print('Hello, runline Dart!');"
  #     echo "void main() { print('Hello, runline Dart!'); }" | dart run
