@@ -3,11 +3,8 @@ import Foundation
 // Create a Process instance
 let process = Process()
 
-// Set the executable path (in this case, /bin/bash)
-process.executableURL = URL(fileURLWithPath: "/opt/hostedtoolcache/swift-Ubuntu/5.7.3/x64/usr/bin/swift")
-
 // Set the arguments for the command to run
-process.arguments = ["-e", """
+process.arguments = ["swift","-e", """
 print("Hello, Swift shell World from -e!")
 """]
 
