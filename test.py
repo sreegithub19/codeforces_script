@@ -23,11 +23,8 @@ else:
 # Shell script as a string
 shell_script = '''
 jshell --class-path '''+classpath+''' --startup /dev/stdin <<EOF
-System.out.println("Hello, World");
-System.out.println("This is a second line."+"2");
-//System.out.println("|  Welcome to JShell -- Version 22.0.2");
-
 import org.apache.commons.lang3.StringUtils;
+
 
 class MyGreeter {
     public static String greet(String name) {
@@ -38,6 +35,9 @@ class MyGreeter {
         String capitalized = StringUtils.capitalize(combinedMessage);
 
             String command = "print('2 from Python!')";
+            System.out.println("Hello, test.py World");
+            System.out.println("This is a second line."+"2");
+            //System.out.println("|  Welcome to JShell -- Version 22.0.2");
 
             try {
                 // Execute the command directly using Runtime.exec()
