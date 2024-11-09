@@ -20,15 +20,15 @@ jobs:
         with:
           swift-version: '5.7'  # Specify the Swift version
 
+
       # Run the Swift program
+      # Mac: #/Users/runner/hostedtoolcache/swift-macOS/5.7.3/arm64/usr/bin/swift
       - name: Run Hello World
         run: |
-          which swift
-
           folder="execute"
           for file in $(find "$folder" -type f -name "*.swift"); do
             swift "$file"
           done
 
-          echo 'print("Hello, Swift from the workflow shell!")' | swift
+          echo 'print("Hello, Swift from the workflow shell!")' | /Users/runner/hostedtoolcache/swift-macOS/5.7.3/arm64/usr/bin/swift
 
