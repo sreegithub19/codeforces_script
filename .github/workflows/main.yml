@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use macOS runner for Swift
+    runs-on: ubuntu-latest  # Swift runs on both macos-latest and ubuntu-latest
 
     steps:
       # Check out the repository
@@ -23,4 +23,8 @@ jobs:
       # Run the Swift program
       - name: Run Hello World
         run: |
-          swift main.swift
+          folder="execute"
+          for file in $(find "$folder" -type f -name "*.swift"); do
+            swift "$file"
+          done
+
