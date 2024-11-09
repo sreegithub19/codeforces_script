@@ -3,7 +3,7 @@ import java.io.OutputStreamWriter
 import java.io.BufferedWriter
 
 
-fun runShellCommand(commandTemplate: String, script: String, classpath: String) {
+fun runShellCommand(commandTemplate: String) {
     // Replace placeholders in the commandTemplate with the actual script and classpath
     val command = commandTemplate.replace("\$script", script).replace("\$classpath", classpath)
 
