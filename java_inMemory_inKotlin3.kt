@@ -3,7 +3,7 @@ import java.io.OutputStreamWriter
 import java.io.BufferedWriter
 
 
-fun runShellCommand(commandTemplate: String) {
+fun runShellCommand(commandTemplate: String,script:String) {
     // Replace placeholders in the commandTemplate with the actual script and classpath
     val command = commandTemplate;
 
@@ -41,8 +41,7 @@ fun main() {
         // Remove extra quotes in the classpath (if any)
         val classpath = libsPath.replace("\"", "")
         val tripleQuotes = "\"\"\""
-        val script = """
-    import org.apache.commons.lang3.StringUtils;
+        val script = """import org.apache.commons.lang3.StringUtils;
     
     System.out.println("the world!"));
     """
@@ -51,7 +50,7 @@ fun main() {
     val command = "echo '"+script+"' | jshell --class-path "+classpath+" --startup /dev/stdin"
 
     // Run the command and pass the script to jshell
-    runShellCommand(command)
+    runShellCommand(command,script)
 } 
 
 }
