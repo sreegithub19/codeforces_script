@@ -59,6 +59,10 @@ jobs:
             
             EOF
 
+      - name: Run JShell and Control Output again
+        run: |
+            echo 'System.out.println("Hello, World from /dev/stdin!");' | jshell --startup /dev/stdin
+
       # - name: Cache Maven dependencies
       #   uses: actions/cache@v2
       #   with:
