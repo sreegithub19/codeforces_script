@@ -4,7 +4,7 @@ import Foundation
 let process = Process()
 
 // Set the executable path (in this case, /bin/bash)
-process.executableURL = URL(fileURLWithPath: "/usr/bin/swift")
+process.executableURL = URL(fileURLWithPath: "/opt/hostedtoolcache/swift-Ubuntu/5.7.3/x64/usr/bin/swift")
 
 // Set the arguments for the command to run
 process.arguments = ["-e", """
