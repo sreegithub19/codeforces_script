@@ -1,51 +1,26 @@
-name: Dart CI
+name: Swift Hello World
 
 on:
   push:
-    branches: [ dart_ ]
+    branches:
+      - swift_  # Trigger on push to master branch
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: macos-latest  # Use macOS runner for Swift
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      # Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install Dart
-      uses: dart-lang/setup-dart@v1
-      with:
-        sdk: '3.4.0'
+      # Set up Swift
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: '6.0'  # Specify the Swift version
 
-    - name: Get dependencies
-      run: dart pub get
-
-    - name: Run Dart application
-      run: |
-        dart pub global activate interactive
-        
-        dart run execute/hello.dart
-        dart run execute/stub.dart
-      # dart run execute/ins.dart
-
-      
- #      python execute/dart_in_python.py
- #      echo 'print("Hello from Dart shell!");' | interactive
- #       echo 'print("Hello from Dart shell!");' | dart
- #      dart eval "print('Hello, runline Dart!');"
- #     echo "void main() { print('Hello, runline Dart!'); }" | dart run
- #      dart run -e "void main() { print('Hello, runline Dart!'); }"
- #      echo "void main() { print('Hello, runline Dart!'); }" | dart run --stdin
- #      dart run --eval "print('Hello, runline Dart!');"
- #      printf "void main() { print('Hello, runline Dart!'); }" | dart run
- #      dart run -c 'void main() { print("Hello from Dart!"); }'
-
-#  dart run <<EOF
-#        void main() {
-#           print('Hello, runline Dart!');
-#        }
-#        EOF
-
-    # - name: Compile Dart application
-    #   run: dart compile exe execute/hello.dart -o execute /hello
+      # Run the Swift program
+      - name: Run Hello World
+        run: |
+          swift main.swift
