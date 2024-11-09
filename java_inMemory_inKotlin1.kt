@@ -78,6 +78,7 @@ fun main() {
         val command = listOf("jshell","--class-path", classpath)
 
         // Run the command and pass the script to jshell
+        println("Command is:",command.joinToString(" "))
         runShellCommand(command.joinToString(" "), script)
         val script_ = """
             This is a raw string containing triple quotes:
