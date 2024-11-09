@@ -45,7 +45,7 @@ fun main() {
             String combinedMessage = message + name;
             String capitalized = StringUtils.capitalize(combinedMessage);
 
-                String command = "print('2 from Python!')";
+                String command = "print('2 from Python again!')";
 
                 try {
                     // Execute the command directly using Runtime.exec()
