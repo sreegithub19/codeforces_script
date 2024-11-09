@@ -74,7 +74,7 @@ fun main() {
     """
     
     // Prepare the full jshell command with echo
-    val command = "echo '$script' | jshell --startup /dev/stdin"
+    val command = "echo '$script' | jshell --class-path $classpath --startup /dev/stdin"
 
     // Run the command and pass the script to jshell
     runShellCommand(command, "")
