@@ -41,10 +41,7 @@ fun main() {
         // Remove extra quotes in the classpath (if any)
         val classpath = libsPath.replace("\"", "")
         val tripleQuotes = "\"\"\""
-        val script = """import org.apache.commons.lang3.StringUtils;
-    
-    System.out.println("the world!"));
-    """
+        val script = """import org.apache.commons.lang3.StringUtils;System.out.println("the world!"));"""
     
     // Prepare the full jshell command with echo
     val command = "echo '"+script+"' | jshell --class-path "+classpath+" --startup /dev/stdin"
