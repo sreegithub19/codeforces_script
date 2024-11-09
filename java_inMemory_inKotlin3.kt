@@ -18,7 +18,7 @@ fun runShellCommand(commandTemplate: String, script: String, classpath: String) 
     // Send the script to jshell via standard input
     val writer = BufferedWriter(OutputStreamWriter(process.outputStream))
     writer.write(script)  // The script is passed to jshell through standard input
-    writer.flush()  // Ensure the input is sent to jshell
+    //writer.flush()  // Ensure the input is sent to jshell
     writer.close()
 
     // Wait for the process to complete and get the exit code
