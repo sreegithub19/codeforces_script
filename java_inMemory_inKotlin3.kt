@@ -3,7 +3,7 @@ import java.io.OutputStreamWriter
 import java.io.BufferedWriter
 
 
-fun runShellCommand(commandTemplate: String) {
+fun runShellCommand(commandTemplate: String, script: String, classpath: String) {
     // Replace placeholders in the commandTemplate with the actual script and classpath
     val command = commandTemplate.replace("\$script", script).replace("\$classpath", classpath)
 
@@ -84,7 +84,7 @@ fun main() {
     val command = "echo '$script' | jshell --class-path $classpath --startup /dev/stdin"
 
     // Run the command and pass the script to jshell
-    runShellCommand(command, "")
+    runShellCommand(command,  script, classpath)
 } 
 
 }
