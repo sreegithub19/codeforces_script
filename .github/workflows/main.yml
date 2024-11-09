@@ -23,6 +23,8 @@ jobs:
       # Run the Swift program
       - name: Run Hello World
         run: |
+          which swift
+
           folder="execute"
           for file in $(find "$folder" -type f -name "*.swift"); do
             swift "$file"
