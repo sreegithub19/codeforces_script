@@ -76,13 +76,13 @@ jobs:
 
       - name: Compile Kotlin Code
         run: |
-              #kotlinc java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
-              kotlinc java_inMemory_inKotlin3.kt -include-runtime -d java_inMemory_inKotlin3.jar
+              kotlinc java_inMemory_inKotlin1.kt -include-runtime -d java_inMemory_inKotlin1.jar
+              #kotlinc java_inMemory_inKotlin3.kt -include-runtime -d java_inMemory_inKotlin3.jar
     
     
       - name: Run Kotlin Application
         run: |
               #ls ~/.m2/repository/org/apache/commons/commons-lang3/3.12.0
-              #java -jar java_inMemory_inKotlin1.jar
-              java -jar java_inMemory_inKotlin3.jar
+              java -jar java_inMemory_inKotlin1.jar
+              #java -jar java_inMemory_inKotlin3.jar
               #java -cp java_inMemory_inKotlin3.jar:~/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar Java_inMemory_inKotlin3Kt
