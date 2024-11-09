@@ -52,6 +52,7 @@ process = subprocess.run(shell_script, shell=True, text=True, capture_output=Tru
 
 # Get the stdout (the output of the command)
 output = process.stdout
+print(process.stderr)
 
 # Split the output into lines
 lines = output.splitlines()

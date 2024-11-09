@@ -33,10 +33,13 @@ jobs:
       - name: Download Maven Dependencies
         run: mvn dependency:copy-dependencies -DoutputDirectory=libs
 
-      - name: Install dependencies and run scripts
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install jupyter nbconvert
+
+      - name: Run scripts
+        run: |
           python test.py
 
       - name: Run Jupyter Notebook
