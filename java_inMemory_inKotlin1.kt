@@ -75,7 +75,7 @@ fun main() {
     
 
         // Prepare the full jshell command and input
-        val command = listOf("jshell","--class-path", classpath,"--startup /dev/stdin")
+        val command = listOf("jshell","--class-path", classpath)
 
         // Run the command and pass the script to jshell
         runShellCommand(command.joinToString(" "), script)
