@@ -3,3 +3,5 @@ execute/*.class
 .idea
 #.github/workflows/main_java.yml
 node_modules
+libs
+greetScript.jsh

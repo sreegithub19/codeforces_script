@@ -23,6 +23,9 @@ else:
 # Shell script as a string
 shell_script = '''
 jshell --class-path '''+classpath+''' --startup /dev/stdin <<EOF
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -34,6 +37,7 @@ class MyGreeter {
         String combinedMessage = message + name;
         String capitalized = StringUtils.capitalize(combinedMessage);
 
+
             String command = "print('2 from Python!')";
             System.out.println("Hello, test.py World");
             System.out.println("This is a second line."+"2");
@@ -41,9 +45,9 @@ class MyGreeter {
 
             try {
                 // Execute the command directly using Runtime.exec()
-                Process process = Runtime.getRuntime().exec(new String[] { "python", "-c", command });
 
                 // Capture and print the output of the shell command
+                Process process = Runtime.getRuntime().exec(new String[] { "python", "-c", command });
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -63,6 +67,8 @@ class MyGreeter {
 
 // Call the greet method and print the result
 System.out.println(MyGreeter.greet("world"));
+
+/exit
 
 EOF
 '''
