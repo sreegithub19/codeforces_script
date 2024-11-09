@@ -10,7 +10,7 @@ process.executableURL = URL(fileURLWithPath: "/opt/hostedtoolcache/swift-Ubuntu/
 let swiftCode = """
 print("Hello, Swift shell World from -e!")
 let x = 42
-print("The answer is \(x)")
+print("The answer is \\(x)")
 """
 
 // Escape the newline characters to make the entire code a single string
