@@ -4,7 +4,7 @@ import Foundation
 let process = Process()
 
 // Set the arguments for the command to run
-process.arguments = ["swift","-e", """
+process.arguments = ["/opt/hostedtoolcache/swift-Ubuntu/5.7.3/x64/usr/bin/swift","-e", """
 print("Hello, Swift shell World from -e!")
 """]
 
