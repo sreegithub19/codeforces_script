@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest  # Use macOS runner for Swift
+    runs-on: ubuntu-latest  # Use macOS runner for Swift
 
     steps:
       # Check out the repository
