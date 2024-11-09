@@ -1,8 +1,28 @@
 import subprocess
+import os
+import glob
+
+# Define the path to the 'libs' directory
+libs_dir = "libs"
+
+classpath = ""
+# Check if the 'libs' directory exists and is a directory
+if os.path.exists(libs_dir) and os.path.isdir(libs_dir):
+    # Get a list of all .jar files in the 'libs' directory
+    jar_files = glob.glob(os.path.join(libs_dir, "*.jar"))
+    
+    if jar_files:
+        # Join the .jar file paths with a colon to create the classpath
+        classpath = ":".join(jar_files)
+        print("Classpath:", classpath)
+    else:
+        print("No .jar files found in the libs directory.")
+else:
+    print(f"The directory '{libs_dir}' does not exist or is not a directory.")
 
 # Shell script as a string
 shell_script = '''
-jshell --startup /dev/stdin <<EOF
+jshell --class-path '''+classpath+''' --startup /dev/stdin <<EOF
 System.out.println("Hello, World");
 System.out.println("This is a second line."+"2");
 //System.out.println("|  Welcome to JShell -- Version 22.0.2");
