@@ -1,2 +1,0 @@
-hello there
-cpp from java from Kotlin in text file
