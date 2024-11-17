@@ -26,29 +26,19 @@ async function loadWasmModule() {
 
 // Test matrix creation and operations
 async function testMatrixOperations(wasm) {
-  // Log matrix-related exports to check what we are working with
-  if (wasm.Matrix) {
-    console.log('Matrix found:', wasm.Matrix);
-  } else {
-    console.log('Matrix not found in exports');
-  }
-
   try {
-    // Check if Matrix is a constructor function or a factory function
-    if (typeof wasm.Matrix === 'function') {
-      const matrixA = wasm.Matrix(1, 2, 3, 4);  // Factory function case
-      const matrixB = wasm.Matrix(5, 6, 7, 8);
+    // Use the fromArray function to create matrices from an array
+    const matrixA = wasm.fromArray([1, 2, 3, 4]);
+    const matrixB = wasm.fromArray([5, 6, 7, 8]);
 
-      const addedMatrix = matrixA.add(matrixB);
-      assert.deepStrictEqual([addedMatrix.a, addedMatrix.b, addedMatrix.c, addedMatrix.d], [6, 8, 10, 12], 'Matrix addition failed');
+    // Assuming there are functions for matrix addition and multiplication
+    const addedMatrix = matrixA.add(matrixB);  // If your module has add method
+    assert.deepStrictEqual([addedMatrix.a, addedMatrix.b, addedMatrix.c, addedMatrix.d], [6, 8, 10, 12], 'Matrix addition failed');
 
-      const multipliedMatrix = matrixA.multiply(matrixB);
-      assert.deepStrictEqual([multipliedMatrix.a, multipliedMatrix.b, multipliedMatrix.c, multipliedMatrix.d], [19, 22, 43, 50], 'Matrix multiplication failed');
+    const multipliedMatrix = matrixA.multiply(matrixB);  // If your module has multiply method
+    assert.deepStrictEqual([multipliedMatrix.a, multipliedMatrix.b, multipliedMatrix.c, multipliedMatrix.d], [19, 22, 43, 50], 'Matrix multiplication failed');
 
-      console.log('Matrix operations passed!');
-    } else {
-      console.log('Matrix is not a constructor or factory function');
-    }
+    console.log('Matrix operations passed!');
   } catch (error) {
     console.error('Matrix operation test failed:', error);
   }
@@ -58,7 +48,7 @@ async function testMatrixOperations(wasm) {
 async function testDotProduct(wasm) {
   const vec1 = new Int32Array([1, 2, 3]);
   const vec2 = new Int32Array([4, 5, 6]);
-  const dotProd = wasm.dotProduct(vec1, vec2);
+  const dotProd = wasm.dotProduct(vec1, vec2);  // Ensure this works
   assert.strictEqual(dotProd, 32, 'Dot product failed');
   console.log('Dot product test passed!');
 }
@@ -82,9 +72,9 @@ async function runTests() {
   try {
     const wasm = await loadWasmModule();
 
-    await testMatrixOperations(wasm);
-    await testDotProduct(wasm);
-    await testArrayOperations(wasm);
+    await testMatrixOperations(wasm);  // Matrix operations
+    await testDotProduct(wasm);       // Dot product test
+    await testArrayOperations(wasm);  // Array operations
 
     console.log('All tests passed successfully!');
   } catch (error) {
