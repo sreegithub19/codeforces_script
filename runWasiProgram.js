@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { WASI } = require('@wasmer/wasi'); // WASI runtime for Node.js
+const { WASI } = require('@wasmer/wasi');
 
 // Path to your WASI-compatible WebAssembly binary
 const wasmFilePath = path.resolve(__dirname, 'build/wasi_.wasm');
@@ -17,8 +17,8 @@ async function runWasiModule() {
   try {
     const wasmBuffer = fs.readFileSync(wasmFilePath);
 
-    // Instantiate the WebAssembly module and run it with the WASI instance
-    const { instance } = await WebAssembly.instantiate(wasmBuffer, wasi.getImports());
+    // WebAssembly instantiation using WASI imports
+    const { instance, module } = await WebAssembly.instantiate(wasmBuffer, wasi.getImports());
 
     // Start the WASI instance (this will run your program)
     wasi.start(instance);
