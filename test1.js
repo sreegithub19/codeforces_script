@@ -1,11 +1,22 @@
 const fs = require('fs');
 const assert = require('assert');
 
+// Define the imports required by the WebAssembly module
+const imports = {
+  env: {
+    // Example: If your module needs memory, you need to provide it.
+    // This is just an example, adjust based on the actual imports required by your WASM module.
+    memory: new WebAssembly.Memory({ initial: 256, maximum: 256 }),
+    // Example: If your module calls `console.log`, you can define it like this:
+    log: (msg) => console.log(msg),
+  },
+};
+
 // Load and instantiate the WebAssembly module
 async function loadWasmModule() {
   const wasmBuffer = fs.readFileSync('./build/example.wasm');
   const wasmModule = await WebAssembly.compile(wasmBuffer);
-  const wasmInstance = await WebAssembly.instantiate(wasmModule, {}); // Pass empty imports object
+  const wasmInstance = await WebAssembly.instantiate(wasmModule, imports); // Pass imports
 
   return wasmInstance.exports;
 }
