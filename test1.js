@@ -4,10 +4,17 @@ const assert = require('assert');
 // Define the imports required by the WebAssembly module
 const imports = {
   env: {
-    // Example: If your module needs memory, you need to provide it.
-    // This is just an example, adjust based on the actual imports required by your WASM module.
+    // Memory object, if required by your module
     memory: new WebAssembly.Memory({ initial: 256, maximum: 256 }),
-    // Example: If your module calls `console.log`, you can define it like this:
+
+    // Provide the abort function as a no-op or a custom handler
+    abort: () => {
+      console.error("Abort called in WebAssembly module!");
+      // You could throw an error or simply exit the process if needed
+      // process.exit(1); // Uncomment to terminate the program on abort
+    },
+
+    // Example: If your module calls `console.log` or something else, define it here
     log: (msg) => console.log(msg),
   },
 };
