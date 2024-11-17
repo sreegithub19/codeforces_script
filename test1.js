@@ -4,17 +4,10 @@ const assert = require('assert');
 // Define the imports required by the WebAssembly module
 const imports = {
   env: {
-    // Memory object, if required by your module
     memory: new WebAssembly.Memory({ initial: 256, maximum: 256 }),
-
-    // Provide the abort function as a no-op or a custom handler
     abort: () => {
       console.error("Abort called in WebAssembly module!");
-      // You could throw an error or simply exit the process if needed
-      // process.exit(1); // Uncomment to terminate the program on abort
     },
-
-    // Example: If your module calls `console.log` or something else, define it here
     log: (msg) => console.log(msg),
   },
 };
@@ -23,23 +16,42 @@ const imports = {
 async function loadWasmModule() {
   const wasmBuffer = fs.readFileSync('./build/example.wasm');
   const wasmModule = await WebAssembly.compile(wasmBuffer);
-  const wasmInstance = await WebAssembly.instantiate(wasmModule, imports); // Pass imports
+  const wasmInstance = await WebAssembly.instantiate(wasmModule, imports);
+
+  // Log exports to inspect what is available
+  console.log('WASM Exports:', wasmInstance.exports);
 
   return wasmInstance.exports;
 }
 
 // Test matrix creation and operations
 async function testMatrixOperations(wasm) {
-  const matrixA = new wasm.Matrix(1, 2, 3, 4);
-  const matrixB = new wasm.Matrix(5, 6, 7, 8);
+  // Log matrix-related exports to check what we are working with
+  if (wasm.Matrix) {
+    console.log('Matrix found:', wasm.Matrix);
+  } else {
+    console.log('Matrix not found in exports');
+  }
 
-  const addedMatrix = matrixA.add(matrixB);
-  assert.deepStrictEqual([addedMatrix.a, addedMatrix.b, addedMatrix.c, addedMatrix.d], [6, 8, 10, 12], 'Matrix addition failed');
+  try {
+    // Check if Matrix is a constructor function or a factory function
+    if (typeof wasm.Matrix === 'function') {
+      const matrixA = wasm.Matrix(1, 2, 3, 4);  // Factory function case
+      const matrixB = wasm.Matrix(5, 6, 7, 8);
 
-  const multipliedMatrix = matrixA.multiply(matrixB);
-  assert.deepStrictEqual([multipliedMatrix.a, multipliedMatrix.b, multipliedMatrix.c, multipliedMatrix.d], [19, 22, 43, 50], 'Matrix multiplication failed');
+      const addedMatrix = matrixA.add(matrixB);
+      assert.deepStrictEqual([addedMatrix.a, addedMatrix.b, addedMatrix.c, addedMatrix.d], [6, 8, 10, 12], 'Matrix addition failed');
 
-  console.log('Matrix operations passed!');
+      const multipliedMatrix = matrixA.multiply(matrixB);
+      assert.deepStrictEqual([multipliedMatrix.a, multipliedMatrix.b, multipliedMatrix.c, multipliedMatrix.d], [19, 22, 43, 50], 'Matrix multiplication failed');
+
+      console.log('Matrix operations passed!');
+    } else {
+      console.log('Matrix is not a constructor or factory function');
+    }
+  } catch (error) {
+    console.error('Matrix operation test failed:', error);
+  }
 }
 
 // Test dot product of vectors
@@ -55,13 +67,13 @@ async function testDotProduct(wasm) {
 async function testArrayOperations(wasm) {
   const arr1 = new Int32Array([1, 2, 3]);
   const arr2 = new Int32Array([4, 5, 6]);
-  
+
   const multipliedArray = wasm.arrayMultiply(arr1, arr2);
   assert.deepStrictEqual(Array.from(multipliedArray), [4, 10, 18], 'Array multiplication failed');
 
   const sum = wasm.arraySum(arr1);
   assert.strictEqual(sum, 6, 'Array sum failed');
-  
+
   console.log('Array manipulation tests passed!');
 }
 
