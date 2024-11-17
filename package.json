@@ -2,7 +2,7 @@
     "name": "wasm-node-example",
     "version": "1.0.0",
     "scripts": {
-      "build": "asc src/index.ts --outFile build/index.wasm --optimize",
+      "build": "asc assemblyscript_/index.ts --outFile build/index.wasm --optimize",
       "test": "node test.js"
     },
     "dependencies": {
