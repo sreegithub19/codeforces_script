@@ -20,6 +20,9 @@ async function runWasiModule() {
     // WebAssembly instantiation using WASI imports
     const { instance, module } = await WebAssembly.instantiate(wasmBuffer, wasi.getImports());
 
+    console.log('WASM Module:', module);
+console.log('WASI Imports:', wasi.getImports());
+
     // Start the WASI instance (this will run your program)
     wasi.start(instance);
   } catch (err) {
