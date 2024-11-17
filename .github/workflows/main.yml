@@ -49,7 +49,7 @@ jobs:
       # Install Wasmer.js (WASI runtime for Node.js)
       - name: Install Wasmer.js
         run: |
-          npm install @wasmer/wasi
+          npm install wasmtime
 
       # Run WASI WebAssembly binary using Wasmer.js (Node.js)
       - name: Run WASI program
