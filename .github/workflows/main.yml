@@ -34,3 +34,24 @@ jobs:
       - name: Run tests
         run: |
           npm test
+
+# WASI
+      # Install AssemblyScript compiler (asc)
+      - name: Install AssemblyScript
+        run: |
+          npm install -g assemblyscript
+
+      # Compile TypeScript to WASI-compatible WebAssembly (using AssemblyScript)
+      - name: Build WASI WebAssembly module
+        run: |
+          npx asc assemblyscript_/wasi_.ts -b build/wasi_.wasm -t build/wasi_.wat
+
+      # Install Wasmer.js (WASI runtime for Node.js)
+      - name: Install Wasmer.js
+        run: |
+          npm install @wasmer/wasi
+
+      # Run WASI WebAssembly binary using Wasmer.js (Node.js)
+      - name: Run WASI program
+        run: |
+          node runWasiProgram.js
