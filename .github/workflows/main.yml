@@ -24,10 +24,19 @@ jobs:
         with:
          toolchain: stable  # Use the stable version of Rust
 
+      # Step 3: Add wasm32-wasi target
+      - name: Add wasm32-wasi target
+        run: rustup target add wasm32-wasip1
+
+      # Step 4: Install Wasmtime CLI (WASI runtime)
+      - name: Install Wasmtime
+        run: |
+          curl https://wasmtime.dev/install.sh -sSf | bash
+          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH  # Add Wasmtime to the PATH
+
       # Step 3: Build the project
       - name: Build the project
         run: |
-         cargo install wasmtime
          cargo build --release
 
       # Step 4: Run the project (this will print output to the Actions log)
