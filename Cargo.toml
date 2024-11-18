@@ -1,0 +1,2 @@
+[dependencies]
+wasi = "0.10"
