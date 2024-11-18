@@ -30,7 +30,7 @@ fn main() {
 
 
   // Use `echo` to pipe the Rust code directly to `rustc` (compiling it)
-  const compileCommand = `echo '${Buffer.from(rustCode).toString('base64')}' | base64 --decode | rustc --target wasm32-wasi -o inline_rust_program.wasm &&
+  const compileCommand = `echo '${Buffer.from(rustCode).toString('base64')}' | base64 --decode | rustc --target wasm32-wasip1 -o inline_rust_program.wasm &&
     wasmtime inline_rust_program.wasm &&
     rm inline_rust_program.wasm`;
 

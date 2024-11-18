@@ -26,7 +26,9 @@ jobs:
 
       # Step 3: Build the project
       - name: Build the project
-        run: cargo build --release
+        run: |
+         cargo install wasmtime
+         cargo build --release
 
       # Step 4: Run the project (this will print output to the Actions log)
       - name: Run the program
