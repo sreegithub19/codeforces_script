@@ -11,15 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Set up Rust environment
+      - name: Install C++ Compiler
+        run: sudo apt-get install g++
+
       - name: Set up Rust
-        uses: actions/setup-rust@v1
+        uses: actions-rs/toolchain@v1
         with:
-          rust-version: stable
+         toolchain: stable  # Use the stable version of Rust
 
       # Step 3: Build the project
       - name: Build the project
