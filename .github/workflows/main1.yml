@@ -28,4 +28,4 @@ jobs:
 
       # Step 4: Run the project (this will print output to the Actions log)
       - name: Run the program
-        run: cargo run      # or cargo run --bin your_binary_name (cargo run --bin src/main.rs)
+        run: cargo run      #  or cargo run --bin your_binary_name (cargo run --bin src/main.rs)
