@@ -31,8 +31,7 @@ fn main() {
 
   // Use `echo` to pipe the Rust code directly to `rustc` (compiling it)
   const compileCommand = `echo '${Buffer.from(rustCode).toString('base64')}' | base64 --decode | rustc --target wasm32-wasip1 -o inline_rust_program.wasm &&
-    wasmtime inline_rust_program.wasm &&
-    rm inline_rust_program.wasm`;
+    wasmtime inline_rust_program.wasm`;
 
   // Run the command to compile and execute the Rust code
   exec(compileCommand, (err, stdout, stderr) => {
@@ -43,14 +42,5 @@ fn main() {
 
     // Print the output from the Rust program
     console.log(stdout);
-
-    // Clean up the compiled binary after execution
-    exec("rm -f inline_rust_program", (err, stdout, stderr) => {
-      if (err) {
-        console.error(`Error cleaning up binary: ${stderr}`);
-      } else {
-        console.log("Cleaned up the compiled binary.");
-      }
-    });
 
   });
