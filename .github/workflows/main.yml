@@ -39,21 +39,15 @@ jobs:
       # Install AssemblyScript compiler (asc)
       - name: Install AssemblyScript
         run: |
-          npm install -g assemblyscript
+         npm install
+         npm install --save-dev assemblyscript @wasmer/wasi
 
       # Compile TypeScript to WASI-compatible WebAssembly (using AssemblyScript)
       - name: Build WASI WebAssembly module
         run: |
-          npx asc assemblyscript_/wasi_.ts --target wasm32-wasi -b build/wasi_.wasm -t build/wasi_.wat
-
-      # Install Wasmer.js (WASI runtime for Node.js)
-      - name: Install Wasmer.js
-        run: |
-          npm install wasmtime
-          npm install @wasmer/wasi
-          npm install wasi
+         npx asc assembly/wasi_.ts --target wasi --outFile build/greet.wasm
 
       # Run WASI WebAssembly binary using Wasmer.js (Node.js)
       - name: Run WASI program
         run: |
-          node runWasiProgram.js
+          node runWasi.js
