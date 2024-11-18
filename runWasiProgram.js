@@ -1,31 +1,25 @@
 const fs = require('fs');
 const path = require('path');
-const { WASI, Instance } = require('wasmtime');
+const { WASI } = require('@wasmer/wasi');
+const { instantiate } = require('@wasmer/wasi');
 
-// Path to your WASI-compatible WebAssembly binary
-const wasmFilePath = path.resolve(__dirname, 'build/wasi_.wasm');
+async function runWasi() {
+  // Initialize the WASI environment without preopens or sandbox
+  const wasi = new WASI({
+    args: ["./wasi_.wasm"]  // Optional arguments to pass to the WASI module
+  });
 
-// Read the WASM binary
-const wasmBuffer = fs.readFileSync(wasmFilePath);
+  // Read the WASI-compatible WASM file
+  const wasmPath = path.resolve(__dirname, 'build/my_wasi_program.wasm');
+  const wasmBytes = fs.readFileSync(wasmPath);
 
-// Create a WASI instance with the correct API
-async function runWasiModule() {
-  try {
-    // Initialize WASI with arguments and environment variables
-    const wasi = new WASI({
-      args: ['node', 'wasi_.wasm'],  // Command-line args
-      env: {},  // Optional: define environment variables if needed
-      preopens: { '/sandbox': './sandbox' }  // Optional: define pre-opened directories
-    });
+  // Instantiate the WASM module with the WASI environment
+  const { instance } = await instantiate(wasmBytes, {
+    wasi_snapshot_preview1: wasi.wasiImport,
+  });
 
-    // Compile and instantiate the WebAssembly module with WASI imports
-    const { module, instance } = await wasmtime.instantiate(wasmBuffer, wasi.getImports());
-
-    // Start the WASI instance
-    wasi.start(instance);
-  } catch (err) {
-    console.error('Error running WASI module:', err);
-  }
+  // Start the WASI module
+  wasi.start(instance);
 }
 
-runWasiModule();
+runWasi().catch(console.error);
