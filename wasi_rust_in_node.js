@@ -34,10 +34,9 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-// Ask the user for their name (we are keeping this part as per your original script)
-rl.question("Enter your name: ", (name) => {
+
   // Log the greeting from the Node.js side
-  console.log(`Hello, ${name}! Welcome to the Node.js program.`);
+  console.log(`Hello! Welcome to the Node.js program.`);
 
   // Use `echo` to pipe the Rust code directly to `rustc` (compiling it)
   const compileCommand = `echo "${rustCode}" | rustc -o inline_rust_program - && ./inline_rust_program`;
@@ -62,7 +61,4 @@ rl.question("Enter your name: ", (name) => {
       }
     });
 
-    // Close the readline interface
-    rl.close();
   });
-});
