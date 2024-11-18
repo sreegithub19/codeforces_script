@@ -51,6 +51,7 @@ jobs:
         run: |
           npm install wasmtime
           npm install @wasmer/wasi
+          npm install wasi
 
       # Run WASI WebAssembly binary using Wasmer.js (Node.js)
       - name: Run WASI program
