@@ -28,18 +28,11 @@ fn main() {
 }
 `;
 
-// Create a readline interface to interact with the user
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-
-  // Log the greeting from the Node.js side
-  console.log(`Hello! Welcome to the Node.js program.`);
 
   // Use `echo` to pipe the Rust code directly to `rustc` (compiling it)
-  const compileCommand = `echo '${rustCode}' | rustc -o inline_rust_program - && ./inline_rust_program`;
+  const compileCommand = `echo '${Buffer.from(rustCode).toString('base64')}' | base64 --decode | rustc --target wasm32-wasi -o inline_rust_program.wasm &&
+    wasmtime inline_rust_program.wasm &&
+    rm inline_rust_program.wasm`;
 
   // Run the command to compile and execute the Rust code
   exec(compileCommand, (err, stdout, stderr) => {
@@ -49,7 +42,6 @@ const rl = readline.createInterface({
     }
 
     // Print the output from the Rust program
-    console.log("Rust Program Output:");
     console.log(stdout);
 
     // Clean up the compiled binary after execution

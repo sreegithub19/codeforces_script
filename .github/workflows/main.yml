@@ -11,14 +11,34 @@ jobs:
 
     steps:
       # Step 1: Checkout the repository code
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
+
+## RUST WITH WASM
+
+      - name: Install C++ Compiler
+        run: sudo apt-get install g++
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+         toolchain: stable  # Use the stable version of Rust
+
+      # Step 3: Build the project
+      - name: Build the project
+        run: cargo build --release
+
+      # Step 4: Run the project (this will print output to the Actions log)
+      - name: Run the program
+        run: cargo run      #  or cargo run --bin your_binary_name (cargo run --bin src/main.rs)
+
+## NODEJS WITH RUST AND WASI
 
       # Step 2: Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: '18'
 
       # Step 3: Install dependencies (including AssemblyScript or other WASM tools)
       - name: Install dependencies
@@ -35,20 +55,3 @@ jobs:
         run: |
           npm test
           node wasi_rust_in_node.js
-
-# # WASI
-#       # Install AssemblyScript compiler (asc)
-#       - name: Install AssemblyScript
-#         run: |
-#          npm install
-#          npm install --save-dev assemblyscript @wasmer/wasi
-
-#       # Compile TypeScript to WASI-compatible WebAssembly (using AssemblyScript)
-#       - name: Build WASI WebAssembly module
-#         run: |
-#          npx asc assemblyscript_/wasi_.ts --target wasi --outFile build/greet.wasm
-
-#       # Run WASI WebAssembly binary using Wasmer.js (Node.js)
-#       - name: Run WASI program
-#         run: |
-#           node runWasi.js
