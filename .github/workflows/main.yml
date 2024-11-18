@@ -45,7 +45,7 @@ jobs:
       # Compile TypeScript to WASI-compatible WebAssembly (using AssemblyScript)
       - name: Build WASI WebAssembly module
         run: |
-         npx asc assembly/wasi_.ts --target wasi --outFile build/greet.wasm
+         npx asc assemblyscript_/wasi_.ts --target wasi --outFile build/greet.wasm
 
       # Run WASI WebAssembly binary using Wasmer.js (Node.js)
       - name: Run WASI program
