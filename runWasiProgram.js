@@ -6,7 +6,7 @@ const { instantiate } = require('@wasmer/wasi');
 async function runWasi() {
   // Initialize the WASI environment without preopens or sandbox
   const wasi = new WASI({
-    args: ["./wasi_.wasm"]  // Optional arguments to pass to the WASI module
+    env: { "MY_ENV_VAR": "example" },  // Optional environment variables
   });
 
   // Read the WASI-compatible WASM file
