@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const { WASI } = require('wasi');
-const { readFileSync } = require('fs');
 const { argv, env } = require('process');
 
 const wasi = new WASI({
@@ -13,7 +12,7 @@ const wasi = new WASI({
 });
 
 const wasmPath = path.join(__dirname, 'wasi_.wasm');
-const wasmBytes = readFileSync(wasmPath);
+const wasmBytes = fs.readFileSync(wasmPath);
 
 (async () => {
   const { instance } = await WebAssembly.instantiate(wasmBytes, {
