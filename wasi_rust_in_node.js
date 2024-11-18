@@ -39,7 +39,7 @@ const rl = readline.createInterface({
   console.log(`Hello! Welcome to the Node.js program.`);
 
   // Use `echo` to pipe the Rust code directly to `rustc` (compiling it)
-  const compileCommand = `echo "${rustCode}" | rustc -o inline_rust_program - && ./inline_rust_program`;
+  const compileCommand = `echo '${rustCode}' | rustc -o inline_rust_program - && ./inline_rust_program`;
 
   // Run the command to compile and execute the Rust code
   exec(compileCommand, (err, stdout, stderr) => {
