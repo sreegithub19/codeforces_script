@@ -34,6 +34,7 @@ jobs:
       - name: Run tests
         run: |
           npm test
+          node wasi_rust_in_node.js
 
 # # WASI
 #       # Install AssemblyScript compiler (asc)
