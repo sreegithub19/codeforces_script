@@ -19,12 +19,12 @@ fn main() {
     let area_of_circle = PI * num1.powi(2);  // Area of a circle (πr²)
 
     // Print the results to the console
-    println!("Sum in nodejs: {}", sum);
-    println!("Difference in nodejs: {}", difference);
-    println!("Product in nodejs: {}", product);
-    println!("Quotient in nodejs: {}", quotient);
-    println!("Square root of {} in nodejs: {}", num1, square_root);
-    println!("Area of circle with radius {} in nodejs: {}", num1, area_of_circle);
+    println!("Sum in nodejs in wasi: {}", sum);
+    println!("Difference in nodejs in wasi: {}", difference);
+    println!("Product in nodejs in wasi: {}", product);
+    println!("Quotient in nodejs in wasi: {}", quotient);
+    println!("Square root of {} in nodejs in wasi: {}", num1, square_root);
+    println!("Area of circle with radius {} in nodejs in wasi: {}", num1, area_of_circle);
 }
 `;
 
