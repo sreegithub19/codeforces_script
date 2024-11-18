@@ -2,12 +2,9 @@ name: Rust CI/CD
 
 # Trigger the workflow on push or pull_request events to the `main` branch
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    push:
+      branches:
+        - web_assembly_
 
 jobs:
   build:
