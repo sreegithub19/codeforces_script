@@ -37,8 +37,10 @@ jobs:
           kotlinc src/main/kotlin/com/example/cpp_inJava_inMemory_inKotlin.kt -include-runtime -d cpp_inJava_inMemory_inKotlin.jar
 
 
+
       - name: Run Kotlin Application
         run: |
+          kotlin hello.kts
           java -jar Main.jar
           java -jar Subs.jar
           java -jar java_inMemory_inKotlin.jar 
