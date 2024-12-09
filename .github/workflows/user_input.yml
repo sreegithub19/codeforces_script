@@ -45,10 +45,10 @@ jobs:
 
         # Example evaluation: Print and check if the doubled value is even or odd
         print(f'Doubled value: {doubled_value}')
-        if doubled_value % 2 == 0:
-        print('The doubled value is even.')
+        if(doubled_value % 2 == 0):
+          print('The doubled value is even.')
         else:
-        print('The doubled value is odd.')
+          print('The doubled value is odd.')
         " > evaluate_input.py
         
         # Run the Python script
