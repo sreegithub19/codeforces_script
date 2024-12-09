@@ -1,12 +1,12 @@
-name: Double the Number Workflow
+name: Double the Sum of Numbers Workflow
 
 on:
   workflow_dispatch:
     inputs:
-      number:
-        description: 'Enter a number to double'
+      numbers:
+        description: 'Enter a list of numbers (one per line)'
         required: true
-        type: number
+        type: string
 
 jobs:
   calculate:
@@ -16,38 +16,36 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Calculate double the number using shell
+    - name: Process numbers, sum and double using Python
+      id: python_processing
       run: |
-        # Get the user-provided number from input
-        number=${{ github.event.inputs.number }}
-        
-        # Display the user-provided number
-        echo "User provided number (Shell): $number"
-        
-        # Calculate double of the number using shell
-        double_number=$(( number * 2 ))
-        
-        # Output the result using shell
-        echo "Double of the number (Shell) is: $double_number"
+        # Get the user-provided numbers (newline-separated)
+        numbers="${{ github.event.inputs.numbers }}"
 
-        # Set output variable to use in the next step
-        echo "double_number=$double_number" >> $GITHUB_ENV
+        # Save the numbers to a temporary file for Python processing
+        echo "$numbers" > numbers.txt
 
-    - name: Run Python script to evaluate doubled number
-      run: |
-        # Get the doubled number from the previous step
-        double_number=${{ env.double_number }}
-        
-        # Save a simple Python script that takes the doubled number
+        # Run Python script to sum and double the sum
         python3 -c "
-        # Python script to evaluate the doubled number
-        doubled_value = $double_number
+        # Python script to sum numbers and double the sum
 
-        # Example evaluation: Print and check if the doubled value is even or odd
-        print(f'Doubled value in Python: {doubled_value}')
-        if(doubled_value % 2 == 0):
-          print('The doubled value is even.')
+        # Read the numbers from the file
+        with open('numbers.txt', 'r') as file:
+            numbers = [int(line.strip()) for line in file.readlines()]
+
+        # Calculate the sum of the numbers
+        sum_of_numbers = sum(numbers)
+
+        # Double the sum
+        doubled_sum = sum_of_numbers * 2
+
+        # Print the results
+        print(f'Sum of the numbers: {sum_of_numbers}')
+        print(f'Doubled sum: {doubled_sum}')
+
+        # Check if the doubled sum is even or odd
+        if doubled_sum % 2 == 0:
+            print('The doubled sum is even.')
         else:
-          print('The doubled value is odd.')
-        "
-  
+            print('The doubled sum is odd.')
+                "
