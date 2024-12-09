@@ -30,22 +30,27 @@ jobs:
         # Output the result using shell
         echo "Double of the number (Shell) is: $double_number"
 
-    - name: Run Python script to evaluate additional input
+        # Set output variable to use in the next step
+        echo "double_number=$double_number" >> $GITHUB_ENV
+
+    - name: Run Python script to evaluate doubled number
       run: |
-          # Get the additional input for Python evaluation
-          additional_input="${{ github.event.inputs.additional_input }}"
-          
-          # Save a simple Python script that takes the additional input
-          echo "
-          # Python script to evaluate the additional input
-          input_value = '$additional_input'
-    
-          # Here you can perform any evaluation you'd like with the input
-          # For now, we'll just print it and convert to uppercase as an example
-          print(f'Evaluating input: {input_value}')
-          print(f'Uppercase input: {input_value.upper()}')
-          " > evaluate_input.py
-            
-            # Run the Python script
-            python3 evaluate_input.py
+        # Get the doubled number from the previous step
+        double_number=${{ env.double_number }}
+        
+        # Save a simple Python script that takes the doubled number
+        echo "
+        # Python script to evaluate the doubled number
+        doubled_value = $double_number
+
+        # Example evaluation: Print and check if the doubled value is even or odd
+        print(f'Doubled value: {doubled_value}')
+        if doubled_value % 2 == 0:
+        print('The doubled value is even.')
+        else:
+        print('The doubled value is odd.')
+        " > evaluate_input.py
+        
+        # Run the Python script
+        python3 evaluate_input.py
   
