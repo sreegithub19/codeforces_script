@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       numbers:
-        description: 'Enter a list of numbers (one per line)'
+        description: 'Enter a list of numbers separated by commas (e.g., 5,10,3)'
         required: true
         type: string
 
@@ -19,7 +19,7 @@ jobs:
     - name: Process numbers, sum and double using Python
       id: python_processing
       run: |
-        # Get the user-provided numbers (newline-separated)
+        # Get the user-provided numbers (comma-separated)
         numbers="${{ github.event.inputs.numbers }}"
 
         # Save the numbers to a temporary file for Python processing
@@ -31,10 +31,13 @@ jobs:
 
         # Read the numbers from the file
         with open('numbers.txt', 'r') as file:
-            numbers = [int(line.strip()) for line in file.readlines()]
+            numbers = file.read().strip()
+
+        # Split the input string by commas and convert to integers
+        numbers_list = [int(num) for num in numbers.split(',')]
 
         # Calculate the sum of the numbers
-        sum_of_numbers = sum(numbers)
+        sum_of_numbers = sum(numbers_list)
 
         # Double the sum
         doubled_sum = sum_of_numbers * 2
