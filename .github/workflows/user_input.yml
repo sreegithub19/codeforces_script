@@ -16,16 +16,27 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Calculate double the number
+    - name: Calculate double the number using shell
       run: |
         # Get the user-provided number from input
         number=${{ github.event.inputs.number }}
         
         # Display the user-provided number
-        echo "User provided number: $number"
+        echo "User provided number (Shell): $number"
         
-        # Calculate double of the number
+        # Calculate double of the number using shell
         double_number=$(( number * 2 ))
         
-        # Output the result
-        echo "Double of the number is: $double_number"
+        # Output the result using shell
+        echo "Double of the number (Shell) is: $double_number"
+
+    - name: Calculate double the number using Python
+      run: |
+        # Pass the number to the Python script
+        echo "User provided number (Python): ${{ github.event.inputs.number }}"
+        
+        # Use Python to take the input and calculate the double
+        python3 -c "
+number = int(input('Enter a number: '))
+print(f'Double of the number (Python) is: {number * 2}')
+        "
