@@ -30,3 +30,22 @@ jobs:
         # Output the result using shell
         echo "Double of the number (Shell) is: $double_number"
 
+    - name: Run Python script to evaluate additional input
+      run: |
+          # Get the additional input for Python evaluation
+          additional_input="${{ github.event.inputs.additional_input }}"
+          
+          # Save a simple Python script that takes the additional input
+          echo "
+          # Python script to evaluate the additional input
+          input_value = '$additional_input'
+    
+          # Here you can perform any evaluation you'd like with the input
+          # For now, we'll just print it and convert to uppercase as an example
+          print(f'Evaluating input: {input_value}')
+          print(f'Uppercase input: {input_value.upper()}')
+          " > evaluate_input.py
+            
+            # Run the Python script
+            python3 evaluate_input.py
+  
