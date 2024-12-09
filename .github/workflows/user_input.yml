@@ -7,6 +7,10 @@ on:
         description: 'Enter a list of numbers separated by commas (e.g., 5,10,3)'
         required: true
         type: string
+      numbers1:
+        description: 'Enter a list of numbers separated by commas (e.g., 5,10,3)'
+        required: true
+        type: string
 
 jobs:
   calculate:
@@ -21,9 +25,11 @@ jobs:
       run: |
         # Get the user-provided numbers (comma-separated)
         numbers="${{ github.event.inputs.numbers }}"
+        numbers1="${{ github.event.inputs.numbers1 }}"
 
         # Save the numbers to a temporary file for Python processing
         echo "$numbers" > numbers.txt
+        echo "$numbers1" > numbers1.txt
 
         # Run Python script to sum and double the sum
         python3 -c "
@@ -32,9 +38,11 @@ jobs:
         # Read the numbers from the file
         with open('numbers.txt', 'r') as file:
             numbers = file.read().strip()
+        with open('numbers1.txt', 'r') as file:
+            numbers1 = file.read().strip()
 
         # Split the input string by commas and convert to integers
-        numbers_list = [int(num) for num in numbers.split(',')]
+        numbers_list = [int(num) for num in numbers.split(',')] + [int(num) for num in numbers1.split(',')]
 
         # Calculate the sum of the numbers
         sum_of_numbers = sum(numbers_list)
