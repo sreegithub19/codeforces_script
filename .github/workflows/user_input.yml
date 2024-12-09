@@ -30,13 +30,3 @@ jobs:
         # Output the result using shell
         echo "Double of the number (Shell) is: $double_number"
 
-    - name: Calculate double the number using Python
-      run: |
-        # Pass the number to the Python script
-        echo "User provided number (Python): ${{ github.event.inputs.number }}"
-        
-        # Use Python to take the input and calculate the double
-        python3 -c "
-number = int(input('Enter a number: '))
-print(f'Double of the number (Python) is: {number * 2}')
-        "
