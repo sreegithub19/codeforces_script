@@ -42,7 +42,8 @@ jobs:
             numbers1 = file.read().strip()
 
         # Split the input string by commas and convert to integers
-        numbers_list = [int(num) for num in numbers.split(',')] + [int(num) for num in numbers1.split(',')]
+        numbers_list = [int(num) for num in numbers.split(',') if num.strip()]
+        + [int(num) for num in numbers1.split(',') if num.strip()]
 
         # Calculate the sum of the numbers
         sum_of_numbers = sum(numbers_list)
