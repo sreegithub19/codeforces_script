@@ -39,18 +39,15 @@ jobs:
         double_number=${{ env.double_number }}
         
         # Save a simple Python script that takes the doubled number
-        echo "
+        python3 -c "
         # Python script to evaluate the doubled number
         doubled_value = $double_number
 
         # Example evaluation: Print and check if the doubled value is even or odd
-        print(f'Doubled value: {doubled_value}')
+        print(f'Doubled value in Python: {doubled_value}')
         if(doubled_value % 2 == 0):
           print('The doubled value is even.')
         else:
           print('The doubled value is odd.')
-        " > evaluate_input.py
-        
-        # Run the Python script
-        python3 evaluate_input.py
+        "
   
