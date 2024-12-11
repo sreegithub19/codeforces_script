@@ -51,6 +51,23 @@
 
     <build>
         <plugins>
+        <!-- Cucumber plugin to generate reports -->
+            <plugin>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-maven-plugin</artifactId>
+                <version>${cucumber.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
+                            <format>html</format>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
