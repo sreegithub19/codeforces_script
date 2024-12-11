@@ -49,4 +49,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: cucumber-json-report
-        path: target/cucumber-reports.json
+        path: target/cucumber-reports/Cucumber.json
