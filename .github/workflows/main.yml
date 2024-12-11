@@ -54,7 +54,7 @@ jobs:
       run: mvn clean package
 
     - name: Generate Cucumber HTML Report
-      run: mvn exec:java -Dexec.mainClass="GenerateReport"
+      run: mvn exec:java -Dexec.mainClass="com.example.GenerateReport"
 
     - name: Upload Cucumber HTML report as artifact
       uses: actions/upload-artifact@v4
