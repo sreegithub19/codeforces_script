@@ -1,3 +1,0 @@
-hello there
-cpp from java
-rust from java
