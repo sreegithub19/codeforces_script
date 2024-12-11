@@ -34,4 +34,12 @@ public class StepDefinitions {
         assertTrue(isLoggedIn);
         System.out.println("User is redirected to the dashboard.");
     }
+
+    @And("the user sees a welcome message")
+    public void theUserSeesAWelcomeMessage() {
+        // Simulate that the user sees a welcome message after login
+        if (isLoggedIn) {
+            System.out.println("Welcome message is displayed.");
+        }
+    }
 }

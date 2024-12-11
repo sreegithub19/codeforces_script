@@ -1,29 +1,23 @@
-name: Java CI
+name: Cucumber Test Automation
 
 on:
   push:
     branches:
-      - java_cucumber  # Adjust the branch name as needed
+      - java_cucumber
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Set up JDK 21
       uses: actions/setup-java@v2
       with:
         java-version: '21'
-        distribution: 'temurin'
-        java-package: 'jdk'
-        architecture: 'x64'
-        check-latest: false
-        overwrite-settings: true
-        job-status: 'success'
-
+        distribution: 'adoptopenjdk'
 
     - name: Build with Maven
       run: mvn clean install
