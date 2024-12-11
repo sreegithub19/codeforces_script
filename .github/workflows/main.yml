@@ -40,3 +40,13 @@ jobs:
 
     - name: Build with Maven
       run: mvn clean install
+
+    - name: Run with Maven
+      run: mvn test
+
+    - name: Upload Cucumber JSON report as artifact
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: cucumber-json-report
+        path: target/cucumber-reports.json
