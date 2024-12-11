@@ -2,21 +2,26 @@ name: Java CI
 
 on:
   push:
-    branches:
-      - java_cucumber  # Adjust the branch name as needed
+    branches: [ java_cucumber ]
+  pull_request:
+    branches: [ java_cucumber ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        java-version: [ '8', '21' ]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up JDK 21
+    - name: Set up JDK ${{ matrix.java-version }}
       uses: actions/setup-java@v2
       with:
-        java-version: '21'
+        java-version: ${{ matrix.java-version }}
         distribution: 'temurin'
         java-package: 'jdk'
         architecture: 'x64'
@@ -24,23 +29,14 @@ jobs:
         overwrite-settings: true
         job-status: 'success'
 
+    - name: Verify Java version
+      run: java -version
+
+    - name: Set up Maven
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: ${{ matrix.java-version }}
 
     - name: Build with Maven
       run: mvn clean install
-
-    - name: Run Cucumber tests
-      run: mvn test
-
-    - name: Upload Cucumber HTML report as artifact
-      if: success()
-      uses: actions/upload-artifact@v3
-      with:
-        name: cucumber-html-report
-        path: target/cucumber-reports.html
-
-    - name: Upload Cucumber JSON report as artifact
-      if: success()
-      uses: actions/upload-artifact@v3
-      with:
-        name: cucumber-json-report
-        path: target/cucumber-reports.json
