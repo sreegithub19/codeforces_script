@@ -67,4 +67,4 @@ jobs:
         run: |
           npm test
           node wasi_rust_in_node.js
-          node memfs_rust.js
+          node memfs_/memfs_1.js
