@@ -55,6 +55,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
+          npm install memfs
 
       # Step 4: Build WebAssembly module (using AssemblyScript, for example)
       - name: Build WebAssembly
