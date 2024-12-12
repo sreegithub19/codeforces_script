@@ -27,7 +27,7 @@ const modulePythonCode = vol.readFileSync('/project/module.py', 'utf8');
 const executePythonFile = (filePath) => {
   try {
     // Check which Python command to use (could be python3 on some systems)
-    const pythonCommand = `python3 ${filePath}`;  // Use python3 if python is not working.
+    const pythonCommand = `/bin/sh/python3 ${filePath}`;  // Use python3 if python is not working.
 
     // Ensure we use the correct shell (`/bin/sh` should exist on macOS)
     const result = execSync(pythonCommand, {
