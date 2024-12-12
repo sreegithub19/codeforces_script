@@ -20,10 +20,19 @@ pub fn hello() {
 const mainRustCode = vol.readFileSync('/project/src/main.rs', 'utf8');
 const libRustCode = vol.readFileSync('/project/src/lib.rs', 'utf8');
 
-// Step 2: Compile Rust code using rustc, passing the code directly (no physical files)
-const compileRustCode = (code, filename) => {
+// Step 2: Combine the code for compilation
+const combinedRustCode = `
+${libRustCode}
+
+${mainRustCode}
+`;
+
+// Step 3: Use echo and rustc to compile the Rust code from memory (using pipes)
+const compileRustCode = (code) => {
   return new Promise((resolve, reject) => {
-    const rustc = exec('rustc -x rust -o output_binary -', { input: code }, (err, stdout, stderr) => {
+    const command = `echo "${code}" | rustc -o output_binary -`;
+    
+    exec(command, (err, stdout, stderr) => {
       if (err) {
         reject(stderr);
         return;
@@ -33,13 +42,10 @@ const compileRustCode = (code, filename) => {
   });
 };
 
-// Step 3: Compile the library (lib.rs) and main.rs files using rustc
-Promise.all([
-  compileRustCode(libRustCode, 'lib.rs'),
-  compileRustCode(mainRustCode, 'main.rs')
-])
+// Step 4: Compile and run the Rust code
+compileRustCode(combinedRustCode)
   .then(() => {
-    // Step 4: Run the compiled Rust binary
+    // Step 5: Execute the compiled Rust binary
     exec('./output_binary', (err, stdout, stderr) => {
       if (err) {
         console.error(`Error running Rust binary: ${stderr}`);
