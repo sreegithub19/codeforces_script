@@ -2,14 +2,14 @@
     "name": "wasm-node-example",
     "version": "1.0.0",
     "scripts": {
-      "build": "asc assemblyscript_/index.ts --outFile build/index.wasm --optimize",
-      "test": "node test.js"
+        "build": "asc assemblyscript_/index.ts --outFile build/index.wasm --optimize",
+        "test": "node test.js"
     },
     "dependencies": {
-      "assemblyscript": "^0.20.0"
+        "assemblyscript": "^0.20.0",
+        "memfs": "^4.15.0"
     },
     "devDependencies": {
-      "assert": "^2.0.0"
+        "assert": "^2.0.0"
     }
-  }
-  
+}

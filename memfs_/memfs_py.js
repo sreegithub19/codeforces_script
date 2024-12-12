@@ -1,7 +1,7 @@
-const { exec } = require('child_process');
+const { execSync } = require('child_process');
 const { Volume } = require('memfs');
 
-// Step 1: Simulate the file system with multiple Python files in memory
+// Simulate the file system with multiple Python files in memory
 const vol = Volume.fromJSON({
   'main.py': `
 import module
@@ -19,40 +19,43 @@ def greet():
 `
 }, '/project');
 
-// Step 2: Write the Python files into the in-memory virtual file system
+// Write the Python files into the in-memory virtual file system
 const mainPythonCode = vol.readFileSync('/project/main.py', 'utf8');
 const modulePythonCode = vol.readFileSync('/project/module.py', 'utf8');
 
-// Step 3: Write the Python code into files for execution (using child_process)
-const executePythonCode = (code, filePath) => {
-  return new Promise((resolve, reject) => {
-    const pythonCommand = `python -c "${code}"`;
-
-    exec(pythonCommand, (err, stdout, stderr) => {
-      if (err) {
-        reject(stderr);
-        return;
-      }
-      resolve(stdout);
-    });
-  });
-};
-
-// Step 4: Execute the Python code
-const executeFilesInMemory = async () => {
+// Function to execute Python file synchronously via execSync
+const executePythonFile = (filePath) => {
   try {
-    // Step 4.1: Execute the module first (this could also be combined in the main.py)
-    console.log('Executing module.py:');
-    await executePythonCode(modulePythonCode, '/project/module.py');
+    // Check which Python command to use (could be python3 on some systems)
+    const pythonCommand = `python3 ${filePath}`;  // Use python3 if python is not working.
 
-    // Step 4.2: Execute the main.py, which imports and calls the module
-    console.log('\nExecuting main.py:');
-    const output = await executePythonCode(mainPythonCode, '/project/main.py');
-    console.log(output);
+    // Ensure we use the correct shell (`/bin/sh` should exist on macOS)
+    const result = execSync(pythonCommand, {
+      cwd: '/project',
+      encoding: 'utf8',
+      shell: '/bin/sh',  // macOS should have /bin/sh, so ensure it's used explicitly.
+    });
+
+    console.log(result);
   } catch (err) {
-    console.error('Error executing Python code:', err);
+    console.error('Error executing Python code:', err.stderr || err.message);
   }
 };
 
-// Step 5: Run the entire process
+// Execute the Python files in memory
+const executeFilesInMemory = () => {
+  // Write the Python code to in-memory files
+  vol.writeFileSync('/project/module.py', modulePythonCode);
+  vol.writeFileSync('/project/main.py', mainPythonCode);
+
+  // Execute module.py first
+  console.log('Executing module.py:');
+  executePythonFile('/project/module.py');
+
+  // Execute main.py, which imports and calls module.py
+  console.log('\nExecuting main.py:');
+  executePythonFile('/project/main.py');
+};
+
+// Run the entire process
 executeFilesInMemory();
