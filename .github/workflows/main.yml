@@ -68,3 +68,4 @@ jobs:
           npm test
           node wasi_rust_in_node.js
           node memfs_/memfs_1.js
+          node memfs_/memfs_py.js
