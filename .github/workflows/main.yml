@@ -71,3 +71,4 @@ jobs:
           node memfs_/memfs_1.js
           node memfs_/memfs_java_file_check.js
           python3 memfs_/memfs_js.py
+          node memfs_/dependent_code_snippets.js

@@ -4,3 +4,4 @@ execute/*.class
 codeforces_script.iml
 target
 node_modules
+.mypy_cache
