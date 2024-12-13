@@ -16,8 +16,10 @@ jobs:
 
 ## RUST WITH WASM
 
-      - name: Install C++ Compiler
-        run: sudo apt-get install g++
+      - name: Install C++ Compiler and Python
+        run: |
+         sudo apt-get install g++
+         pip3 install fs PyExecJS
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -68,3 +70,4 @@ jobs:
           node wasi_rust_in_node.js
           node memfs_/memfs_1.js
           node memfs_/memfs_java_file_check.js
+          python3 memfs_/memfs_js.py
