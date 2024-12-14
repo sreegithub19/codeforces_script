@@ -3,7 +3,7 @@ name: Docker tmpfs with Script Execution Example
 on:
   push:
     branches:
-      - main
+      - web_assembly_
 
 jobs:
   build:
