@@ -1,9 +1,9 @@
-name: Use tmpfs Mount with Docker in GitHub Actions
+name: Docker tmpfs Example with --mount
 
 on:
   push:
     branches:
-      - web_assembly_
+      - main
 
 jobs:
   build:
@@ -13,11 +13,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Run Docker with tmpfs mount
+    - name: Run Docker with tmpfs mount using --mount
       run: |
-        docker run --rm --tmpfs /tmp:rw,size=100m ubuntu bash -c "
-          mkdir -p /tmp/my_tmpfs &&
-          echo 'This is a temporary file in tmpfs' > /tmp/my_tmpfs/tempfile.txt &&
-          cat /tmp/my_tmpfs/tempfile.txt &&
-          ls /tmp/my_tmpfs
+        docker run --rm \
+          --mount type=tmpfs,dst=/tmp/my_tmpfs,size=100m \
+          ubuntu bash -c "
+            mkdir -p /tmp/my_tmpfs &&
+            echo 'This is a temporary file in tmpfs' > /tmp/my_tmpfs/tempfile.txt &&
+            cat /tmp/my_tmpfs/tempfile.txt &&
+            ls /tmp/my_tmpfs
         "
