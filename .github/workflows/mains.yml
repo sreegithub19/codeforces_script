@@ -16,7 +16,7 @@ jobs:
     - name: Run Docker with tmpfs mount using --mount
       run: |
         docker run --rm \
-          --mount type=tmpfs,dst=/tmp/my_tmpfs,size=100m \
+          --mount type=tmpfs,dst=/tmp/my_tmpfs \
           ubuntu bash -c "
             mkdir -p /tmp/my_tmpfs &&
             echo 'This is a temporary file in tmpfs' > /tmp/my_tmpfs/tempfile.txt &&
