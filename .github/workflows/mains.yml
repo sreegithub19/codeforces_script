@@ -29,10 +29,12 @@ jobs:
             touch /tmp/my_tmpfs/myscript.sh 
             chmod +x /tmp/my_tmpfs/myscript.sh
             chmod 755 /tmp/my_tmpfs/myscript.sh && chown root:root /tmp/my_tmpfs/myscript.sh &&
-            echo -e 'echo 2+3' > /tmp/my_tmpfs/myscript.sh &&
+            ls -l /tmp/my_tmpfs/myscript.sh &&
+            #echo -e 'echo 2+3' > /tmp/my_tmpfs/myscript.sh &&
             
             # Step 4: Make the script executable
             chmod +x /tmp/my_tmpfs/myscript.sh &&
+            ls -l /tmp/my_tmpfs/myscript.sh &&
 
             # Step 5: Execute the script
             /tmp/my_tmpfs/myscript.sh &&
