@@ -3,7 +3,7 @@ name: Docker tmpfs with Script Execution Example
 on:
   push:
     branches:
-      - web_assembly_
+      - main
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
     - name: Run Docker with tmpfs mount and execute script
       run: |
         docker run --rm \
-          --mount type=tmpfs,dst=/tmp/my_tmpfs \
+          --mount type=tmpfs,dst=/tmp/my_tmpfs,tmpfs-mode=1777 \
           ubuntu bash -c "
             # Step 1: Create a directory inside tmpfs
             mkdir -p /tmp/my_tmpfs &&
