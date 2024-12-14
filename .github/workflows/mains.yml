@@ -20,25 +20,26 @@ jobs:
           ubuntu bash -c "
             # Step 1: Create a directory inside tmpfs
             mkdir -p /tmp/my_tmpfs &&
-            
+
             # Step 2: Create a simple text file in tmpfs
             echo 'This is a temporary file here in tmpfs' > /tmp/my_tmpfs/tempfile.txt &&
             cat /tmp/my_tmpfs/tempfile.txt &&
 
-            # Step 3: Create a shell script file in tmpfs
-            touch /tmp/my_tmpfs/myscript.sh 
-            chmod +x /tmp/my_tmpfs/myscript.sh
-            chmod 755 /tmp/my_tmpfs/myscript.sh && chown root:root /tmp/my_tmpfs/myscript.sh &&
-            ls -l /tmp/my_tmpfs/myscript.sh &&
-            #echo -e 'echo 2+3' > /tmp/my_tmpfs/myscript.sh &&
-            
-            # Step 4: Make the script executable
-            chmod +x /tmp/my_tmpfs/myscript.sh &&
+            # Step 3: Create a shell script file in tmpfs and add content
+            echo -e '#!/bin/bash\n\necho \"Hello from the tmpfs script!\"' > /tmp/my_tmpfs/myscript.sh &&
+
+            # Step 4: Check permissions of the script
             ls -l /tmp/my_tmpfs/myscript.sh &&
 
-            # Step 5: Execute the script
-            /tmp/my_tmpfs/myscript.sh &&
-            
-            # Step 6: List files in tmpfs directory to confirm
+            # Step 5: Make the script executable (again)
+            chmod +x /tmp/my_tmpfs/myscript.sh &&
+
+            # Step 6: Check the permissions again after chmod
+            ls -l /tmp/my_tmpfs/myscript.sh &&
+
+            # Step 7: Execute the script explicitly with bash
+            bash /tmp/my_tmpfs/myscript.sh &&
+
+            # Step 8: List files in tmpfs directory to confirm
             ls /tmp/my_tmpfs
           "
