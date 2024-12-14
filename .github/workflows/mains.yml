@@ -1,4 +1,4 @@
-name: Docker tmpfs Example with --mount
+name: Docker tmpfs with Script Execution Example
 
 on:
   push:
@@ -13,13 +13,27 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Run Docker with tmpfs mount using --mount
+    - name: Run Docker with tmpfs mount and execute script
       run: |
         docker run --rm \
           --mount type=tmpfs,dst=/tmp/my_tmpfs \
           ubuntu bash -c "
+            # Step 1: Create a directory inside tmpfs
             mkdir -p /tmp/my_tmpfs &&
-            echo 'This is a temporary file in tmpfs' > /tmp/my_tmpfs/tempfile.txt &&
+            
+            # Step 2: Create a simple text file in tmpfs
+            echo 'This is a temporary file here in tmpfs' > /tmp/my_tmpfs/tempfile.txt &&
             cat /tmp/my_tmpfs/tempfile.txt &&
+
+            # Step 3: Create a shell script file in tmpfs
+            echo -e '#!/bin/bash\n\necho \"Hello from the tmpfs script!\"" > /tmp/my_tmpfs/myscript.sh &&
+            
+            # Step 4: Make the script executable
+            chmod +x /tmp/my_tmpfs/myscript.sh &&
+
+            # Step 5: Execute the script
+            /tmp/my_tmpfs/myscript.sh &&
+            
+            # Step 6: List files in tmpfs directory to confirm
             ls /tmp/my_tmpfs
-        "
+          "
