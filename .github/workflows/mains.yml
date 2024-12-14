@@ -1,0 +1,23 @@
+name: Use tmpfs Mount with Docker in GitHub Actions
+
+on:
+  push:
+    branches:
+      - web_assembly_
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run Docker with tmpfs mount
+      run: |
+        docker run --rm --tmpfs /tmp:rw,size=100m ubuntu bash -c "
+          mkdir -p /tmp/my_tmpfs &&
+          echo 'This is a temporary file in tmpfs' > /tmp/my_tmpfs/tempfile.txt &&
+          cat /tmp/my_tmpfs/tempfile.txt &&
+          ls /tmp/my_tmpfs
+        "
