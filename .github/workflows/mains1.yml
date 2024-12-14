@@ -15,28 +15,4 @@ jobs:
 
     - name: Run Docker with tmpfs mount and execute Node.js script
       run: |
-        docker run --rm \
-          --mount type=tmpfs,dst=/tmp/my_tmpfs,tmpfs-mode=1777 \
-          ubuntu bash -c "
-            # Step 1: Install Node.js (if not already installed)
-            apt-get update && apt-get install -y nodejs npm &&
-
-            # Step 2: Create a directory inside tmpfs
-            mkdir -p /tmp/my_tmpfs &&
-
-            # Step 3: Create a simple text file in tmpfs
-            echo 'This is a temporary file here in tmpfs' > /tmp/my_tmpfs/tempfile.txt &&
-            cat /tmp/my_tmpfs/tempfile.txt &&
-
-            # Step 4: Create a Node.js script in tmpfs
-            echo -e 'console.log(\"Hello from Node.js in tmpfs!\");' > /tmp/my_tmpfs/myscript.js &&
-
-            # Step 5: Check permissions of the script
-            ls -l /tmp/my_tmpfs/myscript.js &&
-
-            # Step 6: Execute the Node.js script using node
-            node /tmp/my_tmpfs/myscript.js &&
-
-            # Step 7: List files in tmpfs directory to confirm
-            ls /tmp/my_tmpfs
-          "
+        python3 memfs_/memfs_.py
