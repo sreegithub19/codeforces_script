@@ -16,7 +16,7 @@ docker run --rm \
     cat /tmp/my_tmpfs/tempfile.txt &&
 
     # Step 4: Create a Node.js script in tmpfs
-    echo -e 'console.log(\"Hello from Node.js in tmpfs!\");' > /tmp/my_tmpfs/myscript.js &&
+    echo -e 'console.log(\\"Hello from Node.js in tmpfs!\\");' > /tmp/my_tmpfs/myscript.js &&
 
     # Step 5: Check permissions of the script
     ls -l /tmp/my_tmpfs/myscript.js &&
