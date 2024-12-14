@@ -26,6 +26,7 @@ jobs:
             cat /tmp/my_tmpfs/tempfile.txt &&
 
             # Step 3: Create a shell script file in tmpfs
+            touch /tmp/my_tmpfs/myscript.sh && chmod +x /tmp/my_tmpfs/myscript.sh &&
             echo -e '#!/bin/bash\n\necho \"Hello from the tmpfs script!\"' > /tmp/my_tmpfs/myscript.sh &&
             
             # Step 4: Make the script executable
