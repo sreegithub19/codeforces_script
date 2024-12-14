@@ -1,74 +1,26 @@
-name: Build and Test WebAssembly (Node.js)
+name: MATLAB Hello World Workflow
 
 on:
   push:
     branches:
-      - web_assembly_
+      - matlab_
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
-  build:
+  run-matlab:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository code
-      - name: Checkout repository
+      - name: Checkout the code
         uses: actions/checkout@v2
 
-## RUST WITH WASM
-
-      - name: Install C++ Compiler and Python
-        run: |
-         sudo apt-get install g++
-         pip3 install fs PyExecJS
-
-      - name: Set up Rust
-        uses: actions-rs/toolchain@v1
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v1
         with:
-         toolchain: stable  # Use the stable version of Rust
+          matlab-version: 'R2023b'  # Specify the MATLAB version (adjust as needed)
 
-      # Step 3: Add wasm32-wasi target
-      - name: Add wasm32-wasi target
-        run: rustup target add wasm32-wasip1
-
-      # Step 4: Install Wasmtime CLI (WASI runtime)
-      - name: Install Wasmtime
+      - name: Run MATLAB Hello World script
         run: |
-          curl https://wasmtime.dev/install.sh -sSf | bash
-          echo "$HOME/.wasmtime/bin" >> $GITHUB_PATH  # Add Wasmtime to the PATH
-
-      # Step 3: Build the project
-      - name: Build the project
-        run: |
-         cargo build --release
-
-      # Step 4: Run the project (this will print output to the Actions log)
-      - name: Run the program
-        run: cargo run      #  or cargo run --bin your_binary_name (cargo run --bin src/main.rs)
-
-## NODEJS WITH RUST AND WASI
-
-      # Step 2: Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      # Step 3: Install dependencies (including AssemblyScript or other WASM tools)
-      - name: Install dependencies
-        run: |
-          npm install
-
-      # Step 4: Build WebAssembly module (using AssemblyScript, for example)
-      - name: Build WebAssembly
-        run: |
-          npm run build
-
-      # Step 5: Run tests to ensure the WebAssembly module works with Node.js
-      - name: Run tests
-        run: |
-          npm test
-          node wasi_rust_in_node.js
-          node memfs_/memfs_1.js
-          node memfs_/memfs_java_file_check.js
-          python3 memfs_/memfs_js.py
-          node memfs_/dependent_code_snippets.js
+          matlab -batch "hello_world"
