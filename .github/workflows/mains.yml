@@ -3,7 +3,7 @@ name: Docker tmpfs Example with --mount
 on:
   push:
     branches:
-      - main
+      - web_assembly_
 
 jobs:
   build:
