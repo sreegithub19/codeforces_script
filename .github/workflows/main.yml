@@ -28,6 +28,7 @@ jobs:
 
       - name: Run all MATLAB files in the folder
         run: |
+            mkdir -p output
             # Make sure the script is executable
             chmod +x ./run_all_matlab_files.sh
             # Execute the shell script that runs all .m files
@@ -38,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: sine-wave-plot
-          path: ./output/plot_sine_wave.png  # Path to the generated plot
+          path: output/plot_sine_wave.png  # Path to the generated plot
 
