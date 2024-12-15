@@ -18,8 +18,8 @@ jobs:
 
       - name: Install Scilab
         run: |
-          apt-get update
-          apt-get install -y scilab
+          sudo apt-get update
+          sudo apt-get install -y scilab
 
       # - name: Set up Python
       #   uses: actions/setup-python@v2
