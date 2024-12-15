@@ -21,6 +21,9 @@ jobs:
         with:
           matlab-version: 'R2023b'  # Specify the MATLAB version (adjust as needed)
 
-      - name: Run MATLAB Hello World script
+      - name: Run all MATLAB files in the folder
         run: |
-          matlab -batch "run('hello_world.m')"
+            # Make sure the script is executable
+            chmod +x ./run_all_matlab_files.sh
+            # Execute the shell script that runs all .m files
+            ./run_all_matlab_files.sh
