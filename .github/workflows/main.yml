@@ -34,3 +34,9 @@ jobs:
             ./run_all_matlab_files.sh
             matlab -batch "disp('Running MATLAB code inline!'); a = 3; b = 5; disp(['Sum: ', num2str(a+b)])"
 
+      - name: Upload plot artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sine-wave-plot
+          path: output/plot_sine_wave.png  # Path to the generated plot
+
