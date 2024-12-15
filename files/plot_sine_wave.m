@@ -14,7 +14,7 @@ xlabel('x');
 ylabel('sin(x)');
 
 % Save the plot as a PNG image in the output folder
-saveas(gcf, 'output/plot_sine_wave.png');  % Save plot as PNG image
+saveas(gcf, './output/plot_sine_wave.png');  % Save plot as PNG image
 
 % Close the figure to avoid using excessive resources
 close;
