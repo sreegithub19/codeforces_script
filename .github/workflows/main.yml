@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: sine-wave-plot
-          path: plot_sine_wave.png  # Path to the generated plot
+          path: files/plot_sine_wave.png  # Path to the generated plot
 
