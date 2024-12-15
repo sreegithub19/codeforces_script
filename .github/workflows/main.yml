@@ -21,6 +21,11 @@ jobs:
         with:
           matlab-version: 'R2023b'  # Specify the MATLAB version (adjust as needed)
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
       - name: Run all MATLAB files in the folder
         run: |
             # Make sure the script is executable
