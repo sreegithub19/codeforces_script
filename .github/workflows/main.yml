@@ -41,3 +41,14 @@ jobs:
           name: sine-wave-plot
           path: files/plot_sine_wave.png  # Path to the generated plot
 
+      - name: Upload plot artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: sine-wave-plot
+          path: files/plot_sine_wave.png  # Path to the generated plot
+
+      - name: Upload plot artifact
+        uses: actions/upload-artifact@v4
+        with:
+         name: sine-wave-plot
+         path: files/plot_sine_wave.png  # Path to the generated plot
