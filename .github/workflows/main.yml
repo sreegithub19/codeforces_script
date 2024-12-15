@@ -33,7 +33,7 @@ jobs:
             chmod +x ./run_all_scilab_files.sh
             # Execute the shell script that runs all .m files
             ./run_all_scilab_files.sh
-            #scilab -e "disp('Hello, inline Scilab World!');"
+            scilab -e "disp('Hello, inline Scilab World!');"
 
 
       # - name: Upload plot artifact
