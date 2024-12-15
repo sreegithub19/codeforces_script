@@ -69,6 +69,14 @@ jobs:
         Xvfb :99 &  # Start Xvfb in the background on display :99
         export DISPLAY=:99  # Set the DISPLAY variable
 
-    - name: Run Scilab with GUI
+    - name: Run all SCILAB files in the folder
       run: |
-        scilab -nogui -e "disp('Hello, World!');"  # Run Scilab or your GUI application
+          mkdir -p output
+          # Make sure the script is executable
+          chmod +x ./run_all_scilab_files.sh
+          # Execute the shell script that runs all .m files
+          ./run_all_scilab_files.sh
+
+    # - name: Run Scilab with GUI
+    #   run: |
+    #     scilab -nogui -e "disp('Hello, World!');"  # Run Scilab or your GUI application
