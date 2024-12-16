@@ -9,4 +9,4 @@ unix('ls -l');
 // Run a complex shell command (e.g., creating a directory, navigating, and listing its contents)
 unix('pwd');
 
-unix("python3 -c \'print(2222222)\'");
+unix('python3 -c ''print(2222222)'');
