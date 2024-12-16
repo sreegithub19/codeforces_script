@@ -1,11 +1,3 @@
-#       # - name: Upload plot artifact
-#       #   uses: actions/upload-artifact@v4
-#       #   with:
-#       #    name: all plots
-#       #    path: output  # Path to the generated plot
-
-
-
 name: Run GUI Application with Xvfb
 
 on:
@@ -24,13 +16,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        #sudo apt-get install -y xvfb scilab  # Install Xvfb and Scilab
-        sudo apt-get install -y openjdk-11-jdk libtinfo6
-
-    # - name: Start Xvfb
-    #   run: |
-    #     Xvfb :99 &  # Start Xvfb in the background on display :99
-    #     export DISPLAY=:99  # Set the DISPLAY variable
+        sudo apt-get install -y openjdk-11-jdk libtinfo6  # Install required dependencies
 
     - name: Install Scilab
       run: |
@@ -39,15 +25,20 @@ jobs:
         sudo mv scilab-6.1.1 /opt/scilab
         sudo ln -s /opt/scilab/bin/scilab-cli /usr/local/bin/scilab-cli
 
-
     - name: Run all SCILAB files in the folder
       run: |
-          mkdir -p output
-          # Make sure the script is executable
-          chmod +x ./run_all_scilab_files.sh
-          # Execute the shell script that runs all .sci files
-          ./run_all_scilab_files.sh
+        mkdir -p output
+        # Make sure the script is executable
+        chmod +x ./run_all_scilab_files.sh
+        # Execute the shell script that runs all .sci files
+        ./run_all_scilab_files.sh
 
     - name: Run Scilab with GUI
       run: |
         scilab-cli -nb -e "disp('Hello from inline Scilab!');"  # Run Scilab or your GUI application
+
+    # - name: Upload plot artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: all-plots
+    #     path: output  # Path to the generated plot files
