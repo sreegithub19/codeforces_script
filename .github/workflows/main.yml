@@ -25,7 +25,7 @@ jobs:
       run: |
         sudo apt-get update
         #sudo apt-get install -y xvfb scilab  # Install Xvfb and Scilab
-        sudo apt-get install -y openjdk-11-jdk libtinfo5
+        sudo apt-get install -y openjdk-11-jdk libtinfo6
 
     # - name: Start Xvfb
     #   run: |
