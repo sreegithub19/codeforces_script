@@ -24,12 +24,21 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y xvfb scilab  # Install Xvfb and Scilab
+        #sudo apt-get install -y xvfb scilab  # Install Xvfb and Scilab
+        sudo apt-get install -y openjdk-11-jdk
 
-    - name: Start Xvfb
+    # - name: Start Xvfb
+    #   run: |
+    #     Xvfb :99 &  # Start Xvfb in the background on display :99
+    #     export DISPLAY=:99  # Set the DISPLAY variable
+
+    - name: Install Scilab
       run: |
-        Xvfb :99 &  # Start Xvfb in the background on display :99
-        export DISPLAY=:99  # Set the DISPLAY variable
+        wget https://www.scilab.org/download/6.1.1/scilab-6.1.1.bin.linux-x86_64.tar.gz
+        tar -xzf scilab-6.1.1.bin.linux-x86_64.tar.gz
+        sudo mv scilab-6.1.1 /opt/scilab
+        sudo ln -s /opt/scilab/bin/scilab-cli /usr/local/bin/scilab-cli
+
 
     - name: Run all SCILAB files in the folder
       run: |
