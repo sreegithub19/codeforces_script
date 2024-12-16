@@ -1,7 +1,7 @@
 // my_script.sci
 
 // Run a simple shell command (e.g., listing files)
-unix("echo \'Hello from Scilab!\'");
+unix('echo ''Hello from shell Scilab!''');
 
 // Run a command to list files in the current directory
 unix('ls -l');
