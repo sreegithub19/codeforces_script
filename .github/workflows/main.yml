@@ -28,9 +28,9 @@ jobs:
     - name: Install libtinfo5
       run: |
         # Download the libtinfo5 package
-        wget http://archive.ubuntu.com/ubuntu/pool/main/n/ncurses/libtinfo5_6.2-0ubuntu2_amd64.deb
+        wget http://archive.ubuntu.com/ubuntu/pool/main/n/ncurses/libtinfo5_6.1-1ubuntu1_amd64.deb
         # Install the package using dpkg
-        sudo dpkg -i libtinfo5_6.2-0ubuntu2_amd64.deb
+        sudo dpkg -i libtinfo5_6.1-1ubuntu1_amd64.deb
         # Fix any missing dependencies
         sudo apt-get install -f -y
 
