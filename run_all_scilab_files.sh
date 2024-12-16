@@ -12,3 +12,4 @@ do
     scilab-cli -nb -f "$scilab_file"
   fi
 done
+
