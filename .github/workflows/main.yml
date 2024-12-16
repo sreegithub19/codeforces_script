@@ -48,6 +48,6 @@ jobs:
           # Execute the shell script that runs all .sci files
           ./run_all_scilab_files.sh
 
-    # - name: Run Scilab with GUI
-    #   run: |
-    #     scilab -nogui -e "disp('Hello, World!');"  # Run Scilab or your GUI application
+    - name: Run Scilab with GUI
+      run: |
+        scilab-cli -nb -e "disp('Hello from inline Scilab!');"  # Run Scilab or your GUI application
