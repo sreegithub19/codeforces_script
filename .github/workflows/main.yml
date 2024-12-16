@@ -25,7 +25,7 @@ jobs:
       run: |
         sudo apt-get update
         #sudo apt-get install -y xvfb scilab  # Install Xvfb and Scilab
-        sudo apt-get install -y openjdk-11-jdk
+        sudo apt-get install -y openjdk-11-jdk libtinfo5
 
     # - name: Start Xvfb
     #   run: |
@@ -45,7 +45,7 @@ jobs:
           mkdir -p output
           # Make sure the script is executable
           chmod +x ./run_all_scilab_files.sh
-          # Execute the shell script that runs all .m files
+          # Execute the shell script that runs all .sci files
           ./run_all_scilab_files.sh
 
     # - name: Run Scilab with GUI
