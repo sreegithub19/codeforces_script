@@ -9,6 +9,6 @@ do
   if [[ -f "$scilab_file" ]]; then
     echo "Running $scilab_file..."
     # Run each file using SCILAB -batch
-    scilab -nogui -batch "exec('$scilab_file')"
+    scilab -nogui -f "$scilab_file"
   fi
 done
