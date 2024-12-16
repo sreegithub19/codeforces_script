@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y openjdk-11-jdk libtinfo6  # Install required dependencies
+        sudo apt-get install -y openjdk-11-jdk  # Install required dependencies
 
     - name: Install Scilab
       run: |
@@ -24,6 +24,15 @@ jobs:
         tar -xzf scilab-6.1.1.bin.linux-x86_64.tar.gz
         sudo mv scilab-6.1.1 /opt/scilab
         sudo ln -s /opt/scilab/bin/scilab-cli /usr/local/bin/scilab-cli
+
+    - name: Install libtinfo5
+      run: |
+        # Download the libtinfo5 package
+        wget http://archive.ubuntu.com/ubuntu/pool/main/n/ncurses/libtinfo5_6.2-0ubuntu2_amd64.deb
+        # Install the package using dpkg
+        sudo dpkg -i libtinfo5_6.2-0ubuntu2_amd64.deb
+        # Fix any missing dependencies
+        sudo apt-get install -f -y
 
     - name: Run all SCILAB files in the folder
       run: |
