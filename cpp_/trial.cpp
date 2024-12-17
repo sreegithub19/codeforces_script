@@ -15,7 +15,7 @@ int main ()
     // file name is a.cpp, then str holds "gcc -o a.out a.cpp"
     // Here -o is used to specify executable file name
     string str = "python ";
-    str = str + "-c " + "\"import flask;print('hi');print(2+4, ' from python!');\
+    str = str + "-c " + "\"import flask;print('\\nhi');print(2+4,' from python!');\
     \"";
 
     // Convert string to const char * as system requires
@@ -26,7 +26,7 @@ int main ()
     system(command);
 /**************************************************************/
     string str1 = R"(
-        node -e "console.log(2+3+` from nodejs`);"
+        node -e "console.log(2+3+' from nodejs');"
     )";
    //std::string str1 = "node -e \"console.log(2+3+` from nodejs`);\"";
 
