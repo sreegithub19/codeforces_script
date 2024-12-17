@@ -14,7 +14,7 @@ int main ()
     // Build command to execute. For example if the input
     // file name is a.cpp, then str holds "gcc -o a.out a.cpp"
     // Here -o is used to specify executable file name
-    string str = "python3 ";
+    string str = "python ";
     str = str + "-c " + "\"import flask;print('hi');print(2+4);\
     \"";
 
@@ -28,10 +28,7 @@ int main ()
     // string str1 = R"(
     //     node -e "console.log(2+3+` from nodejs`);"
     // )";
-    string str1 = "node -e "
-    "\"\
-    console.log(2+3+` from nodejs`);\
-    \"";
+    std::string str1 = "node -e \"console.log(2+3+` from nodejs`);\"";
 
     // Convert string to const char * as system requires
     // parameter of type const char *
