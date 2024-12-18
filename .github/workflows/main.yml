@@ -69,7 +69,6 @@ jobs:
 
     - name: Record video of the page
       run: |
-                npx playwright install
                 node -e "
                   const { chromium } = require('playwright');
                   (async () => {
