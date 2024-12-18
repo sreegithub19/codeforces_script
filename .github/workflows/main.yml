@@ -56,6 +56,11 @@ jobs:
             exit 1
           fi
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+          node-version: 18
+
     - name: Capture HTML content from localhost
       run: |
             # Fetch the HTML content from the server running at localhost:5678
@@ -64,11 +69,13 @@ jobs:
 
     - name: Take screenshot of the page
       run: |
+              npm install playwright
               npx playwright install
               npx playwright screenshot http://localhost:5678 videos/index.png
 
     - name: Record video of the page
       run: |
+                npx playwright install
                 node -e "
                   const { chromium } = require('playwright');
                   (async () => {
