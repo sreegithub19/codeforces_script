@@ -11,7 +11,7 @@ while session = server.accept
   session.print("\r\n") # 3
   session.print(
     '''
-    <h1>Hi</h1>
+    <h1>Hi Ruby World!</h1>
     '''
   ) #4
  
