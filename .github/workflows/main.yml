@@ -27,6 +27,7 @@ jobs:
         
         dart run execute/hello.dart
         dart run execute/stub.dart
+        python execute/dart_in_python.py
 
     - name: Run Dart in tmpfs
       run: |
@@ -46,8 +47,7 @@ jobs:
 
       # dart run execute/ins.dart
 
-      
- #      python execute/dart_in_python.py
+    
  #      echo 'print("Hello from Dart shell!");' | interactive
  #       echo 'print("Hello from Dart shell!");' | dart
  #      dart eval "print('Hello, runline Dart!');"
