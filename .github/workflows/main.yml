@@ -57,7 +57,7 @@ jobs:
     - name: Stop Ruby HTTP Server
       run: |
             # Kill the Ruby HTTP server using its process ID
-            kill $SERVER_PID
+            kill -9 $SERVER_PID
     
     - name: Upload HTML file as artifact
       uses: actions/upload-artifact@v4
