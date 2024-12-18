@@ -47,26 +47,37 @@ jobs:
 
     - name: Start HTTP server and expose it via ngrok
       run: |
-              # Start the Ruby HTTP server in the background
-              ruby server_.rb &
-              
-              # Start ngrok to expose the local port 5678 (where your server is running)
-              nohup ngrok http 5678 > ngrok.log &
-              
-              # Give ngrok a few seconds to initialize
-              sleep 5
-              
-              # # Get the ngrok public URL
-              NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
-        
-              # # Print the ngrok URL to the GitHub Actions log
-              echo "Server is publicly accessible at: $NGROK_URL"
-        
-              # # Optionally, test the server using curl
-              curl $NGROK_URL  # You can also check if the server is responding
-        
-              # # Keep ngrok running for 2 minutes (120 seconds)
-              sleep 120
-        
-              # # Optionally, you can kill ngrok here if you need
-              # pkill ngrok
+            # Start the Ruby HTTP server in the background
+            ruby server_.rb &
+            
+            # Start ngrok to expose the local port 5678 (where your server is running)
+            nohup ngrok http 5678 > ngrok.log &
+            
+            # Wait longer for ngrok to initialize
+            sleep 15
+            
+            # Check if ngrok is running and the API is accessible
+            curl -s http://localhost:4040/api/tunnels
+            
+            # Get the ngrok public URL
+            NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
+            
+            # Check if the ngrok URL was retrieved correctly
+            if [ -z "$NGROK_URL" ]; then
+              echo "Failed to retrieve ngrok URL. Check ngrok logs."
+              cat ngrok.log
+              exit 1
+            fi
+      
+            # Print the ngrok URL to the GitHub Actions log
+            echo "Server is publicly accessible at: $NGROK_URL"
+      
+            # # Optionally, test the server using curl
+            # curl $NGROK_URL  # You can also check if the server is responding
+      
+            # # Keep ngrok running for 2 minutes (120 seconds)
+            # sleep 120
+      
+            # # Optionally, kill ngrok here if you need
+            # pkill ngrok
+      
