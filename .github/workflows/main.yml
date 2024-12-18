@@ -30,8 +30,8 @@ jobs:
           ruby "$file"
         done
 
-         - name: Install ngrok
-        run: |
+    - name: Install ngrok
+      run: |
           curl -s https://ngrok.com/download | unzip -d /tmp - && sudo mv /tmp/ngrok /usr/local/bin/ngrok
 
     - name: Start HTTP server and expose it via ngrok
