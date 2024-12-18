@@ -23,7 +23,14 @@ jobs:
         run: npm install -g elm
 
       - name: Build Elm project
-        run: elm install elm/core && elm install elm/html && elm install elm/browser && elm make src/Main.elm --output=elm.js
+        run: |
+         elm install elm/core && elm install elm/html && elm install elm/browser && elm install hecrj/html-parser
+         #mkdir -p js_
+         elm make src/Main.elm --output=js_/Main.js
+         elm make src/Hello_1.elm --output=js_/Hello_1.js
+         elm make src/Html_2.elm --output=js_/Html_2.js
+         elm make src/Html_3.elm --output=js_/Html_3.js
+         elm make src/Html_iframe.elm --output=js_/Html_iframe.js
 
 
       - name: Upload HTML artifact
@@ -31,5 +38,5 @@ jobs:
         with:
           name: elm-artifact
           path: |
-           index.html
-           elm.js
+           html_
+           js_
