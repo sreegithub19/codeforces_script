@@ -31,6 +31,10 @@ jobs:
          elm make src/Html_2.elm --output=js_/Html_2.js
          elm make src/Html_3.elm --output=js_/Html_3.js
          elm make src/Html_iframe.elm --output=js_/Html_iframe.js
+         elm make src/Functions_4.elm --output=js_/Functions_4.js
+         elm make src/Lists_5.elm --output=js_/Lists_5.js
+         elm make src/Conditionals_6.elm --output=js_/Conditionals_6.js
+         elm make src/Strings_7.elm --output=js_/Strings_7.js
 
 
       - name: Upload HTML artifact
