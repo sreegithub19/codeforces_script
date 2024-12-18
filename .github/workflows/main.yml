@@ -18,9 +18,44 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.3.5'  # Specify the Ruby version you want
+      
+    - name: Install dependencies
+      run: |
+        gem install bundler
+        # You can add other gems if needed in the Gemfile
 
     - name: Run all Ruby files in the execute folder
       run: |
         for file in execute/*.rb; do
           ruby "$file"
         done
+
+         - name: Install ngrok
+        run: |
+          curl -s https://ngrok.com/download | unzip -d /tmp - && sudo mv /tmp/ngrok /usr/local/bin/ngrok
+
+    - name: Start HTTP server and expose it via ngrok
+      run: |
+              # Start the Ruby HTTP server in the background
+              ruby server_.rb &
+              
+              # Start ngrok to expose the local port 5678 (where your server is running)
+              nohup ngrok http 5678 > ngrok.log &
+              
+              # Give ngrok a few seconds to initialize
+              sleep 5
+              
+              # Get the ngrok public URL
+              NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
+        
+              # Print the ngrok URL to the GitHub Actions log
+              echo "Server is publicly accessible at: $NGROK_URL"
+        
+              # Optionally, test the server using curl
+              curl $NGROK_URL  # You can also check if the server is responding
+        
+              # Keep ngrok running for 2 minutes (120 seconds)
+              sleep 120
+        
+              # Optionally, you can kill ngrok here if you need
+              pkill ngrok
