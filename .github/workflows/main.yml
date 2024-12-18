@@ -38,7 +38,7 @@ jobs:
             apt-get install -y wget unzip &&
             wget -qO- https://storage.googleapis.com/dart-archive/channels/stable/release/latest/sdk/dartsdk-linux-x64-release.zip > dart-sdk.zip &&
             unzip dart-sdk.zip -d /usr/lib &&
-            #export PATH=\$PATH:/usr/lib/dart-sdk/bin &&
+            export PATH=\$PATH:/usr/lib/dart-sdk/bin &&
             mkdir -p /tmp/my_tmpfs &&
             echo 'void main() { print(\"Hello from Dart in tmpfs!\"); }' > /tmp/my_tmpfs/myscript.dart &&
             dart /tmp/my_tmpfs/myscript.dart
