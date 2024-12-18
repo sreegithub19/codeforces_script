@@ -48,6 +48,22 @@ jobs:
             echo "Ruby HTTP Server is not running."
             exit 1
           fi
+
+          - name: Capture HTML content from localhost
+          run: |
+            # Fetch the HTML content from the server running at localhost:5678
+            curl http://localhost:5678 -o index.html
+    
+    - name: Stop Ruby HTTP Server
+      run: |
+            # Kill the Ruby HTTP server using its process ID
+            kill $SERVER_PID
+    
+    - name: Upload HTML file as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: captured-html
+        path: index.html
       
 
     # - name: Install ngrok
