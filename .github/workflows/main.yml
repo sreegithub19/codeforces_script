@@ -24,6 +24,12 @@ jobs:
         gem install bundler
         # You can add other gems if needed in the Gemfile
 
+    - name: Install Playwright
+      run: |
+          sudo apt-get update
+          sudo apt-get install -y nodejs npm
+          npm install -g playwright
+
     - name: Run all Ruby files in the execute folder
       run: |
         for file in execute/*.rb; do
@@ -54,13 +60,21 @@ jobs:
             # Fetch the HTML content from the server running at localhost:5678
             curl http://localhost:5678 -o index.html
             curl -v http://localhost:5678
+
+    - name: Take screenshot of the page
+      run: |
+              npx playwright install
+              npx playwright screenshot http://localhost:5678 index.png
     
     
     - name: Upload HTML file as artifact
       uses: actions/upload-artifact@v4
       with:
         name: captured-html
-        path: index.html
+        path: |
+         index.html
+         index.png
+
       
 
     # - name: Install ngrok

@@ -1,6 +1,6 @@
 fork { exec '''
 
-node -e `console.log("Hi")`
+node -e `console.log("Hi from nested nodejs!")`
 
 ''' }
 
