@@ -30,54 +30,74 @@ jobs:
           ruby "$file"
         done
 
-    - name: Install ngrok
+
+    - name: Start Ruby HTTP Server
       run: |
-        # Step 1: Download ngrok zip file (ensure it's a .zip file for your OS)
-        curl -sL https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip -o /tmp/ngrok.zip
-
-        # Step 2: Unzip the downloaded file
-        unzip -o /tmp/ngrok.zip -d /tmp
-
-        # Step 3: Move ngrok binary to the appropriate directory
-        sudo mv /tmp/ngrok /usr/local/bin/ngrok
-
-        # Step 4: Clean up (optional)
-        rm /tmp/ngrok.zip
-
-
-    - name: Start HTTP server and expose it via ngrok
-      run: |
-            # Start the Ruby HTTP server in the background
-            ruby server_.rb &
-            
-            # Start ngrok to expose the local port 5678 (where your server is running)
-            nohup ngrok http 5678 > ngrok.log &
-            
-            # Wait longer for ngrok to initialize
-            sleep 15
-            
-            # # Check if ngrok is running and the API is accessible
-            curl -s http://localhost:4040/api/tunnels
-            
-            # # Get the ngrok public URL
-            # NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
-            
-            # # Check if the ngrok URL was retrieved correctly
-            # if [ -z "$NGROK_URL" ]; then
-            #   echo "Failed to retrieve ngrok URL. Check ngrok logs."
-            #   cat ngrok.log
-            #   exit 1
-            # fi
+          # Start the Ruby HTTP server in the background
+          ruby server_.rb &
+          
+          # Give the server some time to start
+          sleep 10
       
-            # # Print the ngrok URL to the GitHub Actions log
-            # echo "Server is publicly accessible at: $NGROK_URL"
+          # Check if the Ruby server is running using ps
+          SERVER_PID=$(ps aux | grep '[r]uby server_.rb' | awk '{print $2}')
+          
+          if [ -n "$SERVER_PID" ]; then
+            echo "Ruby HTTP Server is running with PID $SERVER_PID."
+          else
+            echo "Ruby HTTP Server is not running."
+            exit 1
+          fi
       
-            # # # Optionally, test the server using curl
-            # # curl $NGROK_URL  # You can also check if the server is responding
+
+    # - name: Install ngrok
+    #   run: |
+    #     # Step 1: Download ngrok zip file (ensure it's a .zip file for your OS)
+    #     curl -sL https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip -o /tmp/ngrok.zip
+
+    #     # Step 2: Unzip the downloaded file
+    #     unzip -o /tmp/ngrok.zip -d /tmp
+
+    #     # Step 3: Move ngrok binary to the appropriate directory
+    #     sudo mv /tmp/ngrok /usr/local/bin/ngrok
+
+    #     # Step 4: Clean up (optional)
+    #     rm /tmp/ngrok.zip
+
+
+    # - name: Start HTTP server and expose it via ngrok
+    #   run: |
+    #         # Start the Ruby HTTP server in the background
+    #         ruby server_.rb &
+            
+    #         # Start ngrok to expose the local port 5678 (where your server is running)
+    #         nohup ngrok http 5678 > ngrok.log &
+            
+    #         # Wait longer for ngrok to initialize
+    #         sleep 15
+            
+    #         # # Check if ngrok is running and the API is accessible
+    #         curl -s http://localhost:4040/api/tunnels
+            
+    #         # # Get the ngrok public URL
+    #         # NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
+            
+    #         # # Check if the ngrok URL was retrieved correctly
+    #         # if [ -z "$NGROK_URL" ]; then
+    #         #   echo "Failed to retrieve ngrok URL. Check ngrok logs."
+    #         #   cat ngrok.log
+    #         #   exit 1
+    #         # fi
       
-            # # # Keep ngrok running for 2 minutes (120 seconds)
-            # # sleep 120
+    #         # # Print the ngrok URL to the GitHub Actions log
+    #         # echo "Server is publicly accessible at: $NGROK_URL"
       
-            # # # Optionally, kill ngrok here if you need
-            # # pkill ngrok
+    #         # # # Optionally, test the server using curl
+    #         # # curl $NGROK_URL  # You can also check if the server is responding
+      
+    #         # # # Keep ngrok running for 2 minutes (120 seconds)
+    #         # # sleep 120
+      
+    #         # # # Optionally, kill ngrok here if you need
+    #         # # pkill ngrok
       
