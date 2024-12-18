@@ -58,13 +58,38 @@ jobs:
     - name: Capture HTML content from localhost
       run: |
             # Fetch the HTML content from the server running at localhost:5678
-            curl http://localhost:5678 -o index.html
+            curl http://localhost:5678 -o videos/index.html
             curl -v http://localhost:5678
 
     - name: Take screenshot of the page
       run: |
               npx playwright install
-              npx playwright screenshot http://localhost:5678 index.png
+              npx playwright screenshot http://localhost:5678 videos/index.png
+
+    - name: Record video of the page
+      run: |
+                npx playwright install
+                node -e "
+                  const { chromium } = require('playwright');
+                  (async () => {
+                    const browser = await chromium.launch();
+                    const context = await browser.newContext({
+                      recordVideo: {
+                        dir: 'videos/', // Directory to save the video
+                        size: { width: 1280, height: 720 } // Optional: Set video resolution
+                      }
+                    });
+                    const page = await context.newPage();
+
+                    // Navigate to the first page
+                    await page.goto('http://localhost:5678');
+                    await page.waitForTimeout(2000); // Wait for 2 seconds
+
+                    // Close the browser (this finalizes the video recording)
+                    await browser.close();
+                  })();
+                "
+            
     
     
     - name: Upload HTML file as artifact
@@ -72,8 +97,7 @@ jobs:
       with:
         name: captured-html
         path: |
-         index.html
-         index.png
+         videos/
 
       
 
