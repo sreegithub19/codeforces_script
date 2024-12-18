@@ -32,7 +32,15 @@ jobs:
 
     - name: Install ngrok
       run: |
-          curl -s https://ngrok.com/download | unzip -d /tmp - && sudo mv /tmp/ngrok /usr/local/bin/ngrok
+          # Step 1: Download the ngrok zip file
+          curl -s https://ngrok.com/download | tar -xz -C /tmp
+
+          # Step 2: Move the ngrok binary to /usr/local/bin
+          sudo mv /tmp/ngrok /usr/local/bin/ngrok
+
+          # Step 3: Make sure it's executable
+          sudo chmod +x /usr/local/bin/ngrok
+
 
     - name: Start HTTP server and expose it via ngrok
       run: |
