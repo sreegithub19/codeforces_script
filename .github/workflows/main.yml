@@ -32,14 +32,17 @@ jobs:
 
     - name: Install ngrok
       run: |
-          # Step 1: Download the ngrok zip file
-          curl -s https://ngrok.com/download | tar -xz -C /tmp
+        # Step 1: Download ngrok zip file (ensure it's a .zip file for your OS)
+        curl -sL https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip -o /tmp/ngrok.zip
 
-          # Step 2: Move the ngrok binary to /usr/local/bin
-          sudo mv /tmp/ngrok /usr/local/bin/ngrok
+        # Step 2: Unzip the downloaded file
+        unzip -o /tmp/ngrok.zip -d /tmp
 
-          # Step 3: Make sure it's executable
-          sudo chmod +x /usr/local/bin/ngrok
+        # Step 3: Move ngrok binary to the appropriate directory
+        sudo mv /tmp/ngrok /usr/local/bin/ngrok
+
+        # Step 4: Clean up (optional)
+        rm /tmp/ngrok.zip
 
 
     - name: Start HTTP server and expose it via ngrok
