@@ -21,7 +21,9 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install sprintf-js playwright
+        run: |
+         npm install sprintf-js playwright
+         npx playwright install
 
       # Step 2: Set up Go environment
       - name: Set up Go
