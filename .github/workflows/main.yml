@@ -17,9 +17,15 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v2
       with:
-        java-version: '21'  # You can specify any version of JDK that Scala supports
+        java-version: '11'
+        distribution: 'temurin'
+        java-package: 'jdk'
+        architecture: 'x64'
+        check-latest: false
+        overwrite-settings: true
+        job-status: 'success'
 
     - name: Set up Scala
       uses: olafurpg/setup-scala@v12
