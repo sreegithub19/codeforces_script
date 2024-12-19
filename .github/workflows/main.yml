@@ -36,13 +36,6 @@ jobs:
         working-directory: ./execute
         run: go mod tidy
 
-      - name: Run Go Server
-        run: |
-          nohup go run server_/server_1.go &
-          sleep 15  # Wait for the Go server to start
-          node server_/captureScreenshots.js
-          node server_/captureVideo.js
-
       - name: Run all Go files in the  folders
         run: |
           cd execute  # Change to the 'execute' directory
@@ -59,9 +52,68 @@ jobs:
           done
           cd ..
 
-      - name: Upload Screenshots and Video as Artifacts
+      - name: Run Go Server
+        run: |
+          nohup go run server_/server_1.go &
+          sleep 10  # Wait for the Go server to start
+      
+      - name: Capture HTML content from localhost
+        run: |
+                # Fetch the HTML content from the server running at localhost:8080
+                curl http://localhost:8080 -o videos/index.html
+                curl -v http://localhost:8080
+                curl http://localhost:8080 -o videos/hello.html
+                curl -v http://localhost:8080/hello
+                curl http://localhost:8080 -o videos/hello2.html
+                curl -v http://localhost:8080/hello2
+
+      - name: Take screenshot of the page
+        run: |
+                  npm install playwright
+                  npx playwright install
+                  npx playwright screenshot http://localhost:8080 videos/index.png
+                  npx playwright screenshot http://localhost:8080/hello videos/hello.png
+                  npx playwright screenshot http://localhost:8080/hello2 videos/hello2.png
+        
+      - name: Record video of the pages
+        run: |
+                    npx playwright install
+                    node -e "
+                      const { chromium } = require('playwright');
+                      (async () => {
+                        const browser = await chromium.launch();
+                        const context = await browser.newContext({
+                          recordVideo: {
+                            dir: 'videos/', // Directory to save the video
+                            size: { width: 1280, height: 720 } // Optional: Set video resolution
+                          }
+                        });
+                        const page = await context.newPage();
+                        // Navigate to the first page
+                        await page.goto('http://localhost:8080');
+                        await page.waitForTimeout(2000); // Wait for 2 seconds
+                        await page.goto('http://localhost:8080/hello');
+                        await page.waitForTimeout(2000); // Wait for 2 seconds
+                        await page.goto('http://localhost:8080/hello2');
+                        await page.waitForTimeout(2000); // Wait for 2 seconds
+                        // Close the browser (this finalizes the video recording)
+                        await browser.close();
+                      })();
+                    "
+                
+        
+        
+      - name: Upload HTML file as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: screenshots-video-artifacts
-          path: |
-            server_/screenshots/
+            name: captured-html-artifacts
+            path: |
+             videos/      
+      
+      
+      # - name: Upload Screenshots and Video as Artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: screenshots-video-artifacts
+      #     path: |
+      #       server_/screenshots/
