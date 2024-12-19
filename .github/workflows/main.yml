@@ -69,4 +69,6 @@ jobs:
 
     - name: Run Scala code using sbt console
       run: |
-        sbt -batch console <<< 'println("Hello, Scala from sbt console!")'
+        sbt console <<< 'println("Hello, Scala from sbt console!")'
+        sbt console <<< 'println("Hello, Scala from sbt console!")' > /dev/null 2>&1
+
