@@ -1,1 +1,1 @@
-go mod init github.com/example-user/hello-world/execute
+<!-- go mod init github.com/example-user/hello-world/execute -->
