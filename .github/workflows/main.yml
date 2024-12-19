@@ -39,7 +39,7 @@ jobs:
       - name: Run Go Server
         run: |
           nohup go run server_/server_1.go &
-          sleep 5  # Wait for the Go server to start
+          sleep 15  # Wait for the Go server to start
           node server_/captureScreenshots.js
           node server_/captureVideo.js
 

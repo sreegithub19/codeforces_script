@@ -8,15 +8,15 @@ const { chromium } = require('playwright');  // You can use `firefox` or `webkit
   const page = await browser.newPage();
 
   // Capture /hello page
-  await page.goto('http://127.0.0.1:8080/hello');
+  await page.goto('http://localhost:8080/hello');
   await page.screenshot({ path: 'screenshots/hello.png' });
 
   // Capture /hello2 page
-  await page.goto('http://127.0.0.1:8080/hello2');
+  await page.goto('http://localhost:8080/hello2');
   await page.screenshot({ path: 'screenshots/hello2.png' });
 
   // Capture the home page /
-  await page.goto('http://127.0.0.1:8080/');
+  await page.goto('http://localhost:8080/');
   await page.screenshot({ path: 'screenshots/home.png' });
 
   await browser.close();
