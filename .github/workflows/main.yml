@@ -63,9 +63,9 @@ jobs:
                 # Fetch the HTML content from the server running at localhost:8080
                 curl http://localhost:8080 -o videos/index.html
                 curl -v http://localhost:8080
-                curl http://localhost:8080 -o videos/hello.html
+                curl http://localhost:8080/hello -o videos/hello.html
                 curl -v http://localhost:8080/hello
-                curl http://localhost:8080 -o videos/hello2.html
+                curl http://localhost:8080/hello2 -o videos/hello2.html
                 curl -v http://localhost:8080/hello2
 
       - name: Take screenshot of the page
@@ -109,12 +109,4 @@ jobs:
         with:
             name: captured-html-artifacts
             path: |
-             videos/      
-      
-      
-      # - name: Upload Screenshots and Video as Artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: screenshots-video-artifacts
-      #     path: |
-      #       server_/screenshots/
+             videos/
