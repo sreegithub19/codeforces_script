@@ -2,7 +2,7 @@ const { chromium } = require('playwright');  // You can use `firefox` or `webkit
 
 (async () => {
   const browser = await chromium.launch({
-    headless: false, // We need headful mode for video capture
+    headless: true, // We need headful mode for video capture
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
   const page = await browser.newPage();
