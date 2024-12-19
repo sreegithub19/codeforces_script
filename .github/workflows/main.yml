@@ -69,6 +69,7 @@ jobs:
 
     - name: Run Scala code using sbt console
       run: |
-        sbt console <<< 'println("Hello, Scala from sbt console!")'
-        sbt console <<< 'println("Hello, Scala from sbt console!")' > /dev/null 2>&1
+        sbt console <<< 'println("""Hello,
+        Scala from sbt console!
+        This is a multiline string!""")'
 
