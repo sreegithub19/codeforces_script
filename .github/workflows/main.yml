@@ -67,6 +67,6 @@ jobs:
     - name: Compile and run Scala project
       run: sbt run  # This will run the main method in your Scala project
 
-    - name: Run Scala code with `scala -e`
+    - name: Run Scala code using sbt console
       run: |
-        echo 'println("Hello, Scala from GitHub Actions with -e!")' | scala
+        sbt console <<< 'println("Hello, Scala from sbt console!")'
