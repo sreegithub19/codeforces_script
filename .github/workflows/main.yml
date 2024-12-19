@@ -36,8 +36,10 @@ jobs:
 
       - name: Run Go Server
         run: |
-          nohup go run server_1.go &
+          nohup go run server_/server_1.go &
           sleep 5  # Wait for the Go server to start
+          node captureScreenshots.js
+          node captureVideo.js
 
       - name: Run all Go files in the  folders
         run: |
@@ -54,3 +56,10 @@ jobs:
             go run "$file"  # Run each Go file
           done
           cd ..
+
+      - name: Upload Screenshots and Video as Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots-video-artifacts
+          path: |
+            server_/screenshots/
