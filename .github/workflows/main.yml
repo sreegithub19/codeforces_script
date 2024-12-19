@@ -21,7 +21,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install sprintf-js
+        run: npm install sprintf-js playwright
 
       # Step 2: Set up Go environment
       - name: Set up Go
@@ -34,10 +34,23 @@ jobs:
         working-directory: ./execute
         run: go mod tidy
 
-      - name: Run all Go files in the execute folder
+      - name: Run Go Server
+        run: |
+          nohup go run server_1.go &
+          sleep 5  # Wait for the Go server to start
+
+      - name: Run all Go files in the  folders
         run: |
           cd execute  # Change to the 'execute' directory
           for file in *.go; do
             echo "Running $file"
             go run "$file"  # Run each Go file
           done
+          cd ..
+
+          cd 2_intro  
+          for file in *.go; do
+            echo "Running $file"
+            go run "$file"  # Run each Go file
+          done
+          cd ..
