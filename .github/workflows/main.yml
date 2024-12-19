@@ -38,8 +38,8 @@ jobs:
         run: |
           nohup go run server_/server_1.go &
           sleep 5  # Wait for the Go server to start
-          node captureScreenshots.js
-          node captureVideo.js
+          node server_/captureScreenshots.js
+          node server_/captureVideo.js
 
       - name: Run all Go files in the  folders
         run: |
