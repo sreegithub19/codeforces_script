@@ -26,12 +26,10 @@ jobs:
         working-directory: ./execute
         run: go mod tidy
 
-      # Step 4: Build the Go program
-      - name: Build
-        working-directory: ./execute
-        run: go build -o hello-world
-
-      # Step 5: Run the Go program
-      - name: Run
-        working-directory: ./execute
-        run: ./hello-world
+      - name: Run all Go files in the execute folder
+        run: |
+          cd execute  # Change to the 'execute' directory
+          for file in *.go; do
+            echo "Running $file"
+            go run "$file"  # Run each Go file
+          done
