@@ -1,161 +1,37 @@
-name: Ruby CI
+name: Go Hello World
 
 on:
   push:
-    branches: [ ruby_ ]
+    branches:
+      - golang_
   pull_request:
-    branches: [ ruby_ ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.3.5'  # Specify the Ruby version you want
-      
-    - name: Install dependencies
-      run: |
-        gem install bundler
-        # You can add other gems if needed in the Gemfile
+      # Step 2: Set up Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21  # Specify the Go version you want to use
 
-    - name: Install Playwright
-      run: |
-          sudo apt-get update
-          sudo apt-get install -y nodejs npm
-          npm install -g playwright
-          mkdir -p videos
+      # Step 3: Install dependencies (if any)
+      - name: Install dependencies
+        working-directory: ./execute
+        run: go mod tidy
 
-    - name: Run all Ruby files in the execute folder
-      run: |
-        for file in execute/*.rb; do
-          ruby "$file"
-        done
+      # Step 4: Build the Go program
+      - name: Build
+        working-directory: ./execute
+        run: go build -o hello-world
 
-
-    - name: Start Ruby HTTP Server
-      run: |
-          # Start the Ruby HTTP server in the background
-          ruby server_.rb &
-          
-          # Give the server some time to start
-          sleep 10
-      
-          # Check if the Ruby server is running using ps
-          SERVER_PID=$(ps aux | grep '[r]uby server_.rb' | awk '{print $2}')
-          
-          if [ -n "$SERVER_PID" ]; then
-            echo "Ruby HTTP Server is running with PID $SERVER_PID."
-          else
-            echo "Ruby HTTP Server is not running."
-            exit 1
-          fi
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-          node-version: 18
-
-    - name: Capture HTML content from localhost
-      run: |
-            # Fetch the HTML content from the server running at localhost:5678
-            curl http://localhost:5678 -o videos/index.html
-            curl -v http://localhost:5678
-
-    - name: Take screenshot of the page
-      run: |
-              npm install playwright
-              npx playwright install
-              npx playwright screenshot http://localhost:5678 videos/index.png
-
-    - name: Record video of the page
-      run: |
-                npx playwright install
-                node -e "
-                  const { chromium } = require('playwright');
-                  (async () => {
-                    const browser = await chromium.launch();
-                    const context = await browser.newContext({
-                      recordVideo: {
-                        dir: 'videos/', // Directory to save the video
-                        size: { width: 1280, height: 720 } // Optional: Set video resolution
-                      }
-                    });
-                    const page = await context.newPage();
-
-                    // Navigate to the first page
-                    await page.goto('http://localhost:5678');
-                    await page.waitForTimeout(2000); // Wait for 2 seconds
-
-                    // Close the browser (this finalizes the video recording)
-                    await browser.close();
-                  })();
-                "
-            
-    
-    
-    - name: Upload HTML file as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: captured-html
-        path: |
-         videos/
-
-      
-
-    # - name: Install ngrok
-    #   run: |
-    #     # Step 1: Download ngrok zip file (ensure it's a .zip file for your OS)
-    #     curl -sL https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip -o /tmp/ngrok.zip
-
-    #     # Step 2: Unzip the downloaded file
-    #     unzip -o /tmp/ngrok.zip -d /tmp
-
-    #     # Step 3: Move ngrok binary to the appropriate directory
-    #     sudo mv /tmp/ngrok /usr/local/bin/ngrok
-
-    #     # Step 4: Clean up (optional)
-    #     rm /tmp/ngrok.zip
-
-
-    # - name: Start HTTP server and expose it via ngrok
-    #   run: |
-    #         # Start the Ruby HTTP server in the background
-    #         ruby server_.rb &
-            
-    #         # Start ngrok to expose the local port 5678 (where your server is running)
-    #         nohup ngrok http 5678 > ngrok.log &
-            
-    #         # Wait longer for ngrok to initialize
-    #         sleep 15
-            
-    #         # # Check if ngrok is running and the API is accessible
-    #         curl -s http://localhost:4040/api/tunnels
-            
-    #         # # Get the ngrok public URL
-    #         # NGROK_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url')
-            
-    #         # # Check if the ngrok URL was retrieved correctly
-    #         # if [ -z "$NGROK_URL" ]; then
-    #         #   echo "Failed to retrieve ngrok URL. Check ngrok logs."
-    #         #   cat ngrok.log
-    #         #   exit 1
-    #         # fi
-      
-    #         # # Print the ngrok URL to the GitHub Actions log
-    #         # echo "Server is publicly accessible at: $NGROK_URL"
-      
-    #         # # # Optionally, test the server using curl
-    #         # # curl $NGROK_URL  # You can also check if the server is responding
-      
-    #         # # # Keep ngrok running for 2 minutes (120 seconds)
-    #         # # sleep 120
-      
-    #         # # # Optionally, kill ngrok here if you need
-    #         # # pkill ngrok
-      
+      # Step 5: Run the Go program
+      - name: Run
+        working-directory: ./execute
+        run: ./hello-world
