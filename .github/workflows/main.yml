@@ -40,25 +40,25 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-sbt-
 
-    - name: Install sbt
-      run: |
-              # Download sbt
-              curl -Lo sbt-1.5.5.tgz https://github.com/sbt/sbt/releases/download/v1.5.5/sbt-1.5.5.tgz
+    # - name: Install sbt
+    #   run: |
+    #           # Download sbt
+    #           curl -Lo sbt-1.5.5.tgz https://github.com/sbt/sbt/releases/download/v1.5.5/sbt-1.5.5.tgz
               
-              # Verify if the file was downloaded
-              if [ ! -f sbt-1.5.5.tgz ]; then
-                echo "Failed to download sbt, file does not exist!"
-                exit 1
-              fi
+    #           # Verify if the file was downloaded
+    #           if [ ! -f sbt-1.5.5.tgz ]; then
+    #             echo "Failed to download sbt, file does not exist!"
+    #             exit 1
+    #           fi
               
-              # Extract the downloaded sbt file
-              tar xzf sbt-1.5.5.tgz
+    #           # Extract the downloaded sbt file
+    #           tar xzf sbt-1.5.5.tgz
               
-              # Move sbt binary to /usr/local/bin
-              sudo mv sbt /usr/local/bin/
+    #           # Move sbt binary to /usr/local/bin
+    #           sudo mv sbt /usr/local/bin/
               
-              # Verify sbt is installed
-              sbt --version
+    #           # Verify sbt is installed
+    #           sbt --version
           
 
     - name: Run tests with sbt
