@@ -69,4 +69,4 @@ jobs:
 
     - name: Run Scala code using sbt console
       run: |
-        sbt console <<< 'println("Hello, Scala from sbt console!")'
+          sbt -batch "console <<< 'println(\"Hello, Scala from sbt console!\")'"
