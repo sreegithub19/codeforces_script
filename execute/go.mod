@@ -1,1 +1,0 @@
-<!-- go mod init github.com/example-user/hello-world/execute -->
