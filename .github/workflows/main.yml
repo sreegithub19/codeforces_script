@@ -54,6 +54,7 @@ jobs:
 
       - name: Run Go Server
         run: |
+          mkdir -p videos
           nohup go run server_/server_1.go &
           sleep 10  # Wait for the Go server to start
       
