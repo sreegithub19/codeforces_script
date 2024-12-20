@@ -20,12 +20,14 @@ jobs:
           node-version: '14' # or any version you prefer
 
       - name: Install Elm
-        run: npm install -g elm
+        run: |
+         mkdir -p docker_
+         npm install -g elm
+         python3 elm_in_python.py
 
       - name: Build Elm project
         run: |
          elm install elm/core && elm install elm/html && elm install elm/browser && elm install hecrj/html-parser
-         #mkdir -p js_
          elm make src/Main.elm --output=js_/Main.js
          elm make src/Hello_1.elm --output=js_/Hello_1.js
          elm make src/Html_2.elm --output=js_/Html_2.js
@@ -44,3 +46,4 @@ jobs:
           path: |
            html_
            js_
+           docker_
