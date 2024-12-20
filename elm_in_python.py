@@ -1,9 +1,10 @@
 import subprocess
 import os
+import time
 
-# Define the Docker command as a string
+# Define the Docker command to start the container (in detached mode)
 docker_command = """
-docker run --name elm_container \
+docker run --name elm_container -d \
           ubuntu bash -c "
             apt-get update &&
             apt-get install -y curl npm &&
@@ -62,22 +63,27 @@ EOF
 """
 
 # Define the target path on the host where to save artifacts
-output_directory = 'docker_/'
+output_directory = 'docker_'
 
 def run_docker_and_copy():
     try:
         print("Running Docker container to build Elm project and generate HTML...")
         
-        # Step 1: Run Docker container
-        subprocess.run(docker_command, shell=True, check=True)
+        # Step 1: Run Docker container in detached mode
+        result = subprocess.run(docker_command, shell=True, capture_output=True, text=True, check=True)
         
-        # Step 2: Wait for Docker to exit and give time for container to finalize
+        # Capture the container ID from the result of the docker run command
+        container_id = result.stdout.strip()
+        print(f"Docker container {container_id} started in detached mode.")
+
+        # Step 2: Wait for the container to finish processing
+        # In real scenarios, you might want to implement a more robust waiting mechanism, 
+        # like checking for specific file existence or sleeping for a few seconds.
+        time.sleep(5)  # Adjust as necessary to ensure the container has finished work
+
         print("Docker container finished running. Now copying artifacts...")
         
-        # Step 3: Copy the artifact (the JS file in this case) from the container to host
-        # The container name is static, but if you dynamically capture the container ID, you can use that as well
-        container_id = "elm_container"  # The name used in --name flag above
-        
+        # Step 3: Copy the artifact (the JS file in this case) from the container to the host
         container_output_js_path = "/tmp/elm_artifacts/elm_project/js/Main1.js"
         container_output_html_path = "/tmp/elm_artifacts/elm_project/html/index.html"
         
