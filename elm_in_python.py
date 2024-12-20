@@ -56,7 +56,7 @@ view _ =
 """
 
 # Define the target path on the host where to save artifacts
-output_directory = '/tmp/elm_artifacts/elm_project/js/'
+output_directory = 'docker_/'
 
 def run_docker_and_copy():
     try:
