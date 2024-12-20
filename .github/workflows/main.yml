@@ -22,7 +22,6 @@ jobs:
       - name: Install Elm
         run: |
          npm install -g elm
-         sudo apt-get install -y docker.io
 
       - name: Run Docker commands through Python
         run: |
