@@ -6,23 +6,20 @@ def run_docker():
         print("Building Docker image...")
         subprocess.run("docker build -t my-docker-image .", shell=True, check=True)
 
-        # Step 2: Run the Docker container in detached mode, with a tmpfs mount to keep the file in memory
-        print("Running Docker container with tmpfs...")
-        subprocess.run(
-            "docker run -d --name my-container --mount type=tmpfs,dst=/tmp/my_tmpfs my-docker-image sleep 3600", 
-            shell=True, check=True
-        )
+        # Step 2: Run the Docker container in detached mode, with a sleep command to keep it alive
+        print("Running Docker container...")
+        subprocess.run("docker run -d --name my-container my-docker-image sleep 3600", shell=True, check=True)
 
-        # Step 3: Create the index.html file inside the tmpfs-mounted directory
-        print("Creating index.html inside the Docker container in memory...")
+        # Step 3: Create the index.html file inside the container using a subprocess
+        print("Creating index.html inside the Docker container...")
         create_file_command = """
-        docker exec my-container bash -c 'echo "<html><body><h1>Hello from Docker here in memory!</h1></body></html>" > /tmp/my_tmpfs/index_container.html'
+        docker exec my-container bash -c 'echo "<html><body><h1>Hello from Docker here!</h1></body></html>" > /index_container.html'
         """
         subprocess.run(create_file_command, shell=True, check=True)
 
         # Step 4: Copy the index.html file from the container to the host
         print("Copying index.html from Docker container...")
-        subprocess.run("docker cp my-container:/tmp/my_tmpfs/index_container.html ./index.html", shell=True, check=True)
+        subprocess.run("docker cp my-container:/index_container.html ./index.html", shell=True, check=True)
 
         # Step 5: Clean up the Docker container
         print("Cleaning up Docker container...")
