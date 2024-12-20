@@ -71,7 +71,7 @@ jobs:
       run: |
         sbt console <<< 'println("""Hello,
         Scala from sbt console!
-        This is a multiline string!""")'
+        This is a multiline string!""")' | tail -n +5
 
     - name: Install Scala using apt
       run: sudo apt install -y scala
