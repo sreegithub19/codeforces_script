@@ -69,7 +69,7 @@ jobs:
 
     - name: Run Scala code using sbt console
       run: |
-        sbt console <<< 'println("""Hello,
+        sbt -batch console <<< 'println("""Hello,
         Scala from sbt console!
         This is a multiline string!""")'
 
