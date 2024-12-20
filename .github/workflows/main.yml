@@ -76,6 +76,14 @@ jobs:
         Scala from sbt console!
         This is a multiline string!""")' | tail -n +8
 
+
+    - name: Run Scala code using sbt console again
+      run: |
+        sbt console <<< 'println("""Hello,
+        Scala from sbt console!
+        This is a multiline string!""")' | awk '/\?2004h>/ {flag=1} flag {print}'
+
+
     - name: Install Scala using apt
       run: sudo apt install -y scala
   
