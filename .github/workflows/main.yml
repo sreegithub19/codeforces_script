@@ -26,6 +26,7 @@ jobs:
       - name: Run Docker commands through Python
         run: |
           python run_docker.py
+          python run_docker1.py
 
       - name: Build Elm project
         run: |
@@ -49,3 +50,4 @@ jobs:
            html_
            js_
            ./index.html
+           ./index1.html
