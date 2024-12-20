@@ -69,7 +69,12 @@ jobs:
 
     - name: Run Scala code using sbt console
       run: |
-        sbt -batch console <<< 'println("""Hello,
+        sbt console <<< 'println("""Hello,
         Scala from sbt console!
         This is a multiline string!""")'
 
+    - name: Install Scala using apt
+      run: sudo apt install -y scala
+  
+    - name: Run Scala command
+      run: scala -e "println(22)"
