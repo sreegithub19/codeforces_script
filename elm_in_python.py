@@ -3,7 +3,7 @@ import os
 
 # Define the Docker command as a string
 docker_command = """
-docker run --name elm_container --rm \
+docker run --name elm_container \
           ubuntu bash -c "
             apt-get update &&
             apt-get install -y curl npm &&
@@ -75,7 +75,9 @@ def run_docker_and_copy():
         print("Docker container finished running. Now copying artifacts...")
         
         # Step 3: Copy the artifact (the JS file in this case) from the container to host
+        # The container name is static, but if you dynamically capture the container ID, you can use that as well
         container_id = "elm_container"  # The name used in --name flag above
+        
         container_output_js_path = "/tmp/elm_artifacts/elm_project/js/Main1.js"
         container_output_html_path = "/tmp/elm_artifacts/elm_project/html/index.html"
         
