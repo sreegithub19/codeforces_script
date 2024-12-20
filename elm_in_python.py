@@ -3,7 +3,7 @@ import os
 
 # Define the Docker command as a string
 docker_command = """
-docker run --name elm_container --rm \
+docker run --name elm_container --rm \\
           ubuntu bash -c "
             apt-get update &&
             apt-get install -y curl npm &&
