@@ -10,8 +10,9 @@ docker run --name elm_container --rm \
             npm install -g elm &&
             mkdir -p /tmp/elm_artifacts/elm_project/src /tmp/elm_artifacts/elm_project/html &&
             
-            # Create Elm source file (Main1.elm)
-            echo 'module Main exposing (..)
+            # Create Elm source file (Main1.elm) using cat with a here document
+            cat <<EOF > /tmp/elm_artifacts/elm_project/src/Main1.elm
+module Main exposing (..)
 
 import Browser
 import Html exposing (Html, text, div, h1, p)
@@ -29,12 +30,15 @@ main =
 view : () -> Html msg
 view _ =
     div []
-        [ h1 [] [ text \"Hello there, Elm World!\" ]
-        , p [] [ text \"This is a simple Elm application rendering HTML from Docker container.\" ]
-        ]' > /tmp/elm_artifacts/elm_project/src/Main1.elm &&
+        [ h1 [] [ text "Hello there, Elm World!" ]
+        , p [] [ text "This is a simple Elm application rendering HTML from Docker container." ]
+        ]
+EOF
+            &&
             
-            # Create an index.html file to load the compiled Elm JavaScript
-            echo '<!DOCTYPE html>
+            # Create an index.html file to load the compiled Elm JavaScript using cat with a here document
+            cat <<EOF > /tmp/elm_artifacts/elm_project/html/index.html
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,10 +47,12 @@ view _ =
 </head>
 <body>
     <h1>Elm Hello World App</h1>
-    <div id=\"elm\"></div>
-    <script src=\"/tmp/elm_artifacts/elm_project/js/Main1.js\"></script>
+    <div id="elm"></div>
+    <script src="/tmp/elm_artifacts/elm_project/js/Main1.js"></script>
 </body>
-</html>' > /tmp/elm_artifacts/elm_project/html/index.html &&
+</html>
+EOF
+            &&
             
             # Compile Elm project to JavaScript
             elm make /tmp/elm_artifacts/elm_project/src/Main1.elm --output /tmp/elm_artifacts/elm_project/js/Main1.js &&
