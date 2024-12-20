@@ -23,6 +23,9 @@ def run_docker():
 
         # Step 5: Clean up the Docker container
         print("Cleaning up Docker container...")
+        # Stop the container first (this step ensures it is stopped before removal)
+        subprocess.run("docker stop my-container", shell=True, check=True)
+        # Now remove the container
         subprocess.run("docker rm my-container", shell=True, check=True)
 
     except subprocess.CalledProcessError as e:
