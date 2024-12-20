@@ -21,9 +21,12 @@ jobs:
 
       - name: Install Elm
         run: |
-         mkdir -p docker_
          npm install -g elm
-         python3 elm_in_python.py
+         sudo apt-get install -y docker.io
+
+      - name: Run Docker commands through Python
+        run: |
+          python run_docker.py
 
       - name: Build Elm project
         run: |
@@ -46,4 +49,4 @@ jobs:
           path: |
            html_
            js_
-           docker_
+           ./index.html
