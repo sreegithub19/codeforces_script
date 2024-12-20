@@ -3,7 +3,7 @@ import os
 
 # Define the Docker command as a string
 docker_command = """
-docker run --name elm_container --rm \\
+docker run --name elm_container --rm \
           ubuntu bash -c "
             apt-get update &&
             apt-get install -y curl npm &&
@@ -21,7 +21,7 @@ main : Program () () ()
 main =
     Browser.sandbox
         { init = ()
-        , update = \_ model -> model
+        , update = \\_ model -> model
         , view = view
         }
 
@@ -43,8 +43,8 @@ view _ =
 </head>
 <body>
     <h1>Elm Hello World App</h1>
-    <div id="elm"></div>
-    <script src="/tmp/elm_artifacts/elm_project/js/Main1.js"></script>
+    <div id=\"elm\"></div>
+    <script src=\"/tmp/elm_artifacts/elm_project/js/Main1.js\"></script>
 </body>
 </html>' > /tmp/elm_artifacts/elm_project/html/index.html &&
             
@@ -56,7 +56,7 @@ view _ =
 """
 
 # Define the target path on the host where to save artifacts
-output_directory = 'docker_'
+output_directory = '/tmp/elm_artifacts/elm_project/js/'
 
 def run_docker_and_copy():
     try:
