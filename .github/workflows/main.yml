@@ -50,4 +50,5 @@ jobs:
            html_
            js_
            ./index.html
+           ./index_1.html
            ./index1.html
