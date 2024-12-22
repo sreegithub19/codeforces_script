@@ -47,7 +47,7 @@ def run_docker2():
             """
             #!/bin/bash
             docker build -t my-docker-image . && \
-            docker run -d --name "container_$(date +%\s)" my-docker-image sleep 3600 && \
+            #docker run -d --name "container_$(date +%\s)" my-docker-image sleep 3600 && \
             docker exec "$(docker ps -ql)" bash -c 'echo "<html><body><h1>Hello from Docker there yet again here!</h1></body></html>" > /index_container_2.html' && \
             docker cp "$(docker ps -ql):/index_container_2.html" ./index_2.html && \
             docker rm -f "$(docker ps -ql)"
