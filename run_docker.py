@@ -25,7 +25,7 @@ def run_docker1():
             #!/bin/bash
 
             # Generate a random container name based on the current timestamp or UUID
-            CONTAINER_NAME="container_$(date +\%\s)"  # Use the current timestamp
+            CONTAINER_NAME="container_$(date +%\s)"  # Use the current timestamp
             # OR
             # CONTAINER_NAME="container_$(uuidgen)"  # Use a UUID
 
@@ -34,7 +34,7 @@ def run_docker1():
             # Build the Docker image and run the container with the random name
             docker build -t my-docker-image . && \
             docker run -d --name "$CONTAINER_NAME" my-docker-image sleep 3600 && \
-            docker exec "$CONTAINER_NAME" bash -c 'echo "<html><body><h1>Hello from Docker there yet again!</h1></body></html>" > /index_container_1.html' && \
+            docker exec "$CONTAINER_NAME" bash -c 'echo "<html><body><h1>Hello from Docker there yet again here!</h1></body></html>" > /index_container_1.html' && \
             docker cp "$CONTAINER_NAME:/index_container_1.html" ./index_1.html && \
             docker stop "$CONTAINER_NAME" && \
             docker rm "$CONTAINER_NAME"
