@@ -26,6 +26,9 @@ jobs:
       - name: Run Docker commands through Python
         run: |
           python run_docker.py
+
+      - name: Run Docker commands through Python again
+        run: |
           python run_docker1.py
 
       - name: Build Elm project
