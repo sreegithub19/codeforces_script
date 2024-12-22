@@ -47,10 +47,38 @@ def run_docker2():
             """
             #!/bin/bash
             docker build -t my-docker-image . && \
-            #docker run -d --name "container_$(date +%\s)" my-docker-image sleep 3600 && \
+            docker run -d --name "container_$(date +%\s)" my-docker-image sleep 3600 && \
             docker exec "$(docker ps -ql)" bash -c 'echo "<html><body><h1>Hello from Docker there yet again here!</h1></body></html>" > /index_container_2.html' && \
             docker cp "$(docker ps -ql):/index_container_2.html" ./index_2.html && \
             docker rm -f "$(docker ps -ql)"
+            """, 
+            shell=True, check=True
+        )
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred while running Docker: {e}")
+
+def run_docker3():
+    try:
+        # Combined Docker commands in a single subprocess
+        subprocess.run(
+            """
+            #!/bin/bash
+
+            # Build the Docker image
+            docker build -t my-docker-image . && \
+
+            # Run the container and store the container ID
+            CONTAINER_ID=$(docker run -d --name "container_$(date +%\s)" my-docker-image sleep 3600) && \
+
+            # Execute the command inside the container
+            docker exec "$CONTAINER_ID" bash -c 'echo "<html><body><h1>Hello from Docker there yet again there!</h1></body></html>" > /index_container_3.html' && \
+
+            # Copy the file from the container
+            docker cp "$CONTAINER_ID:/index_container_3.html" ./index_3.html && \
+
+            # Remove the container
+            docker rm -f "$CONTAINER_ID"
+
             """, 
             shell=True, check=True
         )
@@ -61,3 +89,4 @@ if __name__ == "__main__":
     run_docker()
     run_docker1()
     run_docker2()
+    run_docker3()
