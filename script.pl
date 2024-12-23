@@ -2,4 +2,6 @@
 use strict;
 use warnings;
 
-print "Hello, Perl GitHub Actions!\n";
+print `
+Hello, Perl GitHub Actions!\n
+`;
