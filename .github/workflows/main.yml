@@ -27,3 +27,7 @@ jobs:
         for file in execute/*.rs; do
           rustc "$file" && ./$(basename "$file" .rs)
         done
+
+    - name: Run all individual Rust files
+      run: |
+          rustc _5_input.rs && echo 'Hello, echo inline Rust!' | ./_5_input
