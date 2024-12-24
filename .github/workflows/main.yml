@@ -1,37 +1,31 @@
-name: Rust CI
+name: Build and Run Pascal Program
 
 on:
   push:
-    branches: [ rust_ ]
+    branches:
+      - pascal_  # or your default branch name
   pull_request:
-    branches: [ rust_ ]
+    branches:
+      - pascal_  # or your default branch name
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # You can change to other operating systems like 'windows-latest' if necessary
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Install C++ Compiler
-      run: sudo apt-get install g++
+      - name: Install Free Pascal
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fpc  # Installs Free Pascal compiler
 
-    - name: Set up Rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable  # Use the stable version of Rust
+      - name: Compile Pascal Program
+        run: |
+          fpc hello.pas  # Compiles the Pascal file
 
-    - name: Run all Rust files in the execute folder
-      run: |
-        for file in execute/*.rs; do
-          rustc "$file" && ./$(basename "$file" .rs)
-        done
+      - name: Run Pascal Program
+        run: |
+          ./hello  # Executes the compiled Pascal program
 
-    - name: Run all individual Rust files
-      run: |
-          rustc _5_input.rs && cat <<EOF | ./_5_input
-          Hello
-          World
-          there
-          EOF
