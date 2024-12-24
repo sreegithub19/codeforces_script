@@ -1,4 +1,4 @@
-import { SORTING_CRITERIA } from "../config/constants";
+import { SORTING_CRITERIA } from "../config/CONSTANTS";
 import { default as ProductsSearchPage } from "../pages/ProductsSearchPage";
 import { extractActualPrices, extractProductsName } from "../utils/ProductUtils";
 import productCategories  from "../../fixtures/productCategories.json";

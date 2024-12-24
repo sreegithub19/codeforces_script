@@ -1,4 +1,4 @@
-import { PRODUCT_ID_TO_TEST, PRODUCT_TO_TEST } from "../config/constants";
+import { PRODUCT_ID_TO_TEST, PRODUCT_TO_TEST } from "../config/CONSTANTS";
 import { default as ProductDetailsPage } from "../pages/ProductDetailsPage";
 import WishlistPage from "../pages/WishlistPage";
 
