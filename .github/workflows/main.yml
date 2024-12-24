@@ -3,10 +3,10 @@ name: Build and Run Pascal Program
 on:
   push:
     branches:
-      - pascal_  # or your default branch name
+      - cypress_testing  # or your default branch name
   pull_request:
     branches:
-      - pascal_  # or your default branch name
+      - cypress_testing  # or your default branch name
 
 jobs:
   build:
@@ -16,16 +16,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Free Pascal
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y fpc  # Installs Free Pascal compiler
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
 
-      - name: Compile Pascal Program
+      - name: Install dependencies
         run: |
-          fpc hello.pas  # Compiles the Pascal file
+         npm install --save-dev cypress
+         npm install
 
-      - name: Run Pascal Program
-        run: |
-          ./hello  # Executes the compiled Pascal program
+      - name: Install dependencies
+        run: npx cypress run
 
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: executed_notebooks
+          path: |
+            cypress/results/cypress-mochawesome-reporter/index.html
+            cypress/results/cypress-mochawesome-reporter/videos

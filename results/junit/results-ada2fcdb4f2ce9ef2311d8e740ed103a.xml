@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="39.977" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-08-25T15:38:15" tests="0" file="cypress/e2e/tests/WishlistTest.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="adding and removing products from wishlist" timestamp="2024-08-25T15:38:15" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="logged-in user" timestamp="2024-08-25T15:38:15" tests="2" time="34.573" failures="0">
+    <testcase name="adding and removing products from wishlist logged-in user should validate the success message for product added to wishlist" time="12.616" classname="should validate the success message for product added to wishlist">
+    </testcase>
+    <testcase name="adding and removing products from wishlist logged-in user should validate the presence of product in wishlist" time="14.995" classname="should validate the presence of product in wishlist">
+    </testcase>
+  </testsuite>
+  <testsuite name="logged-out user" timestamp="2024-08-25T15:38:50" tests="1" time="5.287" failures="0">
+    <testcase name="adding and removing products from wishlist logged-out user should validate the error message for product added to wishlist" time="4.226" classname="should validate the error message for product added to wishlist">
+    </testcase>
+  </testsuite>
+</testsuites>

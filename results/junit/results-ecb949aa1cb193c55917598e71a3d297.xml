@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="110.541" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-08-25T15:33:53" tests="0" file="cypress/e2e/tests/ProductDataTest.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="product details and search" timestamp="2024-08-25T15:33:53" tests="3" time="110.502" failures="0">
+    <testcase name="product details and search should validate all the products presence in store" time="12.867" classname="should validate all the products presence in store">
+    </testcase>
+    <testcase name="product details and search should validate the product data on products search page" time="4.578" classname="should validate the product data on products search page">
+    </testcase>
+    <testcase name="product details and search should validate the product data on product details page" time="3.566" classname="should validate the product data on product details page">
+    </testcase>
+  </testsuite>
+</testsuites>

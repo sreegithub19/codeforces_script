@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="13.460" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-12-24T15:52:25" tests="0" file="cypress/e2e/tests/AddToCartTest.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="adding products to cart" timestamp="2024-12-24T15:52:25" tests="3" time="13.441" failures="0">
+    <testcase name="adding products to cart should add product to the cart from products search page" time="5.736" classname="should add product to the cart from products search page">
+    </testcase>
+    <testcase name="adding products to cart should add product to the cart from product details page" time="4.536" classname="should add product to the cart from product details page">
+    </testcase>
+    <testcase name="adding products to cart should validate the presence of product in cart" time="3.018" classname="should validate the presence of product in cart">
+    </testcase>
+  </testsuite>
+</testsuites>

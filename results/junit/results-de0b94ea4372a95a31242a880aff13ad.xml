@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="7.285" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2024-08-25T15:33:38" tests="0" file="cypress/e2e/tests/LoginTest.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Success and Fail login flow" timestamp="2024-08-25T15:33:38" tests="3" time="7.250" failures="0">
+    <testcase name="Success and Fail login flow should login successfully with valid credentials" time="2.272" classname="should login successfully with valid credentials">
+    </testcase>
+    <testcase name="Success and Fail login flow should fail to login with invalid credentials" time="1.529" classname="should fail to login with invalid credentials">
+    </testcase>
+    <testcase name="Success and Fail login flow should perform login and logout" time="3.170" classname="should perform login and logout">
+    </testcase>
+  </testsuite>
+</testsuites>
