@@ -30,7 +30,8 @@ jobs:
 
     - name: Run all individual Rust files
       run: |
-          rustc _5_input.rs && cat <<EOF | ./_5_inputHello
+          rustc _5_input.rs && cat <<EOF | ./_5_input
+          Hello
           World
           there
           EOF
