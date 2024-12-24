@@ -30,4 +30,7 @@ jobs:
 
     - name: Run all individual Rust files
       run: |
-          rustc _5_input.rs && echo 'Hello, echo inline Rust!' | ./_5_input
+          rustc _5_input.rs && cat <<EOF | ./_5_inputHello
+          World
+          there
+          EOF
