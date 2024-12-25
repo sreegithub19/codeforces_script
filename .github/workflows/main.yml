@@ -56,7 +56,7 @@ jobs:
     
       - name: Run Go code with goeval
         run: |
-            goeval "import \"fmt\"; func main() { fmt.Println(\"Hello from goeval!\") }"
+            goeval -i fmt,math 'fmt.Printf("The square root of 16 is %.2f\n", math.Sqrt(16))'
 
       - name: Run all Go files in the  folders
         run: |
