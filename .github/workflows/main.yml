@@ -40,14 +40,19 @@ jobs:
         run: |
           git clone https://github.com/dolmen-go/goeval.git /tmp/goeval
   
-      - name: Install goeval
+          - name: Install goeval
+          run: |
+            cd /tmp/goeval
+            sudo go install .
+            echo "$(go env GOPATH)/bin" | sudo tee -a /etc/paths
+    
+      - name: Verify goeval installation
         run: |
-          cd /tmp/goeval
-          sudo go install .
-  
+            goeval --version  # Or run any command to verify goeval is installed
+    
       - name: Run Go code with goeval
         run: |
-          echo "package main; import \"fmt\"; func main() { fmt.Println(\"Hello from goeval!\") }" | goeval
+            echo "package main; import \"fmt\"; func main() { fmt.Println(\"Hello from goeval!\") }" | goeval
 
       - name: Run all Go files in the  folders
         run: |
