@@ -42,13 +42,17 @@ jobs:
   
       - name: Install goeval
         run: |
-            cd /tmp/goeval
-            sudo go install .
-            echo "$(go env GOPATH)/bin" | sudo tee -a /etc/paths
-    
+          cd /tmp/goeval
+          go install .
+
+      - name: Add Go bin directory to PATH
+        run: |
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
       - name: Verify goeval installation
         run: |
-            goeval --version  # Or run any command to verify goeval is installed
+          goeval --version  # Or run any command to verify goeval is installed
+
     
       - name: Run Go code with goeval
         run: |
