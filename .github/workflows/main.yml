@@ -51,7 +51,7 @@ jobs:
 
       - name: Verify goeval installation
         run: |
-          goeval --version  # Or run any command to verify goeval is installed
+          goeval -i fmt 'fmt.Println("Hello, Goeval world!")'  # Or run any command to verify goeval is installed
 
     
       - name: Run Go code with goeval
