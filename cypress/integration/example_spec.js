@@ -42,7 +42,7 @@ describe('todos API', () => {
   beforeEach(reset)
   afterEach(reset)
 
-  it('returns JSON', () => {
+  it('returns the JSON', () => {
     cy.request('/todos')
       .its('headers')
       .its('content-type')
