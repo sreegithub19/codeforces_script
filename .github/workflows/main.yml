@@ -56,7 +56,7 @@ jobs:
     
       - name: Run Go code with goeval
         run: |
-            goeval "package main; import \"fmt\"; func main() { fmt.Println(\"Hello from goeval!\") }"
+            goeval "import \"fmt\"; func main() { fmt.Println(\"Hello from goeval!\") }"
 
       - name: Run all Go files in the  folders
         run: |
