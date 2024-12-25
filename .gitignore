@@ -3,3 +3,4 @@ execute/*.class
 .idea
 .mypy_cache
 elm-stuff
+node_modules
