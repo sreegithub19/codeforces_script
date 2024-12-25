@@ -60,7 +60,7 @@ describe('todos API', () => {
       .should('deep.eq', initialItems)
   })
 
-  it('returns id + task objects', () => {
+  it('returns the id + task objects', () => {
     getItems()
       .each(value =>
         expect(value).to.have.all.keys('id', 'task')
