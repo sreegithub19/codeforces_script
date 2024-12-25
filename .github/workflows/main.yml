@@ -40,8 +40,8 @@ jobs:
         run: |
           git clone https://github.com/dolmen-go/goeval.git /tmp/goeval
   
-          - name: Install goeval
-          run: |
+      - name: Install goeval
+        run: |
             cd /tmp/goeval
             sudo go install .
             echo "$(go env GOPATH)/bin" | sudo tee -a /etc/paths
