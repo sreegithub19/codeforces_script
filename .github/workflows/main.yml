@@ -51,12 +51,12 @@ jobs:
 
       - name: Verify goeval installation
         run: |
-          goeval -i fmt 'fmt.Println("Hello, Goeval world!")'  # Or run any command to verify goeval is installed
+          goeval -i fmt 'fmt.Println("Hello, Goeval world with fmt!")'  # Or run any command to verify goeval is installed
 
     
       - name: Run Go code with goeval
         run: |
-            echo "package main; import \"fmt\"; func main() { fmt.Println(\"Hello from goeval!\") }" | goeval
+            goeval "package main; import \"fmt\"; func main() { fmt.Println(\"Hello from goeval!\") }"
 
       - name: Run all Go files in the  folders
         run: |
