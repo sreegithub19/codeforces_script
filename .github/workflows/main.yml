@@ -33,4 +33,4 @@ jobs:
         with:
           name: executed_notebooks
           path: |
-            cypress/reports/html
+            cypress/reports
