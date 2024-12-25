@@ -36,6 +36,19 @@ jobs:
         working-directory: ./execute
         run: go mod tidy
 
+      - name: Clone goeval repository
+        run: |
+          git clone https://github.com/dolmen-go/goeval.git /tmp/goeval
+  
+      - name: Install goeval
+        run: |
+          cd /tmp/goeval
+          sudo go install .
+  
+      - name: Run Go code with goeval
+        run: |
+          echo "package main; import \"fmt\"; func main() { fmt.Println(\"Hello from goeval!\") }" | goeval
+
       - name: Run all Go files in the  folders
         run: |
           cd execute  # Change to the 'execute' directory
