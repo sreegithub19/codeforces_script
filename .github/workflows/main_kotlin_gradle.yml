@@ -1,0 +1,27 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - javac_  # Adjust the branch name as needed
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21' # Specify your Java version
+          distribution: 'adopt'
+
+      - name: Build and run with Gradle
+        run: |
+            ./gradlew clean build
+            ./gradlew compileJava  # Optional if you specifically need to compile Java
+            ./gradlew run           # Runs the `run` task (assumes you have an application plugin)

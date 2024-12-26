@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0' // Equivalent to the Kotlin Maven Plugin
+    id 'application' // For running the application via `./gradlew run`
+}
+
+group = 'com.example'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = '21'
+targetCompatibility = '21'
+
+repositories {
+    mavenCentral() // Maven Central repository to fetch dependencies
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10" // Equivalent to kotlin-stdlib dependency in Maven
+    implementation "org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.10" // Equivalent to kotlin-scripting-jsr223 dependency in Maven
+}
+
+application {
+    mainClass = 'main.java.com.example.KotlinInJava' // Specify your main class (adjust package name if necessary)
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8' // Ensure proper encoding for Java
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '21' // Ensure Kotlin targets JVM 21
+    }
+}
