@@ -3,10 +3,10 @@ name: R Hello World Workflow
 on:
   push:
     branches:
-      - main  # Trigger on push to 'main' branch
+      - R_  # Trigger on push to 'main' branch
   pull_request:
     branches:
-      - main  # Trigger on pull request to 'main' branch
+      - R_  # Trigger on pull request to 'main' branch
 
 jobs:
   hello-world:
