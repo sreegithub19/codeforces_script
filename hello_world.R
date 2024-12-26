@@ -1,1 +1,1 @@
-print("Hello, R World!"+":"+"2")
+print(paste("Hello, R World!", ":", "2"))
