@@ -1,43 +1,29 @@
-name: MATLAB Hello World Workflow
+name: R Hello World Workflow
 
 on:
   push:
     branches:
-      - matlab_
-  # pull_request:
-  #   branches:
-  #     - main
+      - main  # Trigger on push to 'main' branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull request to 'main' branch
 
 jobs:
-  run-matlab:
-    runs-on: ubuntu-latest
-
+  hello-world:
+    runs-on: ubuntu-latest  # You can also use macos-latest or windows-latest
+    
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
+    # Step 1: Checkout code
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up MATLAB
-        uses: matlab-actions/setup-matlab@v1
-        with:
-          matlab-version: 'R2023b'  # Specify the MATLAB version (adjust as needed)
+    # Step 2: Set up R
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: '4.3.0'  # Specify the R version you want
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
-
-      - name: Run all MATLAB files in the folder
-        run: |
-            mkdir -p output
-            # Make sure the script is executable
-            chmod +x ./run_all_matlab_files.sh
-            # Execute the shell script that runs all .m files
-            ./run_all_matlab_files.sh
-            matlab -batch "disp('Running MATLAB code inline!'); a = 3; b = 5; disp(['Sum: ', num2str(a+b)])"
-
-
-      - name: Upload plot artifact
-        uses: actions/upload-artifact@v4
-        with:
-         name: all plots
-         path: output  # Path to the generated plot
+    # Step 3: Run the Hello World script
+    - name: Run Hello World R Script
+      run: |
+        Rscript hello_world.R  # Run the 'hello_world.R' script
