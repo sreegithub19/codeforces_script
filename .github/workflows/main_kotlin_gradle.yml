@@ -26,4 +26,9 @@ jobs:
         with:
             gradle-version: "8.5" # Quotes required to prevent YAML converting to number
       - name: Build with Gradle 8.5
-        run: gradle build
+        run: |
+         gradle build
+
+      - name: Run with Gradle 8.5
+        run: |
+         gradle run
