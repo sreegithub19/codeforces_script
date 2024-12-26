@@ -20,16 +20,16 @@ jobs:
           java-version: '21' # Specify your Java version
           distribution: 'adopt'
 
+      - name: Set up Gradle
+        uses: gradle/wrapper-validation-action@v1
+  
       - name: Cache Gradle dependencies
         uses: actions/cache@v2
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Build and run with Gradle
-        run: |
-            ./gradlew clean build
-            ./gradlew compileJava  # Optional if you specifically need to compile Java
-            ./gradlew run           # Runs the `run` task (assumes you have an application plugin)
+            path: ~/.gradle/caches
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle*') }}
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+  
+      - name: Build with Gradle
+        run: gradle clean build
