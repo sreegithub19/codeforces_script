@@ -1,34 +1,69 @@
+// plugins {
+//     id 'java'
+//     id 'org.jetbrains.kotlin.jvm' version '1.8.0' // Equivalent to the Kotlin Maven Plugin
+//     id 'application' // For running the application via `./gradlew run`
+// }
+
+// group = 'com.example'
+// version = '1.0-SNAPSHOT'
+
+// sourceCompatibility = '21'
+// targetCompatibility = '21'
+
+// repositories {
+//     mavenCentral() // Maven Central repository to fetch dependencies
+// }
+
+// dependencies {
+//     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10" // Equivalent to kotlin-stdlib dependency in Maven
+//     implementation "org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.10" // Equivalent to kotlin-scripting-jsr223 dependency in Maven
+// }
+
+// application {
+//     mainClass = 'main.java.com.example.KotlinInJava' // Specify your main class (adjust package name if necessary)
+// }
+
+// tasks.withType(JavaCompile) {
+//     options.encoding = 'UTF-8' // Ensure proper encoding for Java
+// }
+
+// tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+//     kotlinOptions {
+//         jvmTarget = '19' // Ensure Kotlin targets JVM 21
+//     }
+// }
+
+
 plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.8.0' // Equivalent to the Kotlin Maven Plugin
-    id 'application' // For running the application via `./gradlew run`
+    id 'org.jetbrains.kotlin.jvm' version '1.7.10' // Kotlin plugin
+    id 'application' // For running the application
 }
 
 group = 'com.example'
 version = '1.0-SNAPSHOT'
 
-sourceCompatibility = '21'
-targetCompatibility = '21'
-
 repositories {
-    mavenCentral() // Maven Central repository to fetch dependencies
+    mavenCentral()
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10" // Equivalent to kotlin-stdlib dependency in Maven
-    implementation "org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.10" // Equivalent to kotlin-scripting-jsr223 dependency in Maven
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10" // Kotlin standard library
+    implementation "org.jetbrains.kotlin:kotlin-scripting-jsr223:1.7.10" // Kotlin scripting
 }
 
 application {
-    mainClass = 'main.java.com.example.KotlinInJava' // Specify your main class (adjust package name if necessary)
+    mainClass = 'main.java.com.example.KotlinInJava' // Adjust if in a package
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8' // Ensure proper encoding for Java
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21)) // Set Java version to 21
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
-        jvmTarget = '19' // Ensure Kotlin targets JVM 21
+        jvmTarget = "21" // Target JVM version
     }
 }
+
