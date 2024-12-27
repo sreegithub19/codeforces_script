@@ -29,6 +29,6 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
-        jvmTarget = '17' // Ensure Kotlin targets JVM 21
+        jvmTarget = '19' // Ensure Kotlin targets JVM 21
     }
 }
