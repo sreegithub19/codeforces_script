@@ -17,7 +17,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '19' # Specify your Java version
+          java-version: '17' # Specify your Java version
           distribution: 'adopt'
 
 
