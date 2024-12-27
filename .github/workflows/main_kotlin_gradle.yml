@@ -28,7 +28,6 @@ jobs:
       - name: Build with Gradle 8.5
         run: |
          gradle build
-
       - name: Run with Gradle 8.5
         run: |
          gradle run
