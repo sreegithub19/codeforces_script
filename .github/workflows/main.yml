@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Run Bitbucket script
+        run: |
+          git clone https://sreebitbucket19@bitbucket.org/sreebitbucket19/first_repo.git
+          cd first_repo
+          ls -la
+          python hello.py 
+
       - name: Checkout code
         uses: actions/checkout@v2
 
