@@ -1,5 +1,4 @@
-exec('''
-sudo apt-get install -y maven
+exec('''sudo apt-get install -y maven
 mvn dependency:copy-dependencies -DoutputDirectory=libs
 python -m pip install --upgrade pip
 pip install jupyter nbconvert
