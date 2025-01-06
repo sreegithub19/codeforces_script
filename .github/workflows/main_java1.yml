@@ -31,8 +31,10 @@ jobs:
       - name: Install IJava kernel
         run: |
           git clone https://github.com/SpencerPark/IJava.git
-          cd IJava
-          gradle install  # Use 'gradle' command, no need for './gradlew'
+          cd IJava/buildSrc
+          sed -i 's/compile /implementation /g' build.gradle  # Replace compile with implementation
+          cd ..
+          gradle install
           cd ..
 
       - name: Run Gradle build (direct use of gradle command)
