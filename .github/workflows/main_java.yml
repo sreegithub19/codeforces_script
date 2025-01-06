@@ -23,6 +23,10 @@ jobs:
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
+          rm -rf ~/.gradle/caches
+
+      - name: Install gradle
+        run: |
           ./gradlew install
 
       - name: Run Jupyter Notebook
