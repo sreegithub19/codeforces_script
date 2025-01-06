@@ -27,8 +27,10 @@ jobs:
 
       - name: Install Jupyter
         run: |
-          pip install jupyter beakerx
-          beakerx install
+          pip install jupyter 
+          pip install --user beakerx
+          #beakerx install
+          python -m beakerx.install
           
       - name: Run Jupyter Notebook
         run: |
