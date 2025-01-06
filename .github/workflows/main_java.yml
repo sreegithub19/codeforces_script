@@ -16,14 +16,14 @@ jobs:
       - name: Install Java, Maven, and Jupyter
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-21-jdk maven
+          sudo apt-get install -y openjdk-8-jdk maven
           python3 -m pip install --upgrade pip
           pip install jupyter
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "7.6"  # Ensure this matches your project setup
+      # - name: Setup Gradle
+      #   uses: gradle/actions/setup-gradle@v4
+      #   with:
+      #     gradle-version: "7.6"  # Ensure this matches your project setup
 
       - name: Install IJava kernel
         run: |
@@ -31,9 +31,6 @@ jobs:
           cd IJava
           ./gradlew install
           cd ..
-
-      - name: Build with Gradle
-        run: gradle build  # Add a Gradle build step if needed
 
       - name: Run Jupyter Notebook
         run: |
