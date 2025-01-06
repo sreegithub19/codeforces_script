@@ -16,14 +16,14 @@ jobs:
       - name: Install Java, Maven, and Jupyter
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-21-jdk maven  # You can change Java version here if needed
+          sudo apt-get install -y openjdk-8-jdk maven  # Use Java 8 for compatibility
           python3 -m pip install --upgrade pip
           pip install jupyter
 
-      - name: Setup Gradle (no wrapper needed)
+      - name: Setup Gradle (Downgrade to 4.8.1)
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "8.9"  # Specify the version of Gradle you want to use
+          gradle-version: "4.8.1"  # Downgrade to Gradle 4.8.1
 
       - name: Clean Gradle cache
         run: rm -rf ~/.gradle/caches  # Clean the Gradle cache in case of corruption
@@ -31,14 +31,9 @@ jobs:
       - name: Install IJava kernel
         run: |
           git clone https://github.com/SpencerPark/IJava.git
-          cd IJava/buildSrc
-          sed -i 's/compile /implementation /g' build.gradle  # Replace compile with implementation
-          cd ..
+          cd IJava
           gradle install
           cd ..
-
-      - name: Run Gradle build (direct use of gradle command)
-        run: gradle build --stacktrace --debug  # Ensure proper build logging
 
       - name: Run Jupyter Notebook
         run: |
