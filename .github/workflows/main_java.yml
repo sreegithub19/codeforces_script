@@ -25,9 +25,9 @@ jobs:
           cd IJava
           ls -la
 
-      # - name: Install gradle
-      #   run: |
-      #     ./gradlew install
+      - name: Install gradle
+        run: |
+          ./gradlew install
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
