@@ -25,7 +25,7 @@ jobs:
       # Step 3: Download and Install the IJava Kernel
       - name: Install IJava Kernel
         run: |
-          wget https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.jar
+          wget https://github.com/SpencerPark/IJava/releases/tag/v1.3.0/ijava-1.3.0.jar
           java -jar ijava-1.3.0.jar --install  # Install the IJava kernel
           jupyter kernelspec list  # Verify that the IJava kernel is installed
 
