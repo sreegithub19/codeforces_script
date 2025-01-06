@@ -23,7 +23,7 @@ jobs:
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
-          rm -rf ~/.gradle/caches
+          ls -la
 
       # - name: Install gradle
       #   run: |
