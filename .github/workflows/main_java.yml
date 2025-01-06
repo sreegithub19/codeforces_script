@@ -13,40 +13,38 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Java and Jupyter
+      - name: Install Java, Maven, and Jupyter
         run: |
           sudo apt-get update
           sudo apt-get install -y openjdk-21-jdk maven
+          python3 -m pip install --upgrade pip
           pip install jupyter
 
       - name: Install IJava kernel
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
+          ./gradlew install
+          cd ..
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "8.9" # Quotes required to prevent YAML converting to number
+          gradle-version: "8.9"  # Ensure this matches your project setup
 
-      - name: Install gradle
-        run: |
-          gradle install
+      - name: Build with Gradle
+        run: gradle build  # Add a Gradle build step if needed
 
       - name: Run Jupyter Notebook
         run: |
-          cd execute
-          jupyter nbconvert --to notebook --execute notebook_java.ipynb --output executed_notebook_java.ipynb
-          cd ..
+          jupyter nbconvert --to notebook --execute execute/notebook_java.ipynb --output execute/executed_notebook_java.ipynb
 
       - name: Convert Executed Notebook to HTML
         run: |
-          cd execute
-          jupyter nbconvert --to html executed_notebook_java.ipynb --output executed_notebook_java
-          cd ..
+          jupyter nbconvert --to html execute/executed_notebook_java.ipynb --output execute/executed_notebook_java.html
 
       - name: List files
-        run: ls -la  # Debugging step
+        run: ls -la execute  # Show the files in the `execute` directory
 
       - name: Upload Notebook and HTML as Artifacts
         uses: actions/upload-artifact@v4
