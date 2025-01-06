@@ -20,17 +20,17 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install jupyter
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "7.6"  # Ensure this matches your project setup
+
       - name: Install IJava kernel
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
           ./gradlew install
           cd ..
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "8.9"  # Ensure this matches your project setup
 
       - name: Build with Gradle
         run: gradle build  # Add a Gradle build step if needed
