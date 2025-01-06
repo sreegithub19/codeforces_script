@@ -23,19 +23,15 @@ jobs:
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
-          ls -la
-          chmod +x gradlew
-          ls -la gradlew
-
-
-      - name: Install gradle
-        run: |
-          ./gradlew install
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.9" # Quotes required to prevent YAML converting to number
+
+      - name: Install gradle
+        run: |
+          gradle install
 
       - name: Run Jupyter Notebook
         run: |
