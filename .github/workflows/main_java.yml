@@ -13,41 +13,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Java, Maven, and Jupyter
+      - name: Install Java and Jupyter
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-17-jdk maven  # Try with JDK 17 if JDK 21 causes issues
-          python3 -m pip install --upgrade pip
+          sudo apt-get install -y openjdk-21-jdk maven
           pip install jupyter
-
-      - name: Clean Gradle cache
-        run: rm -rf ~/.gradle/caches  # Clean the Gradle cache in case of corruption
-
       - name: Install IJava kernel
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
           ./gradlew install
-          cd ..
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "7.6"  # Use a stable Gradle version, e.g., 7.6
-
-      - name: Run Gradle build
-        run: gradle build --stacktrace --debug  # Get more info if something goes wrong
-
       - name: Run Jupyter Notebook
         run: |
-          jupyter nbconvert --to notebook --execute execute/notebook_java.ipynb --output execute/executed_notebook_java.ipynb
-
+          cd execute
+          jupyter nbconvert --to notebook --execute notebook_java.ipynb --output executed_notebook_java.ipynb
+          cd ..
       - name: Convert Executed Notebook to HTML
         run: |
-          jupyter nbconvert --to html execute/executed_notebook_java.ipynb --output execute/executed_notebook_java.html
-
+          cd execute
+          jupyter nbconvert --to html executed_notebook_java.ipynb --output executed_notebook_java
+          cd ..
       - name: List files
-        run: ls -la execute
+        run: ls -la  # Debugging step
 
       - name: Upload Notebook and HTML as Artifacts
         uses: actions/upload-artifact@v4

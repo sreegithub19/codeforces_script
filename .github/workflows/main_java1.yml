@@ -13,28 +13,47 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Java and Jupyter
+      - name: Install Java, Maven, and Jupyter
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-21-jdk maven
+          sudo apt-get install -y openjdk-17-jdk maven  # You can change Java version here if needed
+          python3 -m pip install --upgrade pip
           pip install jupyter
+
+      - name: Update Gradle Wrapper to 7.6 (or another version)
+        run: |
+          # Ensure Gradle wrapper is using the correct version
+          ./gradlew wrapper --gradle-version 7.6  # You can change the version here
+        working-directory: ./  # Ensure you're in the correct directory (the root of your repo)
+
+      - name: Clean Gradle cache
+        run: rm -rf ~/.gradle/caches  # Clean the Gradle cache in case of corruption
+
       - name: Install IJava kernel
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
-          ./gradlew install
+          ./gradlew install  # This should now use Gradle 7.6 (or your updated version)
+          cd ..
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "7.6"  # This ensures that Gradle 7.6 is used in the workflow
+
+      - name: Run Gradle build
+        run: gradle build --stacktrace --debug  # Ensure proper build logging
+
       - name: Run Jupyter Notebook
         run: |
-          cd execute
-          jupyter nbconvert --to notebook --execute notebook_java.ipynb --output executed_notebook_java.ipynb
-          cd ..
+          jupyter nbconvert --to notebook --execute execute/notebook_java.ipynb --output execute/executed_notebook_java.ipynb
+
       - name: Convert Executed Notebook to HTML
         run: |
-          cd execute
-          jupyter nbconvert --to html executed_notebook_java.ipynb --output executed_notebook_java
-          cd ..
+          jupyter nbconvert --to html execute/executed_notebook_java.ipynb --output execute/executed_notebook_java.html
+
       - name: List files
-        run: ls -la  # Debugging step
+        run: ls -la execute
 
       - name: Upload Notebook and HTML as Artifacts
         uses: actions/upload-artifact@v4
