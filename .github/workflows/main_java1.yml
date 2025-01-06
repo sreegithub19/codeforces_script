@@ -20,11 +20,10 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install jupyter
 
-      - name: Update Gradle Wrapper to 7.6 (or another version)
-        run: |
-          # Ensure Gradle wrapper is using the correct version
-          ./gradlew wrapper --gradle-version 7.6  # You can change the version here
-        working-directory: ./  # Ensure you're in the correct directory (the root of your repo)
+      - name: Setup Gradle (no wrapper needed)
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "7.6"  # Specify the version of Gradle you want to use
 
       - name: Clean Gradle cache
         run: rm -rf ~/.gradle/caches  # Clean the Gradle cache in case of corruption
@@ -33,15 +32,10 @@ jobs:
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
-          ./gradlew install  # This should now use Gradle 7.6 (or your updated version)
+          gradle install  # Use 'gradle' command, no need for './gradlew'
           cd ..
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "7.6"  # This ensures that Gradle 7.6 is used in the workflow
-
-      - name: Run Gradle build
+      - name: Run Gradle build (direct use of gradle command)
         run: gradle build --stacktrace --debug  # Ensure proper build logging
 
       - name: Run Jupyter Notebook
