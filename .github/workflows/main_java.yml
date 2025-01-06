@@ -22,8 +22,7 @@ jobs:
         run: |
           git clone https://github.com/SpencerPark/IJava.git
           cd IJava
-          #./gradlew install
-          ./gradlew installKernel
+          ./gradlew install
 
       - name: Run Jupyter Notebook
         run: |
