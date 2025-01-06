@@ -5,3 +5,4 @@ execute/*.class
 node_modules
 libs
 greetScript.jsh
+target
