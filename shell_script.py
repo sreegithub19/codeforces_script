@@ -1,4 +1,7 @@
-exec('''sudo apt-get install -y maven
+import subprocess
+
+commands = '''
+sudo apt-get install -y maven
 mvn dependency:copy-dependencies -DoutputDirectory=libs
 python -m pip install --upgrade pip
 pip install jupyter nbconvert
@@ -10,4 +13,8 @@ cd execute
 jupyter nbconvert --to html executed_notebook.ipynb --output executed_notebook
 cd .. 
 ls -la
-''')
+'''
+
+# Use subprocess to execute the commands
+process = subprocess.Popen(commands, shell=True, executable='/bin/bash')
+process.communicate()
