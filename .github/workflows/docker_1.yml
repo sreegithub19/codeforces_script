@@ -1,0 +1,40 @@
+name: Retrieve Artifacts from Docker Container Without Dockerfile
+
+on:
+  push:
+    branches:
+      - python_
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Pull and run a Docker container
+      - name: Run Docker container
+        run: |
+          # Run a container in detached mode
+          docker run --name my-container -d ubuntu:20.04 sleep infinity
+
+      # Step 2: Execute commands inside the container to create an artifact
+      - name: Create artifact inside container
+        run: |
+          docker exec my-container bash -c "mkdir -p /app/output && echo 'Hello, this is the output file!' > /app/output/output.txt"
+
+      # Step 3: Copy the artifact (output.txt) from the container to the host
+      - name: Copy artifact from container
+        run: |
+          docker cp my-container:/app/output/output.txt ./output.txt
+
+      # Step 4: Upload the artifact to GitHub
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: output-file
+          path: ./output.txt
+
+      # Step 5: Cleanup Docker container
+      - name: Cleanup Docker container
+        run: |
+          docker stop my-container
+          docker rm my-container
