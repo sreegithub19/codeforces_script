@@ -22,19 +22,15 @@ jobs:
           docker exec my-container bash -c "mkdir -p /app/output && echo 'Hello, this is the output file!' > /app/output/output.txt"
 
       # Step 3: Copy the artifact (output.txt) from the container to the host
-      - name: Copy artifact from container
+      - name: Copy artifact from container and Cleanup Docker container
         run: |
           docker cp my-container:/app/output/output.txt ./output.txt
+          docker stop my-container
+          docker rm my-container
 
       # Step 4: Upload the artifact to GitHub
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: output-file
           path: ./output.txt
-
-      # Step 5: Cleanup Docker container
-      - name: Cleanup Docker container
-        run: |
-          docker stop my-container
-          docker rm my-container
