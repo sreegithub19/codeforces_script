@@ -1,0 +1,43 @@
+name: Retrieve Artifacts from Docker Container
+
+on:
+  push:
+    branches:
+      - python_
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Build the Docker image
+      - name: Build Docker image
+        run: |
+          docker build -t my-app .
+
+      # Step 3: Run the Docker container
+      - name: Run Docker container
+        run: |
+          docker run --name my-container -d my-app
+
+      # Step 4: Copy the artifact (output.txt) from the container to the host
+      - name: Copy artifact from container
+        run: |
+          docker cp my-container:/app/output/output.txt ./output.txt
+
+      # Step 5: Upload the artifact to GitHub
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-file
+          path: ./output.txt
+
+      # Step 6: Cleanup (stop and remove the container)
+      - name: Cleanup Docker container
+        run: |
+          docker stop my-container
+          docker rm my-container
