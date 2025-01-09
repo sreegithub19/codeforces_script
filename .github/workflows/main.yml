@@ -27,3 +27,4 @@ jobs:
     - name: Run Hello World R Script
       run: |
         Rscript hello_world.R  # Run the 'hello_world.R' script
+        Rscript -e "print('Hello, R embedded world!')"
