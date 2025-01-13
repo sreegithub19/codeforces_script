@@ -33,7 +33,7 @@ jobs:
         run: |
           cd cpp_  # Change to the directory containing C++ files
           for file in *.cpp; do
-            g++ "$file" -o "${file%.cpp}"  # Compile each C++ file to an executable
+            g++ "$file" -o "${file%.cpp}" -lboost_system -lboost_filesystem    # Link Boost libraries , and Compile each C++ file to an executable
           done
 
       - name: Run C++ programs
