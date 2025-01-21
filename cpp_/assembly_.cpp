@@ -1,8 +1,7 @@
-// main.cpp
 #include <iostream>
 
 int main() {
-    asm(R"(
+    const char *assembly_code = R"(
         section .data
         hello1 db 'Hello world!', 0                    ; Null-terminated string for the first line
         sum_msg db 'The sum of 14 and 10 is: ', 0      ; Null-terminated string for the sum message
@@ -167,7 +166,9 @@ int main() {
         
         section .data
         ten dq 10                        ; Define a constant for the divisor in division
-    )");
+    )";
+
+    asm(assembly_code);
 
     return 0;
 }
