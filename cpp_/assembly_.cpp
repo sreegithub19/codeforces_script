@@ -32,8 +32,8 @@ int main() {
             "movl %%eax, %%edx;" // Move 'a' to edx
             "xorl %%eax, %%eax;" // Clear eax
             "divl %%ebx;"        // Perform division: a / b
-            : "=d" (quotient)    // Output the quotient to 'quotient'
-            : "d" (a), "b" (b)   // Input operands: 'a' in edx, 'b' in ebx
+            : "=a" (quotient)    // Output the quotient to 'quotient'
+            : "d" (0), "a" (a), "b" (b)   // Input operands: 'a' in eax, 'b' in ebx, edx cleared to 0
         );
     } else {
         std::cerr << "Error: Division by zero" << std::endl;
