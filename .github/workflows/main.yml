@@ -27,7 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install flask
           sudo apt-get update
-          sudo apt-get install -y libboost-all-dev  # Install Boost libraries
+          sudo apt-get install -y libboost-all-dev nasm  # Install Boost libraries
 
       - name: Compile C++ programs
         run: |
