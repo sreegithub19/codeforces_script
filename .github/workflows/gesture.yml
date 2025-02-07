@@ -36,7 +36,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install jupyter nbconvert
+          pip install jupyter nbconvert kagglehub
+          python kaggle_.py
 
       - name: Run Jupyter Notebook
         run: |
