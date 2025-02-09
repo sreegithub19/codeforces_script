@@ -71,11 +71,17 @@ jobs:
           unzip -q ijava-kernel.zip -d ijava-kernel && cd ijava-kernel && python3 install.py --sys-prefix
           jupyter kernelspec list
 
+          sudo apt-get update
+          sudo apt-get install -y openjdk-21-jdk maven  # Install Java 21
+
       - name: Set up IJava
         run: | 
           cd execute
           jupyter nbconvert --to notebook --execute notebook_java2.ipynb --output executed_notebook_java2.ipynb
           jupyter nbconvert --to html executed_notebook_java2.ipynb --output executed_notebook_java2
+
+          jupyter nbconvert --to notebook --execute notebook_java.ipynb --output executed_notebook_java.ipynb
+          jupyter nbconvert --to html executed_notebook_java.ipynb --output executed_notebook_java
           cd .. 
         
       - name: Upload Notebook and HTML as Artifacts
@@ -83,5 +89,4 @@ jobs:
         with:
           name: executed_notebooks
           path: |
-            execute/executed_notebook_java2.ipynb
-            execute/executed_notebook_java2.html
+            execute/executed_notebook_*
