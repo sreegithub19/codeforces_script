@@ -65,7 +65,7 @@ jobs:
       - name: Set up Docker container
         run: |
           # Pull Docker image with Java 8, Maven, Jupyter
-          pip install jupyter_client  
+          pip install jupyter jupyter_client  
           cd execute
           jupyter nbconvert --to notebook --execute notebook_java2.ipynb --output executed_notebook_java2.ipynb
           jupyter nbconvert --to html executed_notebook_java2.ipynb --output executed_notebook_java2
