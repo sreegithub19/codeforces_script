@@ -13,10 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Java and Jupyter
+      - name: Install Java 8, Maven, and Jupyter
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-21-jdk maven
+          sudo apt-get install -y openjdk-8-jdk maven  # Install Java 8
           pip install jupyter
           
       - name: Install IJava kernel
@@ -45,61 +45,3 @@ jobs:
           path: |
             execute/executed_notebook_java.ipynb
             execute/executed_notebook_java.html
-
-################################################################################
-
-# name: Run Jupyter Notebook with Java and Maven Dependencies
-
-# on:
-#   push:
-#     branches:
-#       - python_
-
-# jobs:
-#   run_notebook:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-
-#       - name: Install Java, Maven, and Jupyter
-#         run: |
-#           sudo apt-get update
-#           sudo apt-get install -y openjdk-8-jdk maven  # Use Java 8 for compatibility
-#           python3 -m pip install --upgrade pip
-#           pip install jupyter
-
-#       - name: Setup Gradle (Downgrade to 4.8.1)
-#         uses: gradle/actions/setup-gradle@v4
-#         with:
-#           gradle-version: "4.8.1"  # Downgrade to Gradle 4.8.1
-
-#       - name: Clean Gradle cache
-#         run: rm -rf ~/.gradle/caches  # Clean the Gradle cache in case of corruption
-
-#       - name: Install IJava kernel
-#         run: |
-#           git clone https://github.com/SpencerPark/IJava.git
-#           cd IJava
-#           gradle install
-#           cd ..
-
-#       - name: Run Jupyter Notebook
-#         run: |
-#           jupyter nbconvert --to notebook --execute execute/notebook_java.ipynb --output execute/executed_notebook_java.ipynb
-
-#       - name: Convert Executed Notebook to HTML
-#         run: |
-#           jupyter nbconvert --to html execute/executed_notebook_java.ipynb --output execute/executed_notebook_java.html
-
-#       - name: List files
-#         run: ls -la execute
-
-#       - name: Upload Notebook and HTML as Artifacts
-#         uses: actions/upload-artifact@v4
-#         with:
-#           name: executed_notebooks
-#           path: |
-#             execute/executed_notebook_java.ipynb
-#             execute/executed_notebook_java.html
