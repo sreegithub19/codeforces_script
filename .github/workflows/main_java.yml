@@ -64,22 +64,24 @@ jobs:
 
       - name: Set up Docker container
         run: |
-          # Pull Docker image with Java 8, Maven, Jupyter
           pip install jupyter jupyter_client  
           sudo apt update -q
           sudo apt-get install -q openjdk-11-jdk-headless
           curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip -o ijava-kernel.zip
           unzip -q ijava-kernel.zip -d ijava-kernel && cd ijava-kernel && python3 install.py --sys-prefix
-          jupyter kernelspec list  
+          jupyter kernelspec list
+
+      - name: Set up IJava
+        run: | 
           cd execute
           jupyter nbconvert --to notebook --execute notebook_java2.ipynb --output executed_notebook_java2.ipynb
           jupyter nbconvert --to html executed_notebook_java2.ipynb --output executed_notebook_java2
           cd .. 
         
-      - name: Upload Notebook and HTML as Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: executed_notebooks
-          path: |
-            execute/executed_notebook_java2.ipynb
-            execute/executed_notebook_java2.html
+      # - name: Upload Notebook and HTML as Artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: executed_notebooks
+      #     path: |
+      #       execute/executed_notebook_java2.ipynb
+      #       execute/executed_notebook_java2.html
