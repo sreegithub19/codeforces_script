@@ -1,0 +1,75 @@
+name: Run Jupyter Notebook and Generate HTML
+
+on:
+  push:
+    branches:
+      - python_
+
+jobs:
+  run_notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jupyter nbconvert ipython
+          #python kaggle_.py
+
+
+      - name: Convert Executed Notebook to HTML
+        run: |
+          ipython -c "print(2)"
+          ipython -c '{          
+              "cells": [   
+                  {
+                      "cell_type": "code",
+                      "metadata": {},
+                      "outputs": [],
+                      "source": [
+                          "print(22222222)"
+                      ]
+                  }
+              ],
+              "metadata": {
+                  "kernelspec": {
+                      "display_name": "Python 3",
+                      "language": "python",
+                      "name": "python3"
+                  },
+                  "language_info": {
+                      "codemirror_mode": {
+                          "name": "ipython",
+                          "version": 3
+                      },
+                      "file_extension": ".py",
+                      "mimetype": "text/x-python",
+                      "name": "python",
+                      "nbconvert_exporter": "python",
+                      "pygments_lexer": "ipython3",
+                      "version": "3.x"
+                  }
+              },
+              "nbformat": 4,
+              "nbformat_minor": 4
+          }'
+          cd execute
+          jupyter nbconvert --to notebook --execute ipython_.ipynb --output executed_ipython_.ipynb
+          jupyter nbconvert --to html executed_ipython_.ipynb --output executed_ipython_
+          cd ..
+
+      - name: Upload Notebook and HTML as Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: executed_notebooks
+          path: |
+            execute/executed_ipython_.ipynb
+            execute/executed_ipython_.html
