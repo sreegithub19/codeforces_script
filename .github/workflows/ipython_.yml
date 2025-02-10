@@ -27,7 +27,10 @@ jobs:
 
       - name: Convert Executed Notebook to HTML
         run: |
-          ipython -c "print(2)"
+          ipython -c '
+          print(222)
+          '
+
           ipython -c '{          
               "cells": [   
                   {
@@ -61,7 +64,11 @@ jobs:
               "nbformat": 4,
               "nbformat_minor": 4
           }'
+
           cd execute
+          ipython nbconvert --to script ipython_.ipynb
+          ipython ipython_.py
+
           jupyter nbconvert --to notebook --execute ipython_.ipynb --output executed_ipython_.ipynb
           jupyter nbconvert --to html executed_ipython_.ipynb --output executed_ipython_
           cd ..
