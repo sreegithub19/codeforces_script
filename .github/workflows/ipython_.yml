@@ -66,8 +66,7 @@ jobs:
           }'
 
           cd execute
-          ipython nbconvert --to script ipython_.ipynb
-          ipython ipython_.py
+          jupyter nbconvert ipython_.ipynb --to python && ipython ipython_.py
 
           jupyter nbconvert --to notebook --execute ipython_.ipynb --output executed_ipython_.ipynb
           jupyter nbconvert --to html executed_ipython_.ipynb --output executed_ipython_
