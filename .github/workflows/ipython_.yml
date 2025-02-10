@@ -72,6 +72,14 @@ jobs:
           jupyter nbconvert --to html executed_ipython_.ipynb --output executed_ipython_
           cd ..
 
+
+      - name: Execute Gesture recognition
+        run: |
+          cd execute
+          jupyter nbconvert Gesture_Recognition_Project.ipynb --to python
+          ipython Gesture_Recognition_Project.py
+          cd ..
+
       - name: Upload Notebook and HTML as Artifacts
         uses: actions/upload-artifact@v4
         with:
