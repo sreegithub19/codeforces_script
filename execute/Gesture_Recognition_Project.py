@@ -300,6 +300,8 @@ def global_vars(img_idx,shape_h,shape_w,batch_size,num_epochs):
 
 # In[11]:
 
+###########################################################  MODEL 1   ###########################################################
+
 
 # Model 1: No of Epochs = 15 , batch_size = 64 ,shape = (120,120) , no of frames = 10
 
@@ -391,6 +393,8 @@ print(validation_steps)
 
 # In[ ]:
 
+###########################################################  MODEL 2   ###########################################################
+
 
 # Model 2: No of Epochs = 20; batch_size = 20; shape = (50,50); no of frames = 6
 
@@ -428,7 +432,9 @@ conv_model2.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epo
                     validation_steps=validation_steps, class_weight=None, initial_epoch=0)
 
 
-# #### Insights:
+###########################################################  MODEL 3   ###########################################################
+
+#### Insights:
 #     - Number of Epochs =20; Batch size=20; Number of frames=6
 #     - Taking the Frames with the step size 5 and taking 6 frames with shape (50,50) have increased the performance tremendously for both the training and validation set
 
@@ -437,46 +443,49 @@ conv_model2.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epo
 # In[ ]:
 
 
-# #No of Epochs = 20; batch_size = 30; shape = (50,50); no of frames = 10
-# img_idx,shape_h,shape_w,batch_size,num_epochs = global_vars(list(range(0,30,3)),50,50,20,20)
-# conv_model3=Conv3DModel()
-# conv_model3=conv_model3.Model3D(frames_to_sample=len(img_idx),image_height=shape_h,image_width=shape_w)
-# conv_model3.summary()
+#No of Epochs = 20; batch_size = 30; shape = (50,50); no of frames = 10
+img_idx,shape_h,shape_w,batch_size,num_epochs = global_vars(list(range(0,30,3)),50,50,20,20)
+conv_model3=Conv3DModel()
+conv_model3=conv_model3.Model3D(frames_to_sample=len(img_idx),image_height=shape_h,image_width=shape_w)
+conv_model3.summary()
 
 
-# # In[ ]:
+# In[ ]:
 
 
-# train_generator = generator(train_path, train_doc, batch_size)
-# val_generator = generator(val_path, val_doc, batch_size)
+train_generator = generator(train_path, train_doc, batch_size)
+val_generator = generator(val_path, val_doc, batch_size)
 
-# if (num_train_sequences%batch_size) == 0:
-#     steps_per_epoch = int(num_train_sequences/batch_size)
-# else:
-#     steps_per_epoch = (num_train_sequences//batch_size) + 1
+if (num_train_sequences%batch_size) == 0:
+    steps_per_epoch = int(num_train_sequences/batch_size)
+else:
+    steps_per_epoch = (num_train_sequences//batch_size) + 1
 
-# if (num_val_sequences%batch_size) == 0:
-#     validation_steps = int(num_val_sequences/batch_size)
-# else:
-#     validation_steps = (num_val_sequences//batch_size) + 1
+if (num_val_sequences%batch_size) == 0:
+    validation_steps = int(num_val_sequences/batch_size)
+else:
+    validation_steps = (num_val_sequences//batch_size) + 1
 
-# print(steps_per_epoch)
-# print(validation_steps)
-
-
-# # In[ ]:
+print(steps_per_epoch)
+print(validation_steps)
 
 
-# conv_model3.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epochs, verbose=1,
-#                     callbacks=callbacks_list, validation_data=val_generator,
-#                     validation_steps=validation_steps, class_weight=None, initial_epoch=0)
+# In[ ]:
 
 
-# # #### Insights:
-# #     Model 3: Number of Epochs =20; Batch size=30; shape = (50,50); Number of frames=10
-# #     Keeping the same shape and increasing the number of frames we have observed that Validation Accuracy decreased and slightly seems to be overfitting as compared to Model-2
-# #     
-# #     
+conv_model3.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epochs, verbose=1,
+                    callbacks=callbacks_list, validation_data=val_generator,
+                    validation_steps=validation_steps, class_weight=None, initial_epoch=0)
+
+
+# #### Insights:
+#     Model 3: Number of Epochs =20; Batch size=30; shape = (50,50); Number of frames=10
+#     Keeping the same shape and increasing the number of frames we have observed that Validation Accuracy decreased and slightly seems to be overfitting as compared to Model-2
+#     
+#     
+
+###########################################################  MODEL 4  ###########################################################
+
 
 # # <h2><a id="Model_4">Model 4: </a></h2>
 
