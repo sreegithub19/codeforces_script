@@ -447,7 +447,7 @@ conv_model2.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epo
 img_idx,shape_h,shape_w,batch_size,num_epochs = global_vars(list(range(0,30,3)),50,50,20,20)
 conv_model3=Conv3DModel()
 conv_model3=conv_model3.Model3D(frames_to_sample=len(img_idx),image_height=shape_h,image_width=shape_w)
-conv_model3.summary()
+print(conv_model3.summary())
 
 
 # In[ ]:
@@ -487,99 +487,108 @@ conv_model3.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epo
 ###########################################################  MODEL 4  ###########################################################
 
 
-# # <h2><a id="Model_4">Model 4: </a></h2>
+# <h2><a id="Model_4">Model 4: </a></h2>
 
-# # In[ ]:
-
-
-# #No of Epochs = 25 , batch_size = 50 ,shape = (100,100) , no of frames = 10
-# img_idx,shape_h,shape_w,batch_size,num_epochs = global_vars(list(range(5,28,2)),100,100,50,25)
-# conv_model4=Conv3DModel()
-# conv_model4=conv_model4.Model3D(frames_to_sample=len(img_idx),image_height=shape_h,image_width=shape_w)
-# conv_model4.summary()
+# In[ ]:
 
 
-# # In[ ]:
+#No of Epochs = 25 , batch_size = 50 ,shape = (100,100) , no of frames = 10
+img_idx,shape_h,shape_w,batch_size,num_epochs = global_vars(list(range(5,28,2)),100,100,50,25)
+conv_model4=Conv3DModel()
+conv_model4=conv_model4.Model3D(frames_to_sample=len(img_idx),image_height=shape_h,image_width=shape_w)
+print(conv_model4.summary())
 
 
-# train_generator = generator(train_path, train_doc, batch_size)
-# val_generator = generator(val_path, val_doc, batch_size)
-
-# if (num_train_sequences%batch_size) == 0:
-#     steps_per_epoch = int(num_train_sequences/batch_size)
-# else:
-#     steps_per_epoch = (num_train_sequences//batch_size) + 1
-
-# if (num_val_sequences%batch_size) == 0:
-#     validation_steps = int(num_val_sequences/batch_size)
-# else:
-#     validation_steps = (num_val_sequences//batch_size) + 1
-
-# print(steps_per_epoch)
-# print(validation_steps)
+# In[ ]:
 
 
-# # In[ ]:
+train_generator = generator(train_path, train_doc, batch_size)
+val_generator = generator(val_path, val_doc, batch_size)
+
+if (num_train_sequences%batch_size) == 0:
+    steps_per_epoch = int(num_train_sequences/batch_size)
+else:
+    steps_per_epoch = (num_train_sequences//batch_size) + 1
+
+if (num_val_sequences%batch_size) == 0:
+    validation_steps = int(num_val_sequences/batch_size)
+else:
+    validation_steps = (num_val_sequences//batch_size) + 1
+
+print(steps_per_epoch)
+print(validation_steps)
 
 
-# conv_model4.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epochs, verbose=1,
-#                      callbacks=callbacks_list, validation_data=val_generator,
-#                      validation_steps=validation_steps, class_weight=None, initial_epoch=0)
+# In[ ]:
 
 
-# # #### Insights:
-# # Model 4: This model seems to be overfitting. Increasing the image size decreases the accuracy.
-
-# # <h2><a id="Model_5">Model 5: </a></h2>
-
-# # In[ ]:
+conv_model4.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epochs, verbose=1,
+                     callbacks=callbacks_list, validation_data=val_generator,
+                     validation_steps=validation_steps, class_weight=None, initial_epoch=0)
 
 
-# #No of Epochs = 25 , batch_size = 50 ,shape = (70,70) , no of frames = 18
-# img_idx,shape_h,shape_w,batch_size,num_epochs = global_vars([0,1,2,4,6,8,10,12,14,16,18,20,22,24,26,27,28,29],70,70,50,34)
-# conv_model5=Conv3DModel()
-# conv_model5=conv_model5.Model3D(frames_to_sample=len(img_idx),image_height=shape_h,image_width=shape_w)
-# conv_model5.summary()
-
-# train_generator = generator(train_path, train_doc, batch_size)
-# val_generator = generator(val_path, val_doc, batch_size)
+# #### Insights:
+# Model 4: This model seems to be overfitting. Increasing the image size decreases the accuracy.
 
 
-# # In[ ]:
+###########################################################  MODEL 5 ###########################################################
 
 
-# if (num_train_sequences%batch_size) == 0:
-#     steps_per_epoch = int(num_train_sequences/batch_size)
-# else:
-#     steps_per_epoch = (num_train_sequences//batch_size) + 1
 
-# if (num_val_sequences%batch_size) == 0:
-#     validation_steps = int(num_val_sequences/batch_size)
-# else:
-#     validation_steps = (num_val_sequences//batch_size) + 1
+# <h2><a id="Model_5">Model 5: </a></h2>
+
+# In[ ]:
 
 
-# # In[ ]:
+#No of Epochs = 25 , batch_size = 50 ,shape = (70,70) , no of frames = 18
+img_idx,shape_h,shape_w,batch_size,num_epochs = global_vars([0,1,2,4,6,8,10,12,14,16,18,20,22,24,26,27,28,29],70,70,50,34)
+conv_model5=Conv3DModel()
+conv_model5=conv_model5.Model3D(frames_to_sample=len(img_idx),image_height=shape_h,image_width=shape_w)
+print(conv_model5.summary())
+
+train_generator = generator(train_path, train_doc, batch_size)
+val_generator = generator(val_path, val_doc, batch_size)
 
 
-# print(steps_per_epoch)
-# print(validation_steps)
+# In[ ]:
 
 
-# # In[ ]:
+if (num_train_sequences%batch_size) == 0:
+    steps_per_epoch = int(num_train_sequences/batch_size)
+else:
+    steps_per_epoch = (num_train_sequences//batch_size) + 1
+
+if (num_val_sequences%batch_size) == 0:
+    validation_steps = int(num_val_sequences/batch_size)
+else:
+    validation_steps = (num_val_sequences//batch_size) + 1
 
 
-# conv_model5.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epochs, verbose=1,
-#                     callbacks=callbacks_list, validation_data=val_generator,
-#                     validation_steps=validation_steps, class_weight=None, initial_epoch=0)
+# In[ ]:
 
 
-# # #### Insights:
-# #     Model 5 is clearly an overfit model can see that increasing in number of frames and epochs causing the noise to be learned also from all the frames
+print(steps_per_epoch)
+print(validation_steps)
 
-# # #### Overall Insights for Model 1 to 5:
-# #     Based on our experiment the final model will be model 2 - Less no of frames and reducing image size to 50,50 giving good results
-# #     Model 2 No of Epochs = 20 , batch_size = 20 ,shape = (50,50) , no of frames = 6
+
+# In[ ]:
+
+
+conv_model5.fit(train_generator, steps_per_epoch=steps_per_epoch, epochs=num_epochs, verbose=1,
+                    callbacks=callbacks_list, validation_data=val_generator,
+                    validation_steps=validation_steps, class_weight=None, initial_epoch=0)
+
+
+# #### Insights:
+#     Model 5 is clearly an overfit model can see that increasing in number of frames and epochs causing the noise to be learned also from all the frames
+
+# #### Overall Insights for Model 1 to 5:
+#     Based on our experiment the final model will be model 2 - Less no of frames and reducing image size to 50,50 giving good results
+#     Model 2 No of Epochs = 20 , batch_size = 20 ,shape = (50,50) , no of frames = 6
+
+
+###########################################################  MODEL 6 ###########################################################
+
 
 # # <h2><a id="Model_6">Model 6 <br></a></h2>
 
