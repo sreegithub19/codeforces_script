@@ -28,7 +28,7 @@ jobs:
           GOOGLE_EMAIL: "cpadmaja2003@gmail.com"
           GOOGLE_PASSWORD: "Sree@gmail2023"
         run: |
-          colab-cli login --email "cpadmaja2003@gmail.com" --password "Sree@gmail2023"
+          colab-cli new-nb my_nb.ipynb
 
     #   - name: Run Google Colab Notebook
     #     run: |
