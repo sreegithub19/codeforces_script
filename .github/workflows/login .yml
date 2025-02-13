@@ -26,7 +26,7 @@ jobs:
       - name: Authenticate with Google Account
         env:
           GOOGLE_EMAIL: "cpadmaja2003@gmail.com"
-          GOOGLE_PASSWORD: "Sree@gmail2023"
+          GOOGLE_PASSWORD: "ree@gmail2023"
         run: |
           colab-cli new-nb my_nb.ipynb
 
