@@ -1,0 +1,36 @@
+name: Run Google Colab Notebook
+
+on:
+  push:
+    branches:
+      - python_
+
+jobs:
+  run-colab-notebook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Google Colab Notebook
+        env:
+          GOOGLE_EMAIL: "cpadmaja2003@gmail.com"
+          GOOGLE_PASSWORD: "Sree@gmail2023"
+        run: |
+          python run_notebook.py
+
+      - name: Upload Executed Notebook
+        uses: actions/upload-artifact@v2
+        with:
+          name: executed-notebook
+          path: output_colab.ipynb
