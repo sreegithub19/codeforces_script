@@ -30,7 +30,7 @@ jobs:
           python run_notebook.py
 
       - name: Upload Executed Notebook
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: executed-notebook
           path: output_colab.ipynb
