@@ -6,3 +6,4 @@ TempProgram
 node_modules
 .vscode
 .qodo
+.mypy_cache
