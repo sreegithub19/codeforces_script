@@ -32,6 +32,10 @@ jobs:
       - name: Download Mockito Inline
         run: wget https://repo1.maven.org/maven2/org/mockito/mockito-inline/5.2.0/mockito-inline-5.2.0.jar
 
+      # Verify that the required JAR files are downloaded.
+      - name: List directory contents
+        run: ls -l
+
       # Compile Java source and test files located in the "bito__" folder.
       - name: Compile sources and tests
         run: |
