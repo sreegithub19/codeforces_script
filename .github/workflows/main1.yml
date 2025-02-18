@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       # Checkout the repository from the bito_ branch.
       - name: Checkout repository
@@ -22,35 +21,39 @@ jobs:
         uses: actions/setup-java@v2
         with:
           distribution: temurin
-          java-version: '11'
+          java-version: '21'
       
-      ##################### Mockito Setup #####################
+      ##################### Mockito & JUnit Setup #####################
       # Download the JUnit Platform Console Standalone JAR to run tests.
       - name: Download JUnit Console Launcher
         run: wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/junit-platform-console-standalone-1.9.3.jar
       
       # Download the Mockito Inline JAR for static mocking support.
       - name: Download Mockito Inline
-        run: wget https://repo1.maven.org/maven2/org/mockito/mockito-inline/2.28.2/mockito-inline-2.28.2.jar
-
+        run: wget https://repo1.maven.org/maven2/org/mockito/mockito-inline/5.2.0/mockito-inline-5.2.0.jar
+      
+      # Download the Mockito Core JAR (version 5.9.0).
+      - name: Download Mockito Core
+        run: wget https://repo1.maven.org/maven2/org/mockito/mockito-core/5.9.0/mockito-core-5.9.0.jar
+      
       # Compile the Java source file and test files located in the "bito__" folder.
-      # The classpath includes both JUnit Console Launcher and Mockito Inline.
+      # The classpath includes JUnit Console Launcher, Mockito Inline, and Mockito Core.
       - name: Compile sources and tests
         run: |
-          javac -cp .:junit-platform-console-standalone-1.9.3.jar:mockito-inline-2.28.2.jar bito__/Calculator.java bito__/CalculatorTest.java bito__/CalculatorMockitoTest.java
+          javac -cp .:junit-platform-console-standalone-1.9.3.jar:mockito-inline-5.2.0.jar:mockito-core-5.9.0.jar bito__/Calculator.java bito__/CalculatorTest.java bito__/CalculatorMockitoTest.java
       
       # Run the standard JUnit tests (CalculatorTest) from the "bito__" folder.
       - name: Run JUnit tests (non-mockito)
         run: |
-          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__:mockito-inline-2.28.2.jar --select-class CalculatorTest
+          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__:mockito-inline-5.2.0.jar:mockito-core-5.9.0.jar --select-class CalculatorTest
       
       # Run the Mockito-based tests (CalculatorMockitoTest) from the "bito__" folder.
       - name: Run Mockito tests
         run: |
-          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__:mockito-inline-2.28.2.jar --select-class CalculatorMockitoTest
+          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__:mockito-inline-5.2.0.jar:mockito-core-5.9.0.jar --select-class CalculatorMockitoTest
       
       # Execute the Calculator main program.
-      # This step simulates user input (for example, "10" and "5") by piping into the program.
+      # This step simulates user input (e.g., "10" and "5") by piping into the program.
       - name: Run Calculator main program
         run: |
           printf "10\n5\n" | java -cp bito__ Calculator
