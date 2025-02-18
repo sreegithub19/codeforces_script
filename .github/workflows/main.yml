@@ -24,22 +24,31 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      # Download the JUnit Platform Console Standalone JAR to run tests.
+      # Download the JUnit Platform Console Standalone JAR for running tests.
       - name: Download JUnit Console Launcher
         run: wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/junit-platform-console-standalone-1.9.3.jar
 
-      # Compile the Java source file and test file located in the "bito__" folder.
+      # Download the Mockito inline JAR (required for static mocking).
+      - name: Download Mockito Inline
+        run: wget https://repo1.maven.org/maven2/org/mockito/mockito-inline/5.2.0/mockito-inline-5.2.0.jar
+
+      # Compile Java source and test files located in the "bito__" folder.
       - name: Compile sources and tests
         run: |
-          javac -cp .:junit-platform-console-standalone-1.9.3.jar bito__/Calculator.java bito__/CalculatorTest.java
+          javac -cp .:junit-platform-console-standalone-1.9.3.jar:mockito-inline-5.2.0.jar bito__/Calculator.java bito__/CalculatorTest.java bito__/CalculatorMockitoTest.java
 
-      # Run the JUnit tests using the JUnit Console Launcher scanning the "bito__" folder.
-      - name: Run JUnit tests
+      # Run plain JUnit tests (CalculatorTest) without Mockito.
+      - name: Run Calculator JUnit tests (non-mockito)
         run: |
-          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__ --scan-class-path
+          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__:mockito-inline-5.2.0.jar --select-class CalculatorTest
+
+      # Run the JUnit tests that use Mockito (CalculatorMockitoTest).
+      - name: Run Calculator Mockito tests
+        run: |
+          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__:mockito-inline-5.2.0.jar --select-class CalculatorMockitoTest
 
       # Execute the Calculator main program.
-      # This step simulates user input by piping (for example, "10" and "5") into the program.
+      # Simulate user input (for example, "10" and "5") by piping into the program.
       - name: Run Calculator main program
         run: |
           printf "10\n5\n" | java -cp bito__ Calculator
