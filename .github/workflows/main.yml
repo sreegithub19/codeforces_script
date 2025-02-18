@@ -33,7 +33,7 @@ jobs:
       # Compile the Java source file and test file located in the "bito__" folder.
       - name: Compile sources and tests
         run: |
-          javac -cp .:junit-platform-console-standalone-1.9.3.jar src/main/Calculator.java src/test/CalculatorTest.java
+          javac -cp .:junit-platform-console-standalone-1.9.3.jar bito__/Calculator.java bito__/CalculatorTest.java
       # Run the JUnit tests using the JUnit Console Launcher scanning the "bito__" folder.
       - name: Run JUnit tests
         run: |
