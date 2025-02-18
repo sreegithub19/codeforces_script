@@ -24,14 +24,16 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      # Download the JUnit Platform Console Standalone JAR to run tests.
+##################### Maven #####################
+
+      #  Download the JUnit Platform Console Standalone JAR to run tests.
       - name: Download JUnit Console Launcher
         run: wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/junit-platform-console-standalone-1.9.3.jar
 
       # Compile the Java source file and test file located in the "bito__" folder.
       - name: Compile sources and tests
         run: |
-          javac -cp .:junit-platform-console-standalone-1.9.3.jar bito__/Calculator.java bito__/CalculatorTest.java
+          javac -cp .:junit-platform-console-standalone-1.9.3.jar src/main/Calculator.java src/test/CalculatorTest.java
       # Run the JUnit tests using the JUnit Console Launcher scanning the "bito__" folder.
       - name: Run JUnit tests
         run: |
