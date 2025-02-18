@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository on the 'bito_' branch.
+      # Checkout the repository from the bito_ branch.
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
@@ -24,44 +24,20 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      # Download the JUnit Platform Console Standalone JAR.
+      # Download the JUnit Platform Console Standalone JAR to run tests.
       - name: Download JUnit Console Launcher
         run: wget https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/junit-platform-console-standalone-1.9.3.jar
 
-      # Download the Mockito Inline JAR (for static mocking).
-      - name: Download Mockito Inline
-        run: wget https://repo1.maven.org/maven2/org/mockito/mockito-inline/5.2.0/mockito-inline-5.2.0.jar
-
-      # List the directory contents to verify that JAR files are present.
-      - name: List directory contents
-        run: ls -l
-
-      # Compile the Java source and test files from the "bito__" folder.
+      # Compile the Java source file and test file located in the "bito__" folder.
       - name: Compile sources and tests
         run: |
-          # Build a classpath that includes all jar files present
-          CP=$(printf ":%s" *.jar)
-          CP=.:${CP:1}
-          echo "Using classpath: $CP"
-          javac -cp "$CP" bito__/Calculator.java bito__/CalculatorTest.java bito__/CalculatorMockitoTest.java
-
-      # Run plain JUnit tests (CalculatorTest) without Mockito.
-      - name: Run Calculator JUnit tests (non-mockito)
+          javac -cp .:junit-platform-console-standalone-1.9.3.jar bito__/Calculator.java bito__/CalculatorTest.java
+      # Run the JUnit tests using the JUnit Console Launcher scanning the "bito__" folder.
+      - name: Run JUnit tests
         run: |
-          CP=$(printf ":%s" *.jar)
-          CP=.:${CP:1}
-          echo "Using classpath for tests: $CP"
-          java -jar junit-platform-console-standalone-1.9.3.jar --class-path "bito__:$CP" --select-class CalculatorTest
-
-      # Run the Mockito tests (CalculatorMockitoTest) separately.
-      - name: Run Calculator Mockito tests
-        run: |
-          CP=$(printf ":%s" *.jar)
-          CP=.:${CP:1}
-          echo "Using classpath for tests: $CP"
-          java -jar junit-platform-console-standalone-1.9.3.jar --class-path "bito__:$CP" --select-class CalculatorMockitoTest
-
-      # Run the Calculator main program, simulating user input.
+          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__ --scan-class-path
+      # Execute the Calculator main program.
+      # This step simulates user input by piping (for example, "10" and "5") into the program.
       - name: Run Calculator main program
         run: |
           printf "10\n5\n" | java -cp bito__ Calculator
