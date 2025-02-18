@@ -50,7 +50,7 @@ jobs:
       # Run the Mockito-based tests (CalculatorMockitoTest) from the "bito__" folder.
       - name: Run Mockito tests
         run: |
-          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__:mockito-core-5.9.0.jar --select-class CalculatorMockitoTest
+          java -jar junit-platform-console-standalone-1.9.3.jar --class-path bito__:mockito-inline-5.2.0.jar --select-class CalculatorMockitoTest
       
       # Execute the Calculator main program.
       # This step simulates user input (e.g., "10" and "5") by piping into the program.
