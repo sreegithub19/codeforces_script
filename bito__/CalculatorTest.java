@@ -133,4 +133,31 @@ public class CalculatorTest {
         // expected roughly 0.33333
         assertEquals(0.33333, result, 0.00001, "1 / 3 should be approximately 0.33333");
     }
+
+    @Test
+    public void testDivision_WithVerySmallDivisor() {
+        Calculator calculator = new Calculator();
+        
+        double result = Calculator.divide(1.0, 1e-15);
+        
+        assertEquals(1e15, result, 1e10, "Division with very small divisor should work correctly");
+    }
+
+    @Test
+    public void testMultiplication_WithMinValue() {
+        Calculator calculator = new Calculator();
+        
+        double result = Calculator.multiply(Double.MIN_VALUE, 2.0);
+        
+        assertEquals(Double.MIN_VALUE * 2, result, "Multiplication with Double.MIN_VALUE should work correctly");
+    }
+
+    @Test
+    public void testAddition_LargeAndSmallNumber() {
+        Calculator calculator = new Calculator();
+        
+        double result = Calculator.add(1e15, 1e-15);
+        
+        assertEquals(1e15, result, "Adding very large and very small numbers should return the larger number");
+    }
 }
