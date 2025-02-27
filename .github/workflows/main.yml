@@ -40,10 +40,5 @@ jobs:
 
     - name: Run Java Shebang script
       run: |
-        java --source 11 <<EOF
-        public class batchjob {
-            public static void main(String[] args) {
-                System.out.println("Hello Java Shebang World!");
-            }
-        }
-        EOF
+        chmod +x shebang_job.sh
+        java --source 11 shebang_job.sh  1 3 5
