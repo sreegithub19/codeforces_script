@@ -37,3 +37,13 @@ jobs:
 
     - name: Build with Maven
       run: mvn clean install
+
+    - name: Run Java Shebang script
+      run: |
+        /usr/local/bin/java --source 11 <<EOF
+        public class batchjob {
+            public static void main(String[] args) {
+                System.out.println("Hello Java Shebang World!");
+            }
+        }
+        EOF
