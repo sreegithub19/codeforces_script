@@ -64,7 +64,7 @@ jobs:
 
       - name: Set up Docker container
         run: |
-          pip install jupyter jupyter_client  
+          pip install jupyter jupyter_client jupyter-console
           sudo apt update -q
           sudo apt-get install -q openjdk-11-jdk-headless
           curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip -o ijava-kernel.zip
@@ -74,6 +74,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y openjdk-21-jdk maven  # Install Java 21
 
+      - name: IJava inline
+        run: | 
+          jupyter-console --kernel=java <<EOF
+          System.out.println("Hello from IJava inline!");
+          EOF
+
+ 
       - name: Set up IJava
         run: | 
           cd execute
