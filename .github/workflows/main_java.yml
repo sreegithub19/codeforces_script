@@ -78,6 +78,16 @@ jobs:
         run: | 
           jupyter-console --kernel=java <<EOF
           System.out.println("Hello from IJava inline!");
+          %maven org.knowm.xchart:xchart:3.5.2
+          import org.knowm.xchart.*;
+
+          double[] xData = new double[] { 0.0, 1.0, 2.0 };
+          double[] yData = new double[] { 2.0, 1.0, 0.0 };
+
+          XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+
+          //BitmapEncoder.getBufferedImage(chart);
+          BitmapEncoder.saveBitmap(chart, "chart", BitmapEncoder.BitmapFormat.PNG);
           EOF
 
  
@@ -97,3 +107,4 @@ jobs:
           name: executed_notebooks
           path: |
             execute/executed_notebook_*
+            chart.png
