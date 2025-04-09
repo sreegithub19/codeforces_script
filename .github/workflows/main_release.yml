@@ -1,0 +1,95 @@
+name: Run Jupyter Notebook, Generate HTML, and Release Artifacts
+
+on:
+  push:
+    branches:
+      - python_  # Trigger on pushes to the python_ branch
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Install Maven
+        run: sudo apt-get install -y maven
+
+      - name: Download Maven Dependencies
+        run: mvn dependency:copy-dependencies -DoutputDirectory=libs
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jupyter nbconvert
+
+      - name: Run scripts
+        run: |
+          python test.py
+
+      - name: Run Jupyter Notebook
+        run: |
+          cd execute
+          jupyter nbconvert --to notebook --execute notebook.ipynb --output executed_notebook.ipynb
+          cd ..
+
+      - name: Convert Executed Notebook to HTML
+        run: |
+          cd execute
+          jupyter nbconvert --to html executed_notebook.ipynb --output executed_notebook
+          cd ..
+
+      - name: List files
+        run: ls -la  # Debugging step
+
+      - name: Upload Notebook and HTML as Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: executed_notebooks
+          path: |
+            execute/executed_notebook.ipynb
+            execute/executed_notebook.html
+
+      # Create a GitHub release and attach artifacts to it
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: Build ${{ github.sha }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: execute/executed_notebook.ipynb
+          asset_name: executed_notebook.ipynb
+          asset_content_type: application/x-ipynb+json
+
+      - name: Upload HTML Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: execute/executed_notebook.html
+          asset_name: executed_notebook.html
+          asset_content_type: text/html
