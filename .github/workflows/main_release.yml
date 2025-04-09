@@ -78,12 +78,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: |
-            execute/executed_notebook.ipynb
-            execute/executed_notebook.html
-          asset_name: |
-            executed_notebook.ipynb
-            executed_notebook.html
-          asset_content_type: |
-            application/x-ipynb+json
-            text/html
+          asset_path: execute/executed_notebook.ipynb
+          asset_name: executed_notebook.ipynb
+          asset_content_type: application/x-ipynb+json
+
+      - name: Upload HTML Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: execute/executed_notebook.html
+          asset_name: executed_notebook.html
+          asset_content_type: text/html
