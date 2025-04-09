@@ -42,26 +42,26 @@ jobs:
           python test.py
       - name: Run Jupyter Notebook
         run: |
-          cd execute
-          jupyter nbconvert --to notebook --execute notebook.ipynb --output executed_notebook.ipynb
+          cd execute && mkdir outputs
+          jupyter nbconvert --to notebook --execute notebook.ipynb --output outputs/executed_notebook.ipynb
           cd ..
       - name: Convert Executed Notebook to HTML
         run: |
-          cd execute
+          cd execute/outputs
           jupyter nbconvert --to html executed_notebook.ipynb --output executed_notebook
-          cd ..
+          cd ../..
       - name: List files
         run: ls -la  # Debugging step
 
       - name: Zip the execute folder
         run: |
-          zip -r execute.zip execute
+          zip -r outputs.zip execute/outputs
 
       - name: Upload Zipped Folder as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: execute_folder
-          path: execute.zip
+          path: outputs.zip
 
       # Create a GitHub release and attach artifacts to it
       - name: Create GitHub Release
@@ -81,6 +81,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: execute.zip
-          asset_name: execute.zip
+          asset_path: outputs.zip
+          asset_name: outputs.zip
           asset_content_type: application/zip
