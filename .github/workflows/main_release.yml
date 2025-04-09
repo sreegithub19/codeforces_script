@@ -5,6 +5,9 @@ on:
     branches:
       - python_  # Trigger on pushes to the python_ branch
 
+permissions:
+  contents: write  # Required for creating releases and uploading assets
+
 jobs:
   build_and_release:
     runs-on: ubuntu-latest
