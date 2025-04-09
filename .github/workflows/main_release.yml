@@ -42,13 +42,13 @@ jobs:
           python test.py
       - name: Run Jupyter Notebook
         run: |
-          cd execute
-          jupyter nbconvert --to notebook --execute notebook.ipynb --output executed_notebook.ipynb
+          cd execute && mkdir outputs
+          jupyter nbconvert --to notebook --execute notebook.ipynb --output outputs/executed_notebook.ipynb
           cd ..
       - name: Convert Executed Notebook to HTML
         run: |
           cd execute
-          jupyter nbconvert --to html executed_notebook.ipynb --output executed_notebook
+          jupyter nbconvert --to html outputs/executed_notebook.ipynb --output outputs/executed_notebook
           cd ..
       - name: List files
         run: ls -la  # Debugging step
@@ -58,8 +58,8 @@ jobs:
         with:
           name: executed_notebooks
           path: |
-            execute/executed_notebook.ipynb
-            execute/executed_notebook.html
+            execute/outputs/executed_notebook.ipynb
+            execute/outputs/executed_notebook.html
       # Create a GitHub release and attach artifacts to it
       - name: Create GitHub Release
         id: create_release
@@ -78,16 +78,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: execute/executed_notebook.ipynb
-          asset_name: executed_notebook.ipynb
-          asset_content_type: application/x-ipynb+json
-
-      - name: Upload HTML Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: execute/executed_notebook.html
-          asset_name: executed_notebook.html
-          asset_content_type: text/html
+          asset_path: execute/outputs
+          asset_name: executed_notebook_outputs
+          #asset_content_type: application/x-ipynb+json
