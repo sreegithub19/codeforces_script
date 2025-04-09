@@ -78,12 +78,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_paths: |
+          asset_path: |
             execute/executed_notebook.ipynb
             execute/executed_notebook.html
-          asset_names: |
+          asset_name: |
             executed_notebook.ipynb
             executed_notebook.html
-          asset_content_types: |
+          asset_content_type: |
             application/x-ipynb+json
             text/html
