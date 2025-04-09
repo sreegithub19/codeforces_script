@@ -47,9 +47,9 @@ jobs:
           cd ..
       - name: Convert Executed Notebook to HTML
         run: |
-          cd execute
-          jupyter nbconvert --to html outputs/executed_notebook.ipynb --output outputs/executed_notebook
-          cd ..
+          cd execute/outputs
+          jupyter nbconvert --to html executed_notebook.ipynb --output executed_notebook
+          cd ../..
       - name: List files
         run: ls -la  # Debugging step
 
