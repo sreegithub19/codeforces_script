@@ -3,7 +3,7 @@ name: Java CI
 on:
   push:
     branches:
-      - javac_  # Adjust the branch name as needed
+      - javac_   # Adjust the branch name as needed
 
 jobs:
   build:
