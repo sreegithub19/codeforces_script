@@ -18,7 +18,28 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21' # Specify your Java version
-          distribution: 'adopt'
+          distribution: 'temurin'
+
+      - name: Install Kotlin
+        run: |
+          curl -s https://get.sdkman.io | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install kotlin
+
+      - name: Compile and Run Kotlin Files
+        run: |
+          #!/bin/bash
+          # Compile all Kotlin files
+          cd execute_kt && kotlinc *.kt -include-runtime -d compiled.jar
+          # Check if compilation was successful
+          if [ $? -eq 0 ]; then
+              # Run the compiled Kotlin JAR file
+              echo "Executing Kotlin application..."
+              java -jar compiled.jar
+          else
+              echo "Compilation failed."
+              exit 1
+          fi
 
       - name: Build and run with Maven
         run: mvn clean install && mvn compile && mvn exec:java
