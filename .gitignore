@@ -3,3 +3,6 @@ execute/*.class
 .idea
 codeforces_script.iml
 target
+.qodo
+.gradle
+.vscode
