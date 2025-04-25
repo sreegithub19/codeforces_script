@@ -4,3 +4,5 @@ execute/*.class
 codeforces_script.iml
 target
 node_modules
+.gradle
+.vscode
