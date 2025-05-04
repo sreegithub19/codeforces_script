@@ -53,7 +53,7 @@ async function main() {
     const helloWorld = await HelloWorldFactory.deploy();
 
     // Wait for the deployment to finish
-    await helloWorld.deployed();
+    //await helloWorld.deployed();
 
     console.log("HelloWorld deployed to:", helloWorld.address);
 
