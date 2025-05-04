@@ -19,7 +19,7 @@ async function main() {
     const input = {
         language: 'Solidity',
         sources: {
-            'HelloWorld1.sol': {
+            'HelloWorld1': {
                 content: sourceCode,
             },
         },
@@ -35,7 +35,7 @@ async function main() {
     const output = JSON.parse(solc.compile(JSON.stringify(input)));
 
     // Extract the compiled contract's bytecode and ABI
-    const contractData = output.contracts['HelloWorld1.sol']['HelloWorld'];
+    const contractData = output.contracts['HelloWorld1']['HelloWorld'];
     const abi = contractData.abi;
     const bytecode = contractData.evm.bytecode.object;
 
