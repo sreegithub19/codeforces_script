@@ -35,7 +35,12 @@ jobs:
         run: |
           npx hardhat run scripts/deploy.js --network localhost && node scripts/solidity_in_js.js
 
-        # The ampersand (&) runs the command in the background.
+      - name: Start sol in js_1 scripts
+        run: |
+          node scripts/solidity_in_js_1.js
+      
+      
+      # The ampersand (&) runs the command in the background.
 
       # - name: Deploy and display message
       #   run: npx hardhat run scripts/deploy.js --network localhost
