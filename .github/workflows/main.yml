@@ -29,7 +29,11 @@ jobs:
 
       - name: Start Hardhat node
         run: |
-          npx hardhat node & sleep 5 && npx hardhat run scripts/deploy.js --network localhost && node scripts/solidity_in_js.js
+          npx hardhat node & sleep 5 
+          
+      - name: Start sol in js scripts
+        run: |
+          npx hardhat run scripts/deploy.js --network localhost && node scripts/solidity_in_js.js
 
         # The ampersand (&) runs the command in the background.
 
