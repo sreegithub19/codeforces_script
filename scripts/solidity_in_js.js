@@ -55,7 +55,7 @@ async function main() {
 
     // Get the message from the contract
     const message = await helloWorld.message();
-    console.log("Message from contract:", message);
+    console.log("Message from contract in solidity_in_js:", message);
 }
 
 // Execute the deployment script
