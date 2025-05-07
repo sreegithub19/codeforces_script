@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 
 // Function to execute Python code
 function runPythonCode() {
-    const command = `csi <<END
+    const command = `dotnet-script <<END
         using System;
 
         public class Program
@@ -22,6 +22,7 @@ function runPythonCode() {
 
         Program.Main();
         Program.Sub();
+        Environment.Exit(0);
         END`;
     return exec(command);
 }
