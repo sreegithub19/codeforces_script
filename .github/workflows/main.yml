@@ -17,7 +17,7 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.x'  # Specify the .NET version you want
+        dotnet-version: '9.0.x'  # Specify the .NET version you want
 
 
     - name: Build the Project
@@ -29,12 +29,12 @@ jobs:
     - name: Ensure .NET tools are in PATH
       run: echo "/home/runner/.dotnet" >> $GITHUB_PATH
 
-    - name: Install .NET SDK
-      run: |
-        wget http://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.203/dotnet-sdk-9.0.203-linux-x64.tar.gz
-        mkdir -p $HOME/dotnet && tar zxf dotnet-sdk-9.0.203-linux-x64.tar.gz -C $HOME/dotnet
-        export DOTNET_ROOT=$HOME/dotnet
-        export PATH=$PATH:$HOME/dotnet
+    # - name: Install .NET SDK
+    #   run: |
+    #     wget http://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.203/dotnet-sdk-9.0.203-linux-x64.tar.gz
+    #     mkdir -p $HOME/dotnet && tar zxf dotnet-sdk-9.0.203-linux-x64.tar.gz -C $HOME/dotnet
+    #     export DOTNET_ROOT=$HOME/dotnet
+    #     export PATH=$PATH:$HOME/dotnet
 
     # - name: Run the Standalone file
     #   run: |
