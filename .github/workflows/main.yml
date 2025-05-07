@@ -115,6 +115,6 @@ jobs:
                 }
             }
         }
-        Environment.Exit(0);
         Program.Main();
+        Environment.Exit(0);
         EOF
