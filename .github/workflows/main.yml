@@ -22,7 +22,7 @@ jobs:
       # Standard .NET Project
       - name: Create and Build .NET Project
         run: |
-          dotnet new console -n HelloWorld
+          dotnet new console -n HelloWorld --force
           cd HelloWorld
           dotnet build
 
