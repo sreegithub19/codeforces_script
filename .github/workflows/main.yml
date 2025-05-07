@@ -50,10 +50,10 @@ jobs:
 
     - name: Run inline C# code
       run: |
-       echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | csi
+       echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | dotnet-script
     - name: Run multiline C# code
       run: |
-        csi <<EOF
+        dotnet-script <<EOF
         using System;
         public class Program
         {
@@ -67,7 +67,7 @@ jobs:
         EOF
     - name: Run multiline nested C# code
       run: |
-        csi <<EOF
+        dotnet-script <<EOF
         using System;
         using System.Diagnostics;
         public class Program
