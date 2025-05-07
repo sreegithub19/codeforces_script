@@ -35,7 +35,15 @@ jobs:
         run: |
           # Install the dotnet SDK, if not already installed
           sudo apt-get update
-          #sudo apt-get install -y dotnet-sdk-9.0 # Or the version you are using
+          # Use the official Microsoft feed to get the latest packages
+          wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
+          sudo apt-get update
+          # Install the latest SDK
+          LATEST_VERSION=$(curl -s https://dotnet.microsoft.com/download/dotnet-sdk | grep -Po '(?<=version">)\d+\.\d+(?=\s)')
+          echo "Latest .NET SDK Version: $LATEST_VERSION"
+          sudo apt-get install -y "dotnet-sdk-$LATEST_VERSION"
 
           csc standalone.cs # Compile the standalone C# file
           chmod +x standalone.exe # Make the executable runnable
