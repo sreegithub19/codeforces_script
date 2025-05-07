@@ -48,9 +48,9 @@ jobs:
         dotnet tool install -g dotnet-script --version 1.5.0
         export PATH="$PATH:/home/runner/.dotnet/tools"
 
-    - name: Run inline C# code
-      run: |
-       echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | dotnet-script
+    # - name: Run inline C# code
+    #   run: |
+    #    echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | dotnet-script
     - name: Run multiline C# code
       run: |
         dotnet-script <<EOF
