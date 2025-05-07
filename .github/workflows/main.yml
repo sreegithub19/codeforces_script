@@ -32,11 +32,11 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '8.x'  # Specify the .NET version you want
+          dotnet-version: '6.x'  # Specify the .NET version you want
 
       - name: Install dotnet-script
         run: |
-          dotnet tool install -g dotnet-script
+          dotnet tool install -g dotnet-script --version 1.5.0
           export PATH="$PATH:/home/runner/.dotnet/tools"
 
 
