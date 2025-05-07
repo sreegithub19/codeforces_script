@@ -35,7 +35,7 @@ jobs:
         run: |
           # Install the dotnet SDK, if not already installed
           sudo apt-get update
-          sudo apt-get install -y dotnet-sdk-7.0 # Or the version you are using
+          sudo apt-get install -y dotnet-sdk-9.0 # Or the version you are using
 
           csc standalone.cs # Compile the standalone C# file
           chmod +x standalone.exe # Make the executable runnable
