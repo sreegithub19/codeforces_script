@@ -65,8 +65,9 @@ jobs:
             }
         }
         Program.Main();
+        Environment.Exit(0);
         EOF
-        
+
     - name: Run multiline nested C# code
       run: |
         dotnet-script <<EOF
@@ -114,5 +115,6 @@ jobs:
                 }
             }
         }
+        Environment.Exit(0);
         Program.Main();
         EOF
