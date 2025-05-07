@@ -85,8 +85,13 @@ jobs:
     - name: Run the Project
       run: dotnet run --project HelloWorld/HelloWorld.csproj
 
+    - name: Ensure .NET tools are in PATH
+      run: echo "::add-path::$(/home/runner/.dotnet)"
+
     - name: Run the Standalone file
-      run: csc standalone.cs && ls -la && chmod +x standalone.exe && ./standalone.exe
+      run: |
+        export PATH="$PATH:/home/runner/.dotnet/tools"
+        csc standalone.cs && ls -la && chmod +x standalone.exe && ./standalone.exe
 
 
 
