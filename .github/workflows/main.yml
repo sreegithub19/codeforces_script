@@ -17,7 +17,7 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '9.0.x'  # Specify the .NET version you want
+        dotnet-version: '6.x'  # Specify the .NET version you want
 
 
     - name: Build the Project
@@ -47,7 +47,7 @@ jobs:
       run: |
         dotnet tool install -g dotnet-script
         export PATH="$PATH:/home/runner/.dotnet/tools"
-        
+
     - name: Run inline C# code
       run: |
        echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | csi
