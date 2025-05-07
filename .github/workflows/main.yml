@@ -86,7 +86,7 @@ jobs:
       run: dotnet run --project HelloWorld/HelloWorld.csproj
 
     - name: Ensure .NET tools are in PATH
-      run: echo "::add-path::$(/home/runner/.dotnet)"
+      run: echo "/home/runner/.dotnet" >> $GITHUB_PATH
 
     - name: Run the Standalone file
       run: |
