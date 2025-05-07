@@ -52,7 +52,7 @@ jobs:
       run: |
        echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");Environment.Exit(0);' | dotnet-script
     
-       - name: Run multiline C# code
+    - name: Run multiline C# code
       run: |
         dotnet-script <<EOF
         using System;
@@ -66,6 +66,7 @@ jobs:
         }
         Program.Main();
         EOF
+        
     - name: Run multiline nested C# code
       run: |
         dotnet-script <<EOF
