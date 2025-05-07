@@ -11,120 +11,152 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.x'  # Or your desired .NET version
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.x'  # Specify the .NET version you want
 
-      # Standard .NET Project
-      - name: Create and Build .NET Project
-        run: |
-          dotnet new console -n HelloWorld --force
-          cd HelloWorld
-          dotnet build
+    # - name: Create C# Project
+    #   run: |
+    #     dotnet new console -n HelloWorld
 
-      - name: Run .NET Project
-        run: dotnet run
-        working-directory: HelloWorld # Make sure we are in the correct directory
+    # - name: Write Hello World Program
+    #   run: |
+    #       cat <<EOF > HelloWorld/HelloWorld.csproj
+    #       <Project Sdk="Microsoft.NET.Sdk">
 
-      # Standalone C# File Compilation and Execution
-      - name: Compile and Run Standalone C# File
-        run: |
-          # Install the dotnet SDK, if not already installed
-          sudo apt-get update
-          # Use the official Microsoft feed to get the latest packages
-          wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-          sudo dpkg -i packages-microsoft-prod.deb
-          rm packages-microsoft-prod.deb
-          sudo apt-get update
-          # Install the latest SDK
-          LATEST_VERSION=$(curl -s https://dotnet.microsoft.com/download/dotnet-sdk | grep -Po '(?<=version">)\d+\.\d+(?=\s)')
-          echo "Latest .NET SDK Version: $LATEST_VERSION"
-          sudo apt-get install -y "dotnet-sdk-$LATEST_VERSION"
+    #         <PropertyGroup>
+    #           <OutputType>Exe</OutputType>
+    #           <TargetFramework>net6.0</TargetFramework>  <!-- You can specify a different version if needed -->
+    #           <StartupObject>HelloWorld.Program</StartupObject>  <!-- Specify the entry point class -->
+    #         </PropertyGroup>
 
-          csc standalone.cs # Compile the standalone C# file
-          chmod +x standalone.exe # Make the executable runnable
-          ./standalone.exe       # Execute
+    #         <ItemGroup>
+    #           <!-- Add any package references here if needed -->
+    #           <!-- <PackageReference Include="SomePackage" Version="1.0.0" /> -->
+    #         </ItemGroup>
 
-      # dotnet-script
-      - name: Install dotnet-script
-        run: dotnet tool install -g dotnet-script
+    #       </Project>
 
-      - name: Add dotnet tools to the path
-        run: echo "::add-path::/home/runner/.dotnet/tools"
+    #       EOF
 
-      - name: Run inline C# code
-        run: |
-          dotnet-script -c "Console.WriteLine(\"Hello from C# Interactive in GitHub Actions!\");"
+    # - name: Write Hello World Program
+    #   run: |
+    #           cat <<EOF > HelloWorld/first.cs
+    #           using System;
+              
+    #           namespace HelloWorld
+    #           {
+    #               public class first
+    #               {
+    #                   public static void Main()
+    #                   {
+    #                       Console.WriteLine("Hello, World from first.cs");
+    #                   }
+    #               }
+    #           }
+    #           EOF
 
-      - name: Run multiline C# code
-        run: |
-          dotnet-script <<EOF
-          using System;
+    # - name: Write Hello World Program
+    #   run: |
+    #       cat <<EOF > HelloWorld/Program.cs
+    #       using System;
+          
+    #       namespace HelloWorld
+    #       {
+    #           public class Program
+    #           {
+    #               public static void Main(string[] args)
+    #               {
+    #                   Console.WriteLine("Hello, World from Program.cs");
+    #                   first.Main();  // Call the method from FirstProgram
+    #               }
+    #           }
+    #       }
+    #       EOF
 
-          public class Program
-          {
-              public static void Main()
-              {
-                  Console.WriteLine(\"Hello from C# Interactive in GitHub Actions multiline!\");
-                  Console.WriteLine(\"This is a multiline C# code example.\");
-              }
-          }
 
-          Program.Main();
-          EOF
+    - name: Build the Project
+      run: dotnet build HelloWorld/HelloWorld.csproj
 
-      - name: Run multiline nested C# code with Python
-        run: |
-          dotnet-script <<EOF
-          using System;
-          using System.Diagnostics;
+    - name: Run the Project
+      run: dotnet run --project HelloWorld/HelloWorld.csproj
 
-          public class Program
-          {
-              public static void Main()
-              {
-                  // Define the Python command as a multiline string
-                  string pythonCommand = @"
-          print('Hello from Python!')
-          x = 9
-          y = 10
-          print(f'The sum here of {x} and {y} is {x + y}.')
-          ";
+    - name: Run the Standalone file
+      run: csc standalone.cs && ls -la && chmod +x standalone.exe && ./standalone.exe
 
-                  // Create a new process
-                  ProcessStartInfo processInfo = new ProcessStartInfo
-                  {
-                      FileName = "python", // Ensure python is in the PATH
-                      Arguments = $"-c \"{pythonCommand}\"",
-                      RedirectStandardOutput = true,
-                      RedirectStandardError = true,
-                      UseShellExecute = false,
-                      CreateNoWindow = true
-                  };
 
-                  using (Process process = new Process())
-                  {
-                      process.StartInfo = processInfo;
-                      process.Start();
 
-                      string output = process.StandardOutput.ReadToEnd();
-                      string error = process.StandardError.ReadToEnd();
-
-                      process.WaitForExit();
-
-                      Console.WriteLine("Output:");
-                      Console.WriteLine(output);
-                      if (!string.IsNullOrEmpty(error))
-                      {
-                          Console.WriteLine("Error:");
-                          Console.WriteLine(error);
-                      }
-                  }
-              }
-          }
-          Program.Main();
-          EOF
+    - name: Install dotnet-script
+      run: |
+        dotnet tool install -g dotnet-script
+        export PATH="$PATH:/home/runner/.dotnet/tools"
+    - name: Run inline C# code
+      run: |
+       echo 'Console.WriteLine("Hello from C# Interactive in GitHub Actions!");' | csi
+    - name: Run multiline C# code
+      run: |
+        csi <<EOF
+        using System;
+        public class Program
+        {
+            public static void Main()
+            {
+                Console.WriteLine("Hello from C# Interactive in GitHub Actions multiline!");
+                Console.WriteLine("This is a multiline C# code example.");
+            }
+        }
+        Program.Main();
+        EOF
+    - name: Run multiline nested C# code
+      run: |
+        csi <<EOF
+        using System;
+        using System.Diagnostics;
+        public class Program
+        {
+            public static void Main()
+            {
+                // Define the Python command as a multiline string
+                string pythonCommand = @"
+        print('Hello from Python!')
+        x = 9
+        y = 10
+        print(f'The sum here of {x} and {y} is {x + y}.')
+        ";
+                // Create a new process
+                ProcessStartInfo processInfo = new ProcessStartInfo
+                {
+                    FileName = "python", // Adjust this to "python3" if needed
+                    Arguments = $"-c \"{pythonCommand}\"", // The command to execute
+                    RedirectStandardOutput = true, // Redirect output to read it
+                    RedirectStandardError = true, // Redirect error output
+                    UseShellExecute = false, // Required for redirection
+                    CreateNoWindow = true // Do not create a window
+                };
+                using (Process process = new Process())
+                {
+                    process.StartInfo = processInfo;
+                    // Start the process
+                    process.Start();
+                    // Read the output (or error)
+                    string output = process.StandardOutput.ReadToEnd();
+                    string error = process.StandardError.ReadToEnd();
+                    // Wait for the process to finish
+                    process.WaitForExit();
+                    // Print output and error (if any)
+                    Console.WriteLine("Output:");
+                    Console.WriteLine(output);
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        Console.WriteLine("Error:");
+                        Console.WriteLine(error);
+                    }
+                }
+            }
+        }
+        Program.Main();
+        EOF
