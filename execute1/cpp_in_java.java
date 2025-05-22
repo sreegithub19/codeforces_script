@@ -41,28 +41,33 @@ public class cpp_in_java {
                     inputFile.close(); // Close the file
                     return 0;
                 }
-                """.formatted(inputFilePath); // Use the absolute path
+                """.formatted(inputFilePath);
 
-            // Compile and run the C++ code using a single command
-            ProcessBuilder builder = new ProcessBuilder();
-            builder.command("bash", "-c", 
-            "pwd && echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
-            //builder.directory(new File(currentDir));
-            builder.redirectErrorStream(true);
+            // Create the list of directories
+            List<String> dirList = new ArrayList<>();
+            dirList.add(currentDir).add(currentDir + "/inputs");
 
-            Process process = builder.start();
+            for (String dir : dirList) {
+                    // Compile and run the C++ code using a single command
+                    ProcessBuilder builder = new ProcessBuilder();
+                    builder.command("bash", "-c", "pwd && echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
+                    builder.directory(new File(dir));
+                    builder.redirectErrorStream(true);
 
-            // Read the output
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
-                }
+                    Process process = builder.start();
+
+                    // Read the output
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                        }
+                    }
+
+                    // Wait for the process to complete
+                    int exitCode = process.waitFor();
+                    System.out.println("Process exited with code: " + exitCode);
             }
-
-            // Wait for the process to complete
-            int exitCode = process.waitFor();
-            System.out.println("Process exited with code: " + exitCode);
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
