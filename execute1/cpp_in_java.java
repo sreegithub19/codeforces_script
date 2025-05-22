@@ -45,7 +45,8 @@ public class cpp_in_java {
 
             // Compile and run the C++ code using a single command
             ProcessBuilder builder = new ProcessBuilder();
-            builder.command("pwd &&","bash", "-c", "echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
+            builder.command("bash", "-c", 
+            "pwd && echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
             //builder.directory(new File(currentDir));
             builder.redirectErrorStream(true);
 
