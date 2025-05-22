@@ -9,9 +9,6 @@ public class cpp_in_java {
             // Get the current directory
             String currentDir = System.getProperty("user.dir");
 
-            // Construct the absolute path for input.txt
-            String inputFilePath = Paths.get(currentDir,  "input.txt").toString();
-
             // Prepare the C++ code using a text block
             String cppCode = """
                 #include <iostream>
@@ -41,16 +38,17 @@ public class cpp_in_java {
                     inputFile.close(); // Close the file
                     return 0;
                 }
-                """.formatted(inputFilePath);
+                """;
 
             // Create the list of directories
             List<String> dirList = new ArrayList<>();
-            dirList.add(currentDir).add(currentDir + "/inputs");
+            dirList.add(currentDir);
+            dirList.add(currentDir + "/inputs");
 
             for (String dir : dirList) {
                     // Compile and run the C++ code using a single command
                     ProcessBuilder builder = new ProcessBuilder();
-                    builder.command("bash", "-c", "pwd && echo \"" + cppCode.replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
+                    builder.command("bash", "-c", "pwd && echo \"" + cppCode.formatted(Paths.get(dir,  "input.txt").toString()).replace("\"", "\\\"") + "\" | g++ -x c++ -o hello - && ./hello");
                     builder.directory(new File(dir));
                     builder.redirectErrorStream(true);
 
